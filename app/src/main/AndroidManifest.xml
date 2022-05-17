@@ -14,6 +14,7 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
 
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -23,8 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PesanBotol">
         <activity
-
-            android:name="."
+            android:name=".activity.OnBoardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,6 +46,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAc5OjWQoq5KW_0g2_SK2O2BC4986Bq1YM" />
     </application>
 
 </manifest>
