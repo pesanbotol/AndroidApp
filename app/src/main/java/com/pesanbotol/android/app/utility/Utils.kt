@@ -1,4 +1,4 @@
-package com.dwicandra.pesanbotol
+package com.pesanbotol.android.app.utility
 
 import android.content.Context
 import android.graphics.Typeface
@@ -9,6 +9,7 @@ import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.pesanbotol.android.app.R
 
 class Utils {
     companion object {

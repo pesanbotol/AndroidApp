@@ -8,10 +8,13 @@
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/font/custom_font.xml" value="0.20641620937104263" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/font/poppins.xml" value="0.20641620937104263" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/font/poppins_bold.xml" value="0.20641620937104263" />
-        <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout-small/activity_login.xml" value="0.25" />
-        <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout-small/activity_sign_up.xml" value="0.25" />
-        <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/activity_sign_up.xml" value="0.33" />
+        <entry key="app/src/main/res/layout-normal/activity_sign_up.xml" value="0.165" />
+        <entry key="app/src/main/res/layout-small/activity_sign_up.xml" value="0.4902808053152901" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.23541666666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.18289947509765625" />
       </map>
     </option>
   </component>

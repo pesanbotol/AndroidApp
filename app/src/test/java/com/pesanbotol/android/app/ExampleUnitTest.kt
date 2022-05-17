@@ -1,4 +1,4 @@
-package com.dwicandra.pesanbotol
+package com.pesanbotol.android.app
 
 import org.junit.Test
 
