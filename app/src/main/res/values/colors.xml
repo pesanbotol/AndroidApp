@@ -8,6 +8,7 @@
     <!--    colors custom-->
     <color name="blue_900">#1A76BC</color>
     <color name="blue_1100">#1E91D0</color>
+    <color name="blue_0E2">#4A90E2</color>
 
     <!--    colors default Secondary-->
     <color name="yellow_200">#FFB700</color>
@@ -19,7 +20,7 @@
     <color name="yellow_1100">#FFEA00</color>
 
     <!--colors default -->
-    <color name="black">#25262B</color>
+    <color name="black">#4A4A4A</color>
 
     <!--    colors custom   -->
     <color name="grey_37F">#66737F</color>

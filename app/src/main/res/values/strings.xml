@@ -1,5 +1,19 @@
 <resources>
-    <string name="app_name">Pesan Botol</string>\
+    <string name="app_name">Pesan Botol</string>
+    <!--  on boarding  -->
+    <string name="title_menu_1">Bagikan Pengalaman</string>
+    <string name="title_menu_2">Temukan Hidden Gems </string>
+    <string name="title_menu_3">Kumpulkan Badge</string>
+    <string name="desc_menu_1">Menyelami indahnya destinasi sembari membagikan pengalaman anda dan buat orang tahu tentang perjalanan anda!</string>
+    <string name="desc_menu_2">Jelajahi tempat, kegiatan, dan festival dengan mengetahui informasi yang tersedia di sekitar anda. </string>
+    <string name="desc_menu_3">Jadikan profil kamu lebih baik dari yang lain!.  Kunjungi dan selesaikan misi untuk mendapatkan badge-badge unik!</string>
+    <string name="Lewati">Lewati</string>
+    <string name="Lanjut">Lanjut</string>
+<!--  Bottom Navigation Menu  -->
+    <string name="title_bottom_menu_1">Home</string>
+    <string name="title_bottom_menu_2">Aktivitas</string>
+    <string name="title_bottom_menu_3">Akun</string>
+    <!--  Auth  -->
     <string name="imageauth">imageAuth</string>
     <string name="i_agree_with_terms_and_privacy">I agree with Terms and Privacy</string>
     <string name="email">Email</string>
@@ -11,4 +25,6 @@
     <string name="login">Login</string>
     <string name="don_t_have_an_account">Don’t have an account ?</string>
     <string name="signUp"><u>Sign Up </u> </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
