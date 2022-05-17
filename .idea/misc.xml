@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/drawable-v24/ic_circle_outline24.xml" value="0.175" />
+        <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/drawable/background_button_auth.xml" value="0.175" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/drawable/background_outline_auth.xml" value="0.1355" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/drawable/ic_aktivitas_colors.xml" value="0.175" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.175" />
@@ -17,7 +18,7 @@
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout-small/activity_sign_up.xml" value="0.33" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
-        <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/activity_on_boarding.xml" value="0.22" />
+        <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/activity_on_boarding.xml" value="0.25" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/activity_sign_up.xml" value="0.33" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/fragment_account.xml" value="0.21041666666666667" />
         <entry key="..\:/AndroidProject/PesanBotol/app/src/main/res/layout/fragment_aktivitas.xml" value="0.21041666666666667" />
