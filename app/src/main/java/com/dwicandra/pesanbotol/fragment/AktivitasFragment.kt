@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dwicandra.pesanbotol.R
 import com.dwicandra.pesanbotol.databinding.FragmentAktivitasBinding
 
 class AktivitasFragment : Fragment() {
