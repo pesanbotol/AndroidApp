@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import com.dwicandra.pesanbotol.databinding.ActivityOnBoardingBinding
-import com.dwicandra.pesanbotol.databinding.ActivitySignUpBinding
 
 class OnBoardingActivity : AppCompatActivity() {
     private var _binding: ActivityOnBoardingBinding? = null
