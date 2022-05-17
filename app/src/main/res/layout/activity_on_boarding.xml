@@ -11,6 +11,7 @@
         android:id="@+id/iv_menu_1"
         android:layout_width="0dp"
         android:layout_height="100dp"
+        android:contentDescription="@string/title_menu_1"
         app:srcCompat="@drawable/exampleauth"
         tools:layout_editor_absoluteX="30dp"
         tools:layout_editor_absoluteY="58dp" />
@@ -22,8 +23,8 @@
         android:gravity="center_horizontal"
         android:text="@string/title_menu_1"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="439dp" />
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="424dp" />
 
     <TextView
         android:id="@+id/tv_desc_menu_1"
@@ -32,15 +33,16 @@
         android:gravity="center_horizontal"
         android:text="@string/desc_menu_1"
         tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="378dp" />
+        tools:layout_editor_absoluteY="464dp" />
 
     <ImageView
         android:id="@+id/iv_menu_2"
         android:layout_width="0dp"
         android:layout_height="300dp"
-        app:srcCompat="@drawable/exampleauth"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="58dp" />
+        android:contentDescription="@string/title_menu_2"
+        app:srcCompat="@drawable/hidden_gems"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="107dp" />
 
     <TextView
         android:id="@+id/tv_title_menu_2"
@@ -48,9 +50,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/title_menu_2"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="439dp" />
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/tv_desc_menu_2"
@@ -58,16 +58,14 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/desc_menu_2"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="378dp" />
+        tools:layout_editor_absoluteY="463dp" />
 
     <ImageView
         android:id="@+id/iv_menu_3"
         android:layout_width="0dp"
         android:layout_height="300dp"
         app:srcCompat="@drawable/exampleauth"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="58dp" />
+        android:contentDescription="@string/title_menu_2"/>
 
     <TextView
         android:id="@+id/tv_title_menu_3"
@@ -75,25 +73,19 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/title_menu_3"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="439dp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_desc_menu_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/desc_menu_3"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="378dp" />
+        android:text="@string/desc_menu_3" />
 
     <Button
         android:id="@+id/button_lanjut"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="0"
-        android:text="@string/Lanjut"
-        tools:layout_editor_absoluteX="322dp"
-        tools:layout_editor_absoluteY="667dp" />
+        android:text="@string/Lanjut"/>
 </androidx.constraintlayout.motion.widget.MotionLayout>
