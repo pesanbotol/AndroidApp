@@ -1,11 +1,11 @@
-package com.dwicandra.pesanbotol.fragment
+package com.pesanbotol.android.app.activity.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dwicandra.pesanbotol.databinding.FragmentAktivitasBinding
+import com.pesanbotol.android.app.databinding.FragmentAktivitasBinding
 
 class AktivitasFragment : Fragment() {
 

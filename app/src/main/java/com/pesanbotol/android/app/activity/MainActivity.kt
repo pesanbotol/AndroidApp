@@ -1,13 +1,14 @@
-package com.dwicandra.pesanbotol
+package com.pesanbotol.android.app.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.pesanbotol.android.app.R
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.dwicandra.pesanbotol.databinding.ActivityMainBinding
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.pesanbotol.android.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

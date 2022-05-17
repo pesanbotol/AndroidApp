@@ -1,9 +1,10 @@
-package com.dwicandra.pesanbotol
+package com.pesanbotol.android.app.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.dwicandra.pesanbotol.databinding.ActivitySignUpBinding
+import com.pesanbotol.android.app.databinding.ActivitySignUpBinding
+import com.pesanbotol.android.app.utility.Utils
 
 class SignUpActivity : AppCompatActivity() {
     private var _binding: ActivitySignUpBinding? = null

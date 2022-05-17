@@ -1,11 +1,11 @@
-package com.dwicandra.pesanbotol.fragment
+package com.pesanbotol.android.app.activity.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.dwicandra.pesanbotol.databinding.FragmentAccountBinding
+import com.pesanbotol.android.app.databinding.FragmentAccountBinding
 
 class AccountFragment : Fragment() {
     private var _binding: FragmentAccountBinding? = null

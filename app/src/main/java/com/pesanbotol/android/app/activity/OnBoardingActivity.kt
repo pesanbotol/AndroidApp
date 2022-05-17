@@ -1,4 +1,4 @@
-package com.dwicandra.pesanbotol
+package com.pesanbotol.android.app.activity
 
 import android.content.Intent
 import android.os.Build
@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
-import com.dwicandra.pesanbotol.databinding.ActivityOnBoardingBinding
+import com.pesanbotol.android.app.databinding.ActivityOnBoardingBinding
 
 class OnBoardingActivity : AppCompatActivity() {
     private var _binding: ActivityOnBoardingBinding? = null

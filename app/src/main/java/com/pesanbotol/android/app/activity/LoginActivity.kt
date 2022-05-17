@@ -1,9 +1,9 @@
-package com.dwicandra.pesanbotol
+package com.pesanbotol.android.app.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.dwicandra.pesanbotol.databinding.ActivityLoginBinding
+import com.pesanbotol.android.app.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
