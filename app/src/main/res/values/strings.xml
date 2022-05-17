@@ -9,22 +9,22 @@
     <string name="desc_menu_3">Jadikan profil kamu lebih baik dari yang lain!.  Kunjungi dan selesaikan misi untuk mendapatkan badge-badge unik!</string>
     <string name="Lewati">Lewati</string>
     <string name="Lanjut">Lanjut</string>
-<!--  Bottom Navigation Menu  -->
+    <!--  Bottom Navigation Menu  -->
     <string name="title_bottom_menu_1">Home</string>
     <string name="title_bottom_menu_2">Aktivitas</string>
     <string name="title_bottom_menu_3">Akun</string>
     <!--  Auth  -->
     <string name="imageauth">imageAuth</string>
-    <string name="i_agree_with_terms_and_privacy">I agree with Terms and Privacy</string>
+    <string name="i_agree_with_terms_and_privacy">Saya setuju dengan Terms dan Privacy</string>
     <string name="email">Email</string>
-    <string name="name">Name</string>
+    <string name="name">Nama</string>
     <string name="password">Password</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="already_have_account">Already have an account ?</string>
-    <string name="log_in"> <u>Log In</u></string>
-    <string name="login">Login</string>
-    <string name="don_t_have_an_account">Don’t have an account ?</string>
-    <string name="signUp"><u>Sign Up </u> </string>
+    <string name="sign_up">Daftar</string>
+    <string name="already_have_account">Sudah punya akun?</string>
+    <string name="log_in"> <u>Masuk</u></string>
+    <string name="login">Masuk</string>
+    <string name="don_t_have_an_account">Belum punya akun?</string>
+    <string name="signUp"><u>Daftar</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

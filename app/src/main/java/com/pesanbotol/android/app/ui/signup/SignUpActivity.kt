@@ -1,9 +1,10 @@
-package com.pesanbotol.android.app.activity
+package com.pesanbotol.android.app.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.pesanbotol.android.app.databinding.ActivitySignUpBinding
+import com.pesanbotol.android.app.ui.login.LoginActivity
 import com.pesanbotol.android.app.utility.Utils
 
 class SignUpActivity : AppCompatActivity() {
@@ -24,8 +25,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun loginPage() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+        onBackPressed()
     }
 
 }

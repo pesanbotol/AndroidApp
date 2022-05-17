@@ -1,4 +1,4 @@
-package com.pesanbotol.android.app.activity
+package com.pesanbotol.android.app.ui.landing
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,14 +8,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.pesanbotol.android.app.databinding.ActivityMainBinding
+import com.pesanbotol.android.app.databinding.ActivityLandingBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class LandingActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLandingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityLandingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView

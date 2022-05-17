@@ -1,4 +1,4 @@
-package com.pesanbotol.android.app.activity.fragment
+package com.pesanbotol.android.app.ui.landing.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
