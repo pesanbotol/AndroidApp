@@ -42,6 +42,7 @@
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
@@ -85,34 +86,48 @@
         app:layout_constraintTop_toBottomOf="@+id/password_text_input"
         tools:layout_editor_absoluteX="12dp" />
 
-    <com.pesanbotol.android.app.ui.components.PrimaryButton
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/background_button_auth"
-        android:gravity="center"
-        android:text="@string/login"
-        android:textColor="?attr/colorOnPrimary"
-        android:textSize="14sp"
+    <RelativeLayout
+        android:id="@+id/layout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="102dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/forgotPassword">
+
+        <com.pesanbotol.android.app.ui.components.PrimaryButton
+            android:elevation="1dp"
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/background_button_auth"
+            android:gravity="center"
+            android:text="@string/login"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="14sp" />
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progressBarOnBtn"
+            android:elevation="2dp"
+            android:layout_centerInParent="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </RelativeLayout>
 
 
     <TextView
         android:id="@+id/already_hav"
         android:layout_width="185dp"
-        android:layout_marginTop="60dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:gravity="center"
 
         android:text="@string/don_t_have_an_account"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_btn" />
 
     <TextView
         android:id="@+id/tv_signup"

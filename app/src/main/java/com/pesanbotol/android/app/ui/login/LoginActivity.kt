@@ -3,6 +3,7 @@ package com.pesanbotol.android.app.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
 import com.pesanbotol.android.app.data.core.StateHandler
@@ -12,7 +13,7 @@ import com.pesanbotol.android.app.ui.landing.LandingActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
-    val authViewModel by viewModel<AuthViewModel>()
+    private val authViewModel by viewModel<AuthViewModel>()
     private var _binding: ActivityLoginBinding? = null
     private val binding get() = _binding!!
 
@@ -34,14 +35,14 @@ class LoginActivity : AppCompatActivity() {
         authViewModel.authState.observe(this) {
             when (it) {
                 is StateHandler.Loading -> {
-                    binding.btnLogin.isEnabled = false
+                    showLoading()
                 }
                 is StateHandler.Error -> {
-                    binding.btnLogin.isEnabled = true
+                    hideLoading()
                     Toast.makeText(this, "Gagal masuk : ${it.message}", Toast.LENGTH_LONG).show()
                 }
                 is StateHandler.Success -> {
-                    binding.btnLogin.isEnabled = true
+                    hideLoading()
                     Toast.makeText(this, "Berhasil masuk!", Toast.LENGTH_LONG).show()
                     val intent = Intent(this, LandingActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
@@ -55,6 +56,16 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun hideLoading() {
+        binding.btnLogin.isEnabled = true
+        binding.progressBarOnBtn.visibility = View.GONE
+    }
+
+    private fun showLoading() {
+        binding.btnLogin.isEnabled = false
+        binding.progressBarOnBtn.visibility = View.VISIBLE
     }
 
     private fun signUpPage() {
