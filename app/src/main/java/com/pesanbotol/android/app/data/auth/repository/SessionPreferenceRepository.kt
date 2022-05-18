@@ -6,7 +6,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserInfo
 import com.google.gson.Gson
+import com.pesanbotol.android.app.data.auth.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -15,7 +17,10 @@ import kotlinx.coroutines.flow.singleOrNull
 class SessionPreferenceRepository private constructor(private val dataStore: DataStore<Preferences>) {
 
     private val _token = stringPreferencesKey("token")
-    private val _user = stringPreferencesKey("user")
+    private val _user_name = stringPreferencesKey("user-name")
+    private val _user_photo = stringPreferencesKey("user-photo")
+    private val _user_email = stringPreferencesKey("user-email")
+    private val _user_uid = stringPreferencesKey("user-uid")
     private val _hasPassedOnboarding = booleanPreferencesKey("has-passed-onboarding")
 
     suspend fun getToken(): String? {
@@ -36,10 +41,21 @@ class SessionPreferenceRepository private constructor(private val dataStore: Dat
         }
     }
 
-    suspend fun saveUser(user: FirebaseUser) {
-        val gson = Gson()
+    suspend fun saveUser(user: User) {
         dataStore.edit { preferences ->
-            preferences[_user] = gson.toJson(user)
+            preferences[_user_uid] = user.uid ?: ""
+            preferences[_user_name] = user.name ?: ""
+            preferences[_user_photo] = user.photoUrl ?: ""
+            preferences[_user_email] = user.email ?: ""
+        }
+    }
+
+    suspend fun removeUser() {
+        dataStore.edit { preferences ->
+            preferences.remove(_user_uid)
+            preferences.remove(_user_name)
+            preferences.remove(_user_photo)
+            preferences.remove(_user_email)
         }
     }
 
@@ -55,10 +71,14 @@ class SessionPreferenceRepository private constructor(private val dataStore: Dat
         }
     }
 
-    fun getUser(): Flow<FirebaseUser> {
-        val gson = Gson()
+    fun getUser(): Flow<User> {
         return dataStore.data.map { preferences ->
-            gson.fromJson(preferences[_user], FirebaseUser::class.java)
+            User(
+                uid = preferences[_user_uid],
+                name = preferences[_user_name],
+                email = preferences[_user_email],
+                photoUrl = preferences[_user_photo]
+            )
         }
     }
 

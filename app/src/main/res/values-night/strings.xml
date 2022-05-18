@@ -10,4 +10,6 @@
     <string name="login">Login</string>
     <string name="don_t_have_an_account">Don’t have an account ?</string>
     <string name="signUp">Sign Up</string>
+    <string name="profile_user">Profile User</string>
+    <string name="your_latest_activity">Your Latest Activity</string>
 </resources>

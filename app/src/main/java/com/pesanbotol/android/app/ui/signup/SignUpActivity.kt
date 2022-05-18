@@ -9,6 +9,7 @@ import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
 import com.pesanbotol.android.app.data.core.StateHandler
 import com.pesanbotol.android.app.databinding.ActivitySignUpBinding
 import com.pesanbotol.android.app.ui.landing.LandingActivity
+import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.Utils
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,7 +27,7 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.tvLogin.setOnClickListener { loginPage() }
         binding.btnSignup.setOnClickListener {
-            authViewModel.handleSignIn(
+            authViewModel.handleSignUp(
                 binding.emailEditText.text.toString(),
                 binding.passwordEditText.text.toString()
             )
@@ -38,21 +39,21 @@ class SignUpActivity : AppCompatActivity() {
                 }
                 is StateHandler.Error -> {
                     hideLoading()
-                    Toast.makeText(this, "Gagal mendaftar : ${it.message}", Toast.LENGTH_LONG)
-                        .show()
+                    CommonFunction.showSnackBar(binding.root,applicationContext,"Gagal mendaftar : ${it.message}",true)
                 }
                 is StateHandler.Success -> {
                     hideLoading()
-                    Toast.makeText(this, "Berhasil mendaftar!", Toast.LENGTH_LONG).show()
+                    CommonFunction.showSnackBar(binding.root,applicationContext,"Berhasil mendaftar!")
                     val intent = Intent(this, LandingActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
                             Intent.FLAG_ACTIVITY_CLEAR_TASK or
                             Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
+//                    onBackPressed()
                 }
 
                 else ->
-                    Toast.makeText(this, "Gagal masuk : ", Toast.LENGTH_LONG).show()
+                    CommonFunction.showSnackBar(binding.root,applicationContext,"Gagal mendaftar",true)
             }
         }
 

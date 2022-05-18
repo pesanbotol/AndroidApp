@@ -23,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PesanBotol">
         <activity
+            android:name=".ui.add_message.AddMessageActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.LoadingActivity"
             android:exported="true">
             <intent-filter>
@@ -30,8 +33,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
@@ -49,6 +50,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAc5OjWQoq5KW_0g2_SK2O2BC4986Bq1YM" />
     </application>
 
 </manifest>

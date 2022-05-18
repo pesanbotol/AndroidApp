@@ -10,6 +10,7 @@ import com.pesanbotol.android.app.data.core.StateHandler
 import com.pesanbotol.android.app.ui.signup.SignUpActivity
 import com.pesanbotol.android.app.databinding.ActivityLoginBinding
 import com.pesanbotol.android.app.ui.landing.LandingActivity
+import com.pesanbotol.android.app.utility.CommonFunction
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -39,11 +40,11 @@ class LoginActivity : AppCompatActivity() {
                 }
                 is StateHandler.Error -> {
                     hideLoading()
-                    Toast.makeText(this, "Gagal masuk : ${it.message}", Toast.LENGTH_LONG).show()
+                    CommonFunction.showSnackBar(binding.root,applicationContext,"Gagal masuk : ${it.message}",true)
                 }
                 is StateHandler.Success -> {
                     hideLoading()
-                    Toast.makeText(this, "Berhasil masuk!", Toast.LENGTH_LONG).show()
+                    CommonFunction.showSnackBar(binding.root,applicationContext,"Berhasil masuk!")
                     val intent = Intent(this, LandingActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
                             Intent.FLAG_ACTIVITY_CLEAR_TASK or
@@ -52,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 else ->
-                    Toast.makeText(this, "Gagal masuk : ", Toast.LENGTH_LONG).show()
+                    CommonFunction.showSnackBar(binding.root,applicationContext,"Gagal masuk",true)
             }
         }
 

@@ -3,13 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.landing.fragment.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_message"
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/ic_baseline_add_24"
+        android:src="@drawable/ic_baseline_add_24"
+        android:backgroundTint="?attr/colorPrimary"
+        android:tint="@color/white"
+        app:backgroundTint="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom" />
 
 </FrameLayout>
