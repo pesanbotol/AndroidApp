@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
@@ -34,6 +35,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private var myLocation: Location? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var bounds: ArrayList<LatLng> = arrayListOf()
+    private var boundsBuilder = LatLngBounds.Builder()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,7 +65,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 //        mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
         mMap.setOnCameraMoveListener {
-            val bounds = mMap.projection.visibleRegion.latLngBounds
+//            val bounds = mMap.projection.visibleRegion.latLngBounds
 //            println("Bounds Center : lat ${bounds.center.latitude}, lng ${bounds.center.longitude}")
 //            println("Bounds northeast :lat ${bounds.northeast.latitude}, lng ${bounds.northeast.longitude}")
 //            println("Bounds southwest :lat ${bounds.southwest.latitude}, lng ${bounds.southwest.longitude}")
@@ -118,14 +121,23 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         bottleViewModel.getBottle(latLng)
             .addOnSuccessListener {
                 it?.data?.bottle?.forEach { data ->
+                    val latLng = LatLng(
+                        data!!.geo?.get(0)!!,
+                        data.geo?.get(1)!!
+                    )
                     mMap.addMarker(
                         MarkerOptions().position(
-                            LatLng(
-                                data!!.geo?.get(0)!!,
-                                data.geo?.get(1)!!
-                            )
+                            latLng
                         )
                     )
+                    bounds.add(latLng)
+                    boundsBuilder.include(latLng)
+                }.apply {
+
+                }
+                val bounds: LatLngBounds = boundsBuilder.build()
+                mMap.setOnMapLoadedCallback {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
                 }
             }
             .addOnFailureListener {
