@@ -3,8 +3,6 @@ package com.pesanbotol.android.app.utility
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.Resources
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
@@ -13,8 +11,14 @@ import com.pesanbotol.android.app.R
 class CommonFunction {
     companion object {
         val REQUIRED_PERMISSIONS =
-                arrayOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
         const val REQUEST_CODE_PERMISSIONS = 10
+        const val LOCATION_PERMISSION_REQUEST_CODE = 1
+
         fun showSnackBar(
             view: View,
             context: Context,

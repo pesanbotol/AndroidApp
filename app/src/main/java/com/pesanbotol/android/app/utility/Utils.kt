@@ -1,7 +1,9 @@
 package com.pesanbotol.android.app.utility
 
+import android.app.Application
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Environment
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -10,6 +12,9 @@ import android.text.style.UnderlineSpan
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.pesanbotol.android.app.R
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Utils {
     companion object {
