@@ -100,6 +100,42 @@
             android:id="@+id/button_lanjut"
             app:layout_constraintEnd_toEndOf="parent"
             android:alpha="0" />
+        <Constraint
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:id="@+id/indicator_menu_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="88dp" >
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="0" />
+        </Constraint>
+        <Constraint
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/indicator_menu_1"
+            android:id="@+id/indicator_menu_2"
+            app:layout_constraintTop_toTopOf="@+id/indicator_menu_1"
+            app:layout_constraintBottom_toBottomOf="@+id/indicator_menu_1"
+            android:layout_marginEnd="16dp" >
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="1" />
+        </Constraint>
+        <Constraint
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/indicator_menu_1"
+            android:id="@+id/indicator_menu_3"
+            app:layout_constraintTop_toTopOf="@+id/indicator_menu_1"
+            app:layout_constraintBottom_toBottomOf="@+id/indicator_menu_1"
+            android:layout_marginStart="16dp" >
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="0" />
+        </Constraint>
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -164,6 +200,36 @@
             android:id="@+id/button_lanjut"
             app:layout_constraintBottom_toBottomOf="parent"
             android:alpha="0" />
+        <Constraint
+            android:id="@+id/indicator_menu_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_editor_absoluteY="715dp"
+            app:layout_editor_absoluteX="198dp">
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="0" />
+        </Constraint>
+        <Constraint
+            android:id="@+id/indicator_menu_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_editor_absoluteY="715dp"
+            app:layout_editor_absoluteX="198dp">
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="1" />
+        </Constraint>
+        <Constraint
+            android:id="@+id/indicator_menu_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_editor_absoluteY="715dp"
+            app:layout_editor_absoluteX="198dp">
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="0" />
+        </Constraint>
     </ConstraintSet>
 
     <Transition
@@ -221,6 +287,28 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp" />
+        <Constraint
+            android:id="@+id/indicator_menu_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_editor_absoluteY="715dp"
+            app:crossfade="1"
+            app:layout_editor_absoluteX="198dp" >
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="1" />
+        </Constraint>
+        <Constraint
+            android:id="@+id/indicator_menu_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_editor_absoluteY="715dp"
+            app:crossfade="0"
+            app:layout_editor_absoluteX="198dp" >
+            <CustomAttribute
+                app:attributeName="crossfade"
+                app:customFloatValue="0" />
+        </Constraint>
     </ConstraintSet>
     <Transition
         app:constraintSetStart="@+id/end"
