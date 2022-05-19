@@ -39,10 +39,11 @@ android {
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:30.0.1')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.firebase:firebase-functions-ktx'
     def nav_version_ktx = "2.5.0-beta01"
     def coroutines_ver = "1.6.0"
     def okhttp_log_ver = "4.9.0"

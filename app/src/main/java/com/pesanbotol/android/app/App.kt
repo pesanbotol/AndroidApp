@@ -8,6 +8,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.google.firebase.FirebaseApp
 import com.pesanbotol.android.app.data.auth.repository.SessionPreferenceRepository
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
+import com.pesanbotol.android.app.data.bottle.repository.BottleRepository
+import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -18,11 +20,15 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 class App : Application() {
     private val viewModelModules = module {
         viewModel {
-            AuthViewModel(get(),this@App)
+            AuthViewModel(get(), this@App)
+        }
+        viewModel {
+            BottleViewModel(get())
         }
     }
     private val repositoryModules = module {
         single { SessionPreferenceRepository.getInstance(dataStore) }
+        single { BottleRepository() }
     }
 
     override fun onCreate() {
