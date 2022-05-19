@@ -6,7 +6,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.firebase.FirebaseApp
-import com.pesanbotol.android.app.data.bottle.repository.AddMessageBottleRepository
 import com.pesanbotol.android.app.data.auth.repository.SessionPreferenceRepository
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
 import com.pesanbotol.android.app.data.bottle.repository.BottleRepository
@@ -30,7 +29,6 @@ class App : Application() {
     private val repositoryModules = module {
         single { SessionPreferenceRepository.getInstance(dataStore) }
         single { BottleRepository() }
-        single { AddMessageBottleRepository() }
     }
 
     override fun onCreate() {

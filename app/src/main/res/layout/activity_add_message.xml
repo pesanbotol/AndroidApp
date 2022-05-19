@@ -18,8 +18,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 android:background="@drawable/background_outline_latest_activity"
+
                 app:boxBackgroundMode="none"
                 app:hintEnabled="false">
 
@@ -32,43 +33,47 @@
                     android:maxLines="10"
                     android:minLines="6" />
             </com.google.android.material.textfield.TextInputLayout>
+            <RelativeLayout
+                android:id="@+id/upload_image_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="260dp">
 
-            <ImageView
-                android:id="@+id/preview_image"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/rounded_outline"
-                android:contentDescription="View Images"
-                android:scaleType="centerCrop"
-                android:src="@drawable/photo_profile_dummy"
-                android:transitionName="profile" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:orientation="horizontal">
-
-                <com.pesanbotol.android.app.ui.components.PrimaryButton
-                    android:id="@+id/btn_camera"
+                <ImageView
+                    android:id="@+id/preview_image"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:text="Camera" />
+                    android:layout_height="260dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/bg_empty_image_outline"
+                    android:clipToOutline="true"
+                    android:contentDescription="View Images"
+                    android:scaleType="centerCrop"
+                    android:transitionName="profile" />
+                <LinearLayout
+                    android:id="@+id/upload_image_placeholder"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/blue_1100"
+                        android:src="@drawable/bg_empty_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:tint="@color/blue_1100" />
 
-                <com.pesanbotol.android.app.ui.components.PrimaryButton
-                    android:id="@+id/btn_gallery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:text="Gallery" />
-            </LinearLayout>
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:text="Unggah gambar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
 
 
             <TextView
@@ -76,6 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
                 android:paddingBottom="10dp"
                 android:text="@string/tv_location"
                 android:textSize="16sp" />
@@ -114,7 +120,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="Post" />
+            android:textColor="@color/white"
+            android:text="Buat Pesan" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

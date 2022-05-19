@@ -9,10 +9,13 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -23,20 +26,24 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.Task
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pesanbotol.android.app.R
+import com.pesanbotol.android.app.data.bottle.model.BottleCreatedResponse
+import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.databinding.ActivityAddMessageBinding
+import com.pesanbotol.android.app.utility.*
 import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUEST_CODE_PERMISSIONS
 import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUIRED_PERMISSIONS
-import com.pesanbotol.android.app.utility.createCustomTempFile
-import com.pesanbotol.android.app.utility.rotateBitmap
-import com.pesanbotol.android.app.utility.uriToFile
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 
-class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback {
+class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
     private lateinit var binding: ActivityAddMessageBinding
     private var photo: File? = null
     private lateinit var mMap: GoogleMap
     private var myLocation: Location? = null
+    private val bottleViewModel by viewModel<BottleViewModel>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
@@ -69,7 +76,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val mapManager =
-            supportFragmentManager.findFragmentById(R.id.map_add_story) as SupportMapFragment?
+                supportFragmentManager.findFragmentById(R.id.map_add_story) as SupportMapFragment?
         mapManager?.getMapAsync(this)
 
         if (!allPermissionsGranted()) {
@@ -79,9 +86,23 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback {
                 REQUEST_CODE_PERMISSIONS
             )
         }
-        binding.btnCamera.setOnClickListener { startTakePhoto() }
-        binding.btnGallery.setOnClickListener { startGallery() }
-        binding.btnPost.setOnClickListener {}
+        binding.uploadImageLayout.setOnClickListener {
+            val dialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_upload_image_dialog, null)
+            val btnCamera = view.findViewById<CardView>(R.id.btn_camera)
+            val btnGallery = view.findViewById<CardView>(R.id.btn_gallery)
+            btnCamera.setOnClickListener {
+                dialog.dismiss()
+                startTakePhoto()
+            }
+            btnGallery.setOnClickListener {
+                dialog.dismiss()
+                startGallery()
+            }
+            dialog.setContentView(view)
+            dialog.show()
+        }
+        binding.btnPost.setOnClickListener(this)
 
     }
 
@@ -89,7 +110,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         mMap.uiSettings.apply {
             binding.addMapFrame.background =
-                ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
+                    ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
             binding.addMapFrame.clipToOutline = true
             setAllGesturesEnabled(true)
             isScrollGesturesEnabledDuringRotateOrZoom = true
@@ -108,13 +129,13 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                getMyLocation()
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    getMyLocation()
+                }
             }
-        }
 
     private fun getMyLocation() {
         mMap.isMyLocationEnabled = true
@@ -132,8 +153,9 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback {
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
                 myLocation = location
+
                 val latLng = LatLng(location.latitude, location.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 8.0f))
                 mMap.addMarker(MarkerOptions().position(latLng))
                 binding.tvLocation?.text = "Location (${location.latitude},${
                     location.longitude
@@ -180,6 +202,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback {
                 true
             )
             binding.previewImage.setImageBitmap(result)
+            binding.uploadImagePlaceholder.visibility = View.GONE
         }
     }
 
@@ -190,7 +213,85 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback {
             val selectedImg: Uri = result.data?.data as Uri
             val myFile = uriToFile(selectedImg, this@AddMessageActivity)
             binding.previewImage.setImageURI(selectedImg)
+            binding.uploadImagePlaceholder.visibility = View.GONE
         }
+    }
+
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.btnPost.isEnabled = false
+    }
+
+    private fun hideLoading() {
+        binding.progressBar.visibility = View.GONE
+        binding.btnPost.isEnabled = true
+    }
+
+    override fun onClick(p0: View?) {
+//        if (photo == null) {
+//            CommonFunction.showSnackBar(
+//                binding.root,
+//                applicationContext,
+//                getString(R.string.photo_empty_warning),
+//                true
+//            )
+//            return
+//        }
+//        photo?.let {
+        try {
+            if (binding.etDescription.text?.isEmpty() == true) {
+                binding.etDescription.error = "Konten tidak boleh kosong"
+//                binding.etDescription.error = getString(R.string.description_empty_warning)
+                return
+            }
+            val defaultLocation = LatLng(-5.778581, 109.640097)
+            createBottle(defaultLocation)
+//            reduceFileImage(it).let { reduced ->
+//                createBottle(defaultLocation)
+//            }
+        } catch (e: Exception) {
+            CommonFunction.showSnackBar(
+                binding.root,
+                applicationContext,
+                "Gagal mengunggah gambar",
+//                    getString(R.string.file_failed_to_convert),
+                true
+            )
+        }
+
+//        }
+    }
+
+    private fun createBottle(defaultLocation: LatLng) {
+        showLoading()
+        bottleViewModel.addBottle(
+            if (myLocation != null) LatLng(
+                myLocation!!.latitude,
+                myLocation!!.longitude
+            ) else defaultLocation,
+            binding.etDescription.text.toString(),
+        )
+            .addOnSuccessListener {
+                hideLoading()
+                CommonFunction.showSnackBar(
+                    binding.root,
+                    applicationContext,
+                    "Berhasil mengunggah!",
+                    //                    getString(R.string.file_failed_to_convert),
+                )
+                onBackPressed()
+            }
+            .addOnFailureListener { exc ->
+                hideLoading()
+                CommonFunction.showSnackBar(
+                    binding.root,
+                    applicationContext,
+                    "Gagal membuat status : $exc",
+                    //                    getString(R.string.file_failed_to_convert),
+                    true
+                )
+
+            }
     }
 
 

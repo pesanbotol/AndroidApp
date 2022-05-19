@@ -27,7 +27,7 @@
     <string name="signUp"><u>Daftar</u></string>
 
     <!--  Activity Page  -->
-    <string name="tv_location">Current Location</string>
+    <string name="tv_location">Lokasi saat ini</string>
     <string name="user_current_location">Kudus, Central Java</string>
 
     <!-- TODO: Remove or change this placeholder text -->

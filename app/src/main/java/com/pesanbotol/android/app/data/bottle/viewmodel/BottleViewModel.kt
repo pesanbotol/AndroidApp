@@ -10,4 +10,5 @@ class BottleViewModel(private val bottleRepository: BottleRepository) : ViewMode
 //    private val _bottleViewState : MutableLiveData<>
 
     fun getBottle(latLng: LatLng) = bottleRepository.getBottles(latLng)
+    fun addBottle(latLng: LatLng, content: String) = bottleRepository.addBottle(latLng, content)
 }

@@ -7,6 +7,7 @@ import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.pesanbotol.android.app.data.bottle.model.BottleContentResponse
+import com.pesanbotol.android.app.data.bottle.model.BottleCreatedResponse
 
 class BottleRepository {
     private var _functions: FirebaseFunctions = Firebase.functions
@@ -21,8 +22,35 @@ class BottleRepository {
             .call(position)
             .continueWith {
                 val gson = Gson()
-                val result = gson.fromJson(gson.toJson(it.result?.data), BottleContentResponse::class.java)
+                val result = gson.fromJson(
+                    gson.toJson(it.result?.data),
+                    BottleContentResponse::class.java
+                )
                 result
+            }.addOnSuccessListener {
+                println("Success getting bottles")
             }
+    }
+
+    fun addBottle(latLng: LatLng, content: String): Task<BottleCreatedResponse?> {
+        val position = hashMapOf(
+            "contentText" to content,
+            "kind" to "text",
+            "geo" to listOf(latLng.latitude, latLng.longitude)
+        )
+        return _functions
+            .getHttpsCallable("bottle-callableBottle-createBottle")
+            .call(position)
+            .continueWith {
+                val gson = Gson()
+                val result = gson.fromJson(
+                    gson.toJson(it.result?.data),
+                    BottleCreatedResponse::class.java
+                )
+                result
+            }.addOnFailureListener { 
+                println("Error Creating Bottle : $it")
+            }
+
     }
 }

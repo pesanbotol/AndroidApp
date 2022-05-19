@@ -60,6 +60,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         _binding = null
     }
 
+    override fun onStop() {
+        super.onStop()
+        myLocation?.let {
+            getBottleContents(LatLng(it.latitude, it.longitude))
+        }
+
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 //        mMap.uiSettings.isZoomControlsEnabled = true
@@ -74,9 +82,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             mMap.setOnMyLocationClickListener {
                 myLocation = it
                 val latLng = LatLng(it.latitude, it.longitude)
-                mMap.addMarker(
-                    MarkerOptions().position(latLng)
-                )
+//                mMap.addMarker(
+//                    MarkerOptions().position(latLng)
+//                )
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                 getBottleContents(latLng)
             }
@@ -107,7 +115,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                     myLocation = it
                     val latLng = LatLng(it.latitude, it.longitude)
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-                    mMap.addMarker(MarkerOptions().position(latLng))
+//                    mMap.addMarker(MarkerOptions().position(latLng))
                     getBottleContents(latLng)
 
                 }
@@ -129,6 +137,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                         MarkerOptions().position(
                             latLng
                         )
+
                     )
                     bounds.add(latLng)
                     boundsBuilder.include(latLng)
