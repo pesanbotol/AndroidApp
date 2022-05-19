@@ -6,8 +6,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.firebase.FirebaseApp
+import com.pesanbotol.android.app.data.auth.repository.AddMessageBottleRepository
 import com.pesanbotol.android.app.data.auth.repository.SessionPreferenceRepository
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
+import com.pesanbotol.android.app.data.auth.viewmodel.BottleViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -23,6 +25,7 @@ class App : Application() {
     }
     private val repositoryModules = module {
         single { SessionPreferenceRepository.getInstance(dataStore) }
+        single { AddMessageBottleRepository() }
     }
 
     override fun onCreate() {

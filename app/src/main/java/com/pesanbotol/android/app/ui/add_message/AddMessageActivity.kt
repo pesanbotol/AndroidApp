@@ -79,9 +79,10 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback {
                 REQUEST_CODE_PERMISSIONS
             )
         }
-
         binding.btnCamera.setOnClickListener { startTakePhoto() }
         binding.btnGallery.setOnClickListener { startGallery() }
+        binding.btnPost.setOnClickListener {}
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
