@@ -13,19 +13,16 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.*
 import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.databinding.FragmentHomeBinding
 import com.pesanbotol.android.app.ui.add_message.AddMessageActivity
 import com.pesanbotol.android.app.utility.CommonFunction
+import com.pesanbotol.android.app.utility.CustomInfoWindowForGoogleMap
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class HomeFragment : Fragment(), OnMapReadyCallback {
 
@@ -81,19 +78,17 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 getBottleContents(latLng)
             }
         }
-
-
         getMyLocation()
     }
 
     private val requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    getMyLocation()
-                }
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                getMyLocation()
             }
+        }
 
     private fun getMyLocation() {
         if (ContextCompat.checkSelfPermission(
@@ -122,16 +117,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             .addOnSuccessListener {
                 it?.data?.bottle?.forEach { data ->
                     val latLng = LatLng(
-                        data!!.geo?.get(0)!!,
-                        data.geo?.get(1)!!
+                        data?.geo?.get(0)!!,
+                        data.geo.get(1)!!
                     )
                     mMap.addMarker(
-                        MarkerOptions().position(
-                            latLng
-                        )
+                        MarkerOptions()
+                            .position(latLng)
+                            .title(data.contentText)
+                            .snippet(data.kind)
                     )
                     bounds.add(latLng)
                     boundsBuilder.include(latLng)
+                    mMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
+
                 }.apply {
 
                 }
