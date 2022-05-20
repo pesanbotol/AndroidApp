@@ -10,6 +10,8 @@ import com.pesanbotol.android.app.data.auth.repository.SessionPreferenceReposito
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
 import com.pesanbotol.android.app.data.bottle.repository.BottleRepository
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
+import com.pesanbotol.android.app.data.search.repository.SearchRepository
+import com.pesanbotol.android.app.data.search.viewmodel.SearchViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -25,10 +27,14 @@ class App : Application() {
         viewModel {
             BottleViewModel(get())
         }
+        viewModel {
+            SearchViewModel(get())
+        }
     }
     private val repositoryModules = module {
         single { SessionPreferenceRepository.getInstance(dataStore) }
         single { BottleRepository() }
+        single { SearchRepository() }
     }
 
     override fun onCreate() {

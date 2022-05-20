@@ -48,7 +48,7 @@ class BottleRepository {
                     BottleCreatedResponse::class.java
                 )
                 result
-            }.addOnFailureListener { 
+            }.addOnFailureListener {
                 println("Error Creating Bottle : $it")
             }
 

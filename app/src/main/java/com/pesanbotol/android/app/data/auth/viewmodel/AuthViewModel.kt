@@ -7,6 +7,9 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.ktx.functions
+import com.google.firebase.ktx.Firebase
 import com.pesanbotol.android.app.data.auth.model.User
 import com.pesanbotol.android.app.data.auth.repository.SessionPreferenceRepository
 import com.pesanbotol.android.app.data.core.StateHandler
@@ -18,6 +21,7 @@ class AuthViewModel(
     application: Application
 ) :
     ViewModel() {
+
     init {
         FirebaseApp.initializeApp(application)
     }
@@ -70,7 +74,6 @@ class AuthViewModel(
 //        if (password != confirmPassword) {
 //            _authState.postValue(StateHandler.Error("Password does not match"))
 //            return
-//        }
         _authState.postValue(StateHandler.Loading())
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(
             email, password
