@@ -4,27 +4,43 @@ import android.Manifest.permission
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.maps.android.clustering.Cluster
+import com.google.maps.android.clustering.ClusterManager
 import com.pesanbotol.android.app.R
+import com.pesanbotol.android.app.data.auth.model.User
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
+import com.pesanbotol.android.app.data.core.model.UserCustomMarker
 import com.pesanbotol.android.app.databinding.FragmentHomeBinding
 import com.pesanbotol.android.app.ui.add_message.AddMessageActivity
 import com.pesanbotol.android.app.utility.CommonFunction
-import com.pesanbotol.android.app.utility.CustomInfoWindowForGoogleMap
+import com.pesanbotol.android.app.utility.CustomMarkerRenderer
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class HomeFragment : Fragment(), OnMapReadyCallback {
+class HomeFragment : Fragment(), OnMapReadyCallback,
+    ClusterManager.OnClusterClickListener<UserCustomMarker>,
+    ClusterManager.OnClusterInfoWindowClickListener<UserCustomMarker>,
+    ClusterManager.OnClusterItemClickListener<UserCustomMarker>,
+    ClusterManager.OnClusterItemInfoWindowClickListener<UserCustomMarker> {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding
@@ -34,7 +50,17 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var bounds: ArrayList<LatLng> = arrayListOf()
     private var boundsBuilder = LatLngBounds.Builder()
-
+    private var mClusterManager: ClusterManager<UserCustomMarker>? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val SDK_INT = Build.VERSION.SDK_INT
+        if (SDK_INT > 8) {
+            val policy = ThreadPolicy.Builder()
+                .permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            //your codes here
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,7 +70,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
         binding?.fabAddMessage?.setOnClickListener {
             val intent = Intent(requireActivity(), AddMessageActivity::class.java)
             startActivity(intent)
@@ -67,8 +92,21 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-//        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
+        CommonFunction.setMapStyle(mMap, requireContext())
+        mClusterManager = ClusterManager(requireActivity(), mMap)
+        mClusterManager?.let {
+            mMap.setOnCameraIdleListener(mClusterManager)
+            mMap.setOnMarkerClickListener(mClusterManager)
+            mMap.setOnInfoWindowClickListener(mClusterManager)
+            it.renderer = CustomMarkerRenderer(mMap, requireActivity(), it)
+            mClusterManager!!.setOnClusterClickListener(this)
+            mClusterManager!!.setOnClusterInfoWindowClickListener(this)
+            mClusterManager!!.setOnClusterItemClickListener(this)
+            mClusterManager!!.setOnClusterItemInfoWindowClickListener(this)
+
+        }
         mMap.setOnCameraMoveListener {
 //            val bounds = mMap.projection.visibleRegion.latLngBounds
 //            println("Bounds Center : lat ${bounds.center.latitude}, lng ${bounds.center.longitude}")
@@ -121,6 +159,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun getBottleContents(latLng: LatLng) {
+        mClusterManager?.clearItems()
         bottleViewModel.getBottle(latLng)
             .addOnSuccessListener {
                 it?.data?.bottle?.forEach { data ->
@@ -128,20 +167,29 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                         data?.geo?.get(0)!!,
                         data.geo.get(1)!!
                     )
-                    mMap.addMarker(
-
-                        MarkerOptions()
-                            .position(latLng)
-                            .title(data.contentText)
-                            .snippet(data.kind)
-                    )
+//                    val marker = mMap.addMarker(
+//
+//                        MarkerOptions()
+//                            .position(latLng)
+//                            .title(data.contentText)
+//                            .snippet(data.kind)
+//                    )
+                    mClusterManager?.addItem(UserCustomMarker(User(
+                        "12345",
+                        "Arby Azra",
+                        "https://api.duniagames.co.id/api/content/upload/file/15157218231625823751.jpg",
+                        "arby@gmail.com"
+                    ),latLng))
+//                    marker?.hideInfoWindow()
                     bounds.add(latLng)
                     boundsBuilder.include(latLng)
-                    mMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
+
+//                    mMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
 
                 }.apply {
 
                 }
+                mClusterManager?.cluster()
                 val bounds: LatLngBounds = boundsBuilder.build()
                 mMap.setOnMapLoadedCallback {
                     mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
@@ -157,5 +205,53 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 )
             }
     }
+
+    override fun onClusterClick(cluster: Cluster<UserCustomMarker>?): Boolean {
+        val firstName: String = cluster!!.items.iterator().next()?.user?.name ?: ""
+        Toast.makeText(
+            activity?.applicationContext,
+            cluster.size.toString() + " (including " + firstName + ")",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        val builder = LatLngBounds.builder()
+        for (item in cluster.items) {
+            builder.include(item.position)
+        }
+        val bounds = builder.build()
+        try {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return true
+    }
+
+    override fun onClusterInfoWindowClick(cluster: Cluster<UserCustomMarker>?) {
+        CommonFunction.showSnackBar(
+            binding!!.root,
+            requireContext(),
+            "Todo",
+        )
+    }
+
+    override fun onClusterItemClick(item: UserCustomMarker?): Boolean {
+        CommonFunction.showSnackBar(
+            binding!!.root,
+            requireContext(),
+            "Todo",
+        )
+        return true
+    }
+
+    override fun onClusterItemInfoWindowClick(item: UserCustomMarker?) {
+        CommonFunction.showSnackBar(
+            binding!!.root,
+            requireContext(),
+            "Todo",
+        )
+    }
+
 
 }

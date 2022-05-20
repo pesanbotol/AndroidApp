@@ -2,6 +2,7 @@ package com.pesanbotol.android.app.utility
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Environment
 import android.text.SpannableString
@@ -9,8 +10,11 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.pesanbotol.android.app.R
 import java.io.File
 import java.text.SimpleDateFormat
@@ -61,5 +65,7 @@ class Utils {
 
             tv.text = spannableStr
         }
+
+
     }
 }

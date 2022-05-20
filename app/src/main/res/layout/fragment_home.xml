@@ -22,6 +22,6 @@
         android:tint="@color/white"
         app:backgroundTint="@color/white"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom" />
+        android:layout_gravity="start|bottom" />
 
 </FrameLayout>
