@@ -57,8 +57,8 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-        Utils.setTextColor(this, binding.iAgreeWith, 13, 18)
-        Utils.setTextColor(this, binding.iAgreeWith, 23, 30)
+//        Utils.setTextColor(this, binding.iAgreeWith, 13, 18)
+//        Utils.setTextColor(this, binding.iAgreeWith, 23, 30)
     }
 
 

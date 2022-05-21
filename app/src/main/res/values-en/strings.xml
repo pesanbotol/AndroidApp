@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_menu_1">Share Experience</string>
+    <string name="title_menu_2">Find Hidden Gems </string>
+    <string name="title_menu_3">Collect Badge</string>
+    <string name="desc_menu_1">Dive into the beauty of the destination while sharing your experiences and letting people know about your trip!</string>
+    <string name="desc_menu_2">Explore places, activities and festivals by knowing the information available around you.</string>
+    <string name="desc_menu_3">Make your profile better than others!. Visit and complete missions to earn unique badges!</string>
+    <string name="Lewati">Next</string>
+    <string name="Lanjut">Explore !!</string>
+
+    <string name="descriptionLogin">Welcome!\nPlease login or register</string>
+    <string name="lupa_password">Forget password?</string>
+    <string name="log_in"> <u>Sign In</u></string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account">Don\'t have an Account ?</string>
+    <string name="signUp"><u>Sign Up</u></string>
+
+    <string name="descSignup">Sign up to enjoy exciting features and show off your experience to others</string>
+    <string name="i_agree_with_terms_and_privacy">I agree with the<font color='#01C6DB'>Terms</font> and <font color='#01C6DB'>Privacy</font>Privacy</string>
+    <string name="already_have_account">Do you have account ?</string>
+
+    <string name="title_bottom_menu_1" >Home</string>
+    <string name="title_bottom_menu_2" >Activity</string>
+    <string name="title_bottom_menu_3" >Account</string>
+
+    <string name="tv_location">Current Location</string>
+    <string name="your_latest_activity">Your Latest Activity</string>
+</resources>
