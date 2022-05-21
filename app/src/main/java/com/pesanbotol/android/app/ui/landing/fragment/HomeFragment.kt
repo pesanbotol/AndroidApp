@@ -61,6 +61,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
             //your codes here
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -120,7 +121,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 //                mMap.addMarker(
 //                    MarkerOptions().position(latLng)
 //                )
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f))
                 getBottleContents(latLng)
             }
         }
@@ -159,6 +160,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun getBottleContents(latLng: LatLng) {
+        binding?.loadingIndicator?.visibility = View.VISIBLE
         mClusterManager?.clearItems()
         bottleViewModel.getBottle(latLng)
             .addOnSuccessListener {
@@ -174,12 +176,16 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 //                            .title(data.contentText)
 //                            .snippet(data.kind)
 //                    )
-                    mClusterManager?.addItem(UserCustomMarker(User(
-                        "12345",
-                        "Arby Azra",
-                        "https://api.duniagames.co.id/api/content/upload/file/15157218231625823751.jpg",
-                        "arby@gmail.com"
-                    ),latLng))
+                    mClusterManager?.addItem(
+                        UserCustomMarker(
+                            User(
+                                "12345",
+                                "Arby Azra",
+                                "https://api.duniagames.co.id/api/content/upload/file/15157218231625823751.jpg",
+                                "arby@gmail.com"
+                            ), latLng
+                        )
+                    )
 //                    marker?.hideInfoWindow()
                     bounds.add(latLng)
                     boundsBuilder.include(latLng)
@@ -187,22 +193,26 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 //                    mMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
 
                 }.apply {
-
-                }
-                mClusterManager?.cluster()
-                val bounds: LatLngBounds = boundsBuilder.build()
-                mMap.setOnMapLoadedCallback {
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
+                    binding?.loadingIndicator?.visibility = View.GONE
+                    mClusterManager?.cluster()
+                    val bounds: LatLngBounds = boundsBuilder.build()
+                    mMap.setOnMapLoadedCallback {
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
+                    }
                 }
             }
             .addOnFailureListener {
+                binding?.loadingIndicator?.visibility = View.GONE
                 println("Gagal mengambil data : $it")
-                CommonFunction.showSnackBar(
-                    binding!!.root,
-                    requireContext(),
-                    "Gagal mengambil data : $it",
-                    true
-                )
+                binding?.let { binding ->
+                    CommonFunction.showSnackBar(
+                        binding.root,
+                        requireContext(),
+                        "Gagal mengambil data : $it",
+                        true
+                    )
+                }
+
             }
     }
 
