@@ -27,8 +27,9 @@ import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.auth.model.User
+import com.pesanbotol.android.app.data.bottle.model.BottleItem
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
-import com.pesanbotol.android.app.data.core.model.UserCustomMarker
+import com.pesanbotol.android.app.data.core.model.BottleCustomMarker
 import com.pesanbotol.android.app.databinding.FragmentHomeBinding
 import com.pesanbotol.android.app.ui.add_message.AddMessageActivity
 import com.pesanbotol.android.app.utility.CommonFunction
@@ -37,10 +38,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomeFragment : Fragment(), OnMapReadyCallback,
-    ClusterManager.OnClusterClickListener<UserCustomMarker>,
-    ClusterManager.OnClusterInfoWindowClickListener<UserCustomMarker>,
-    ClusterManager.OnClusterItemClickListener<UserCustomMarker>,
-    ClusterManager.OnClusterItemInfoWindowClickListener<UserCustomMarker> {
+    ClusterManager.OnClusterClickListener<BottleCustomMarker>,
+    ClusterManager.OnClusterInfoWindowClickListener<BottleCustomMarker>,
+    ClusterManager.OnClusterItemClickListener<BottleCustomMarker>,
+    ClusterManager.OnClusterItemInfoWindowClickListener<BottleCustomMarker> {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding
@@ -50,7 +51,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var bounds: ArrayList<LatLng> = arrayListOf()
     private var boundsBuilder = LatLngBounds.Builder()
-    private var mClusterManager: ClusterManager<UserCustomMarker>? = null
+    private var mClusterManager: ClusterManager<BottleCustomMarker>? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val SDK_INT = Build.VERSION.SDK_INT
@@ -83,8 +84,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         _binding = null
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onResume() {
+        super.onResume()
         myLocation?.let {
             getBottleContents(LatLng(it.latitude, it.longitude))
         }
@@ -95,6 +96,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         mMap = googleMap
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
+        mMap.uiSettings.isTiltGesturesEnabled = true
+        mMap.uiSettings.isZoomGesturesEnabled = true
+        mMap.uiSettings.isRotateGesturesEnabled = true
         CommonFunction.setMapStyle(mMap, requireContext())
         mClusterManager = ClusterManager(requireActivity(), mMap)
         mClusterManager?.let {
@@ -114,16 +118,25 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 //            println("Bounds northeast :lat ${bounds.northeast.latitude}, lng ${bounds.northeast.longitude}")
 //            println("Bounds southwest :lat ${bounds.southwest.latitude}, lng ${bounds.southwest.longitude}")
         }
+        mMap.setOnCameraMoveListener {
+//            if (mMap.cameraPosition.zoom > 8.0f) {
+//                mClusterManager?.markerCollection?.markers?.forEach {
+//                    it.showInfoWindow()
+//                }
+//            } else {
+//                mClusterManager?.markerCollection?.markers?.forEach {
+//                    it.hideInfoWindow()
+//                }
+//            }
+        }
         mMap.setOnMyLocationClickListener {
-            mMap.setOnMyLocationClickListener {
-                myLocation = it
-                val latLng = LatLng(it.latitude, it.longitude)
+            myLocation = it
+            val latLng = LatLng(it.latitude, it.longitude)
 //                mMap.addMarker(
 //                    MarkerOptions().position(latLng)
 //                )
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f))
-                getBottleContents(latLng)
-            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f))
+            getBottleContents(latLng)
         }
         getMyLocation()
     }
@@ -177,13 +190,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 //                            .snippet(data.kind)
 //                    )
                     mClusterManager?.addItem(
-                        UserCustomMarker(
+                        BottleCustomMarker(
                             User(
                                 "12345",
                                 "Arby Azra",
                                 "https://api.duniagames.co.id/api/content/upload/file/15157218231625823751.jpg",
                                 "arby@gmail.com"
-                            ), latLng
+                            ), latLng,
+                            data
                         )
                     )
 //                    marker?.hideInfoWindow()
@@ -216,7 +230,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
             }
     }
 
-    override fun onClusterClick(cluster: Cluster<UserCustomMarker>?): Boolean {
+    override fun onClusterClick(cluster: Cluster<BottleCustomMarker>?): Boolean {
         val firstName: String = cluster!!.items.iterator().next()?.user?.name ?: ""
         Toast.makeText(
             activity?.applicationContext,
@@ -238,7 +252,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         return true
     }
 
-    override fun onClusterInfoWindowClick(cluster: Cluster<UserCustomMarker>?) {
+    override fun onClusterInfoWindowClick(cluster: Cluster<BottleCustomMarker>?) {
         CommonFunction.showSnackBar(
             binding!!.root,
             requireContext(),
@@ -246,7 +260,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         )
     }
 
-    override fun onClusterItemClick(item: UserCustomMarker?): Boolean {
+    override fun onClusterItemClick(item: BottleCustomMarker?): Boolean {
         CommonFunction.showSnackBar(
             binding!!.root,
             requireContext(),
@@ -255,7 +269,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         return true
     }
 
-    override fun onClusterItemInfoWindowClick(item: UserCustomMarker?) {
+    override fun onClusterItemInfoWindowClick(item: BottleCustomMarker?) {
         CommonFunction.showSnackBar(
             binding!!.root,
             requireContext(),

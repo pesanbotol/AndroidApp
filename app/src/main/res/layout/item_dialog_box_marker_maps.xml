@@ -4,27 +4,44 @@
     android:layout_height="wrap_content"
     android:background="@drawable/custom_info_bubble"
     android:orientation="horizontal"
-    android:padding="12dp">
+    android:paddingEnd="12dp"
+    android:paddingStart="0dp"
+    android:paddingBottom="12dp"
+    android:paddingTop="12dp">
 
-
+    <ImageView
+        android:layout_marginStart="10dp"
+        android:id="@+id/image_dialog_profile"
+        android:clipToOutline="true"
+        android:background="@drawable/rounded_outline"
+        android:src="@drawable/photo_profile_dummy"
+        android:layout_width="50dp"
+        android:scaleType="centerCrop"
+        android:layout_height="50dp"/>
     <LinearLayout
+        android:layout_marginStart="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
+            android:gravity="start"
             android:id="@+id/title_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="start"
             android:ellipsize="end"
+            android:text="Arby Azra"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
+            android:gravity="start"
+            android:layout_gravity="start"
             android:id="@+id/snippet_desc"
+            android:text="Halo guys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -38,9 +55,12 @@
         android:id="@+id/tv_time_upload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="10dp"
+        android:text="5d days ago"
+        android:textSize="12sp"
+
         android:layout_marginEnd="0dp"
-        android:textColor="@color/white" />
+        android:textColor="@color/grey_1CC" />
 
 
 </LinearLayout>

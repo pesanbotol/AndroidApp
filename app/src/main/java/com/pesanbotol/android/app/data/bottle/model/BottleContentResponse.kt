@@ -18,7 +18,9 @@ data class Data(
 @Parcelize
 data class BottleItem(
 	val geo: List<Double?>? = null,
+	val contentImageUrl: String? = null,
 	val kind: String? = null,
 	val contentText: String? = null,
-	val id: String? = null
+	val id: String? = null,
+	val contentImagePath: String? = null
 ) : Parcelable

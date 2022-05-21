@@ -48,6 +48,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-common-ktx:20.1.1'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
     implementation 'com.google.firebase:firebase-functions-ktx:20.1.0'
+    implementation 'com.google.firebase:firebase-storage-ktx'
     def nav_version_ktx = "2.5.0-beta01"
     def coroutines_ver = "1.6.0"
     def okhttp_log_ver = "4.9.0"

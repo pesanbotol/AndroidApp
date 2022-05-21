@@ -3,8 +3,9 @@ package com.pesanbotol.android.app.data.core.model
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
 import com.pesanbotol.android.app.data.auth.model.User
+import com.pesanbotol.android.app.data.bottle.model.BottleItem
 
-class UserCustomMarker(val user: User, val latLng: LatLng) : ClusterItem {
+class BottleCustomMarker(val user: User, private val latLng: LatLng,val bottleItem: BottleItem) : ClusterItem {
     override fun getPosition(): LatLng {
         return latLng
     }
@@ -14,6 +15,6 @@ class UserCustomMarker(val user: User, val latLng: LatLng) : ClusterItem {
     }
 
     override fun getSnippet(): String? {
-        return null
+        return bottleItem.contentText
     }
 }

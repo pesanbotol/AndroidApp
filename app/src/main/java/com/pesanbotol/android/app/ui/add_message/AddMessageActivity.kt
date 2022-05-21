@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pesanbotol.android.app.R
+import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
 import com.pesanbotol.android.app.data.bottle.model.BottleCreatedResponse
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.databinding.ActivityAddMessageBinding
@@ -44,6 +45,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
     private lateinit var mMap: GoogleMap
     private var myLocation: Location? = null
     private val bottleViewModel by viewModel<BottleViewModel>()
+    private val authViewModel by viewModel<AuthViewModel>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
@@ -116,15 +118,12 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             isScrollGesturesEnabledDuringRotateOrZoom = true
             isZoomControlsEnabled = true
         }
-        if (mMap.isMyLocationEnabled) {
-            mMap.setOnMyLocationClickListener {
-                myLocation = it
-                val latLng = LatLng(it.latitude, it.longitude)
-                mMap.addMarker(
-                    MarkerOptions().position(latLng)
-                )
-            }
+        mMap.setOnMyLocationButtonClickListener {
+            mMap.clear()
+            getMyLocation()
+            true
         }
+
         getMyLocation()
     }
 
@@ -155,7 +154,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
                 myLocation = location
 
                 val latLng = LatLng(location.latitude, location.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 8.0f))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f))
                 mMap.addMarker(MarkerOptions().position(latLng))
                 binding.tvLocation?.text = "Location (${location.latitude},${
                     location.longitude
@@ -194,14 +193,17 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == RESULT_OK) {
-            val myFile = File(currentPhotoPath)
+            photo = File(currentPhotoPath)
 
 //            val result = BitmapFactory.decodeFile(myFile.path)
             val result = rotateBitmap(
-                BitmapFactory.decodeFile(myFile.path),
+                BitmapFactory.decodeFile(photo!!.path),
                 true
             )
             binding.previewImage.setImageBitmap(result)
+            binding.previewImage.background =
+                    ContextCompat.getDrawable(this, R.drawable.rounded_outline)
+            binding.previewImage.clipToOutline = true
             binding.uploadImagePlaceholder.visibility = View.GONE
         }
     }
@@ -211,8 +213,11 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedImg: Uri = result.data?.data as Uri
-            val myFile = uriToFile(selectedImg, this@AddMessageActivity)
+            photo = uriToFile(selectedImg, this@AddMessageActivity)
             binding.previewImage.setImageURI(selectedImg)
+            binding.previewImage.background =
+                    ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
+            binding.previewImage.clipToOutline = true
             binding.uploadImagePlaceholder.visibility = View.GONE
         }
     }
@@ -264,34 +269,50 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
 
     private fun createBottle(defaultLocation: LatLng) {
         showLoading()
-        bottleViewModel.addBottle(
-            if (myLocation != null) LatLng(
-                myLocation!!.latitude,
-                myLocation!!.longitude
-            ) else defaultLocation,
-            binding.etDescription.text.toString(),
-        )
-            .addOnSuccessListener {
-                hideLoading()
-                CommonFunction.showSnackBar(
-                    binding.root,
-                    applicationContext,
-                    "Berhasil mengunggah!",
-                    //                    getString(R.string.file_failed_to_convert),
+        try {
+            authViewModel.firebaseUser()?.let {
+                bottleViewModel.addBottle(
+                    it,
+                    if (myLocation != null) LatLng(
+                        myLocation!!.latitude,
+                        myLocation!!.longitude
+                    ) else defaultLocation,
+                    binding.etDescription.text.toString(),
+                    photo
                 )
-                onBackPressed()
-            }
-            .addOnFailureListener { exc ->
-                hideLoading()
-                CommonFunction.showSnackBar(
-                    binding.root,
-                    applicationContext,
-                    "Gagal membuat status : $exc",
-                    //                    getString(R.string.file_failed_to_convert),
-                    true
-                )
+                    .addOnSuccessListener {
+                        hideLoading()
+                        CommonFunction.showSnackBar(
+                            binding.root,
+                            applicationContext,
+                            "Berhasil mengunggah!",
+                            //                    getString(R.string.file_failed_to_convert),
+                        )
+                        onBackPressed()
+                    }
+                    .addOnFailureListener { exc ->
+                        hideLoading()
+                        CommonFunction.showSnackBar(
+                            binding.root,
+                            applicationContext,
+                            "Gagal membuat status : $exc",
+                            //                    getString(R.string.file_failed_to_convert),
+                            true
+                        )
 
+                    }
             }
+        } catch (e: Exception) {
+            hideLoading()
+            CommonFunction.showSnackBar(
+                binding.root,
+                applicationContext,
+                "Gagal membuat status : ${e.toString()}",
+                //                    getString(R.string.file_failed_to_convert),
+                true
+            )
+        }
+
     }
 
 
