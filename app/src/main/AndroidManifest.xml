@@ -9,11 +9,20 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data android:scheme="https" />
+        </intent>
+    </queries>
 
     <application
         android:name=".App"
@@ -23,6 +32,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PesanBotol">
+        <activity
+            android:name=".ui.detail_bubble.DetailBubbleMessageActivity"
+            android:exported="false"
+            android:label="@string/title_activity_detail_message"
+            android:theme="@style/Theme.PesanBotol.NoActionBar" />
         <activity
             android:name=".ui.add_message.AddMessageActivity"
             android:exported="false" />
@@ -47,6 +61,9 @@
         <activity
             android:name=".ui.onboarding.OnBoardingActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.comment_bottle.CommentBottleActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -65,11 +82,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https" />
-        </intent>
-    </queries>
+
 </manifest>

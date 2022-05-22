@@ -60,7 +60,6 @@
         android:layout_marginStart="10dp"
         android:text="5d days ago"
         android:textSize="12sp"
-
         android:textColor="@color/grey_1CC" />
 
 

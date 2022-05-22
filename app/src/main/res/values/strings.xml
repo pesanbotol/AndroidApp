@@ -10,9 +10,9 @@
     <string name="Lewati">Lewati</string>
     <string name="Lanjut">Lanjut</string>
     <!--  Bottom Navigation Menu  -->
-    <string name="title_bottom_menu_1" >Home</string>
-    <string name="title_bottom_menu_2" >Aktivitas</string>
-    <string name="title_bottom_menu_3" >Akun</string>
+    <string name="title_bottom_menu_1">Home</string>
+    <string name="title_bottom_menu_2">Aktivitas</string>
+    <string name="title_bottom_menu_3">Akun</string>
     <!--  Auth  -->
     <string name="imageauth" translatable="false">imageAuth</string>
     <string name="i_agree_with_terms_and_privacy">Saya setuju dengan <font color='#01C6DB'>Terms</font> dan <font color='#01C6DB'>Privacy</font> </string>
@@ -41,4 +41,64 @@
     <string name="descriptionLogin">Selamat datang!\nSilahkan masuk atau mendaftar</string>
     <string name="lupa_password">Lupa password?</string>
     <string name="descSignup">Daftar untuk menikmati fitur-fitur menarik dan pamerkan pengalaman kamu ke orang lain</string>
+    <string name="title_activity_detail_message" translatable="false">DetailMessageActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
+
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+    <string name="lihat_semua" translatable="false"><u> Lihat Semua </u></string>
+
+    <!--    dummy data  -->
+    <string-array name="name">
+        <item>Jake Wharton</item>
+        <item>Amit Shekhar</item>
+        <item>Romain Guy</item>
+        <item>Chris Banes</item>
+        <item>David</item>
+        <item>Ravi Tamada</item>
+        <item>Deny Prasetyo</item>
+        <item>Budi Oktaviyan</item>
+        <item>Hendi Santika</item>
+        <item>Sidiq Permana</item>
+    </string-array>
+    <string-array name="description">
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+        <item>Pedagangnya tadi baik banget. Aku ngga beli tapi dikasih gaess 😭😭😭😭😭..</item>
+    </string-array>
+    <string-array name="dates">
+        <item>12 jam yang lalu</item>
+        <item>1 menit yang lalu</item>
+        <item>3 detik yang lalu</item>
+        <item>9 jam yang lalu</item>
+        <item>2 jam yang lalu</item>
+        <item>12 jam yang lalu</item>
+        <item>19 jam yang lalu</item>
+        <item>7 jam yang lalu</item>
+        <item>8 jam yang lalu</item>
+        <item>12 jam yang lalu</item>
+    </string-array>
+    <string-array name="avatar">
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+        <item>https://i.ibb.co/T4kF9wC/monyet.jpg</item>
+    </string-array>
 </resources>
