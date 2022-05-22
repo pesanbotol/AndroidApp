@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Daftar untuk menikmati fitur-fitur menarik dan pamerkan pengalaman kamu ke orang lain"
+        android:text="@string/descSignup"
         android:textColor="?attr/colorOnSecondary"
         android:textStyle="normal"
         app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -114,7 +114,7 @@
         android:gravity="center"
         android:lineSpacingExtra="-5sp"
         android:text="@string/i_agree_with_terms_and_privacy"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/password_text_input"
         tools:layout_editor_absoluteX="8dp" />

@@ -38,9 +38,8 @@ class EmailTextField : AppCompatEditText, View.OnTouchListener {
 
     init {
         maxLines = 1
-        setTextColor(ContextCompat.getColor(context, R.color.pink))
+        setTextColor(ContextCompat.getColor(context, R.color.black))
         setHintTextColor(ContextCompat.getColor(context, R.color.grey_37F))
-        hint = "Email"
         clearButton =
                 ContextCompat.getDrawable(context, R.drawable.ic_baseline_clear_24) as Drawable
         background =

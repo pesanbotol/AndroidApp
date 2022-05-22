@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Selamat datang!\nSilahkan masuk atau mendaftar"
+        android:text="@string/descriptionLogin"
         android:textColor="?attr/colorOnSecondary"
         android:textStyle="normal"
         app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -38,19 +38,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
+        app:boxBackgroundMode="none"
+        app:errorEnabled="true"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:startIconDrawable="@drawable/ic_baseline_email_24">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.pesanbotol.android.app.ui.components.EmailTextField
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:ems="10"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -59,19 +62,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        app:errorEnabled="true"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_text_input"
-        app:passwordToggleEnabled="true">
+        app:startIconDrawable="@drawable/ic_lock">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.pesanbotol.android.app.ui.components.PasswordTextField
             android:id="@+id/password_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:ems="10"
             android:hint="@string/password"
-            android:inputType="textPassword"
-            app:passwordToggleEnabled="true" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -80,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="end"
-        android:text="Lupa password?"
+        android:text="@string/lupa_password"
         android:textColor="?attr/colorPrimary"
         android:textStyle="normal"
         app:layout_constraintTop_toBottomOf="@+id/password_text_input"
@@ -96,25 +100,25 @@
         app:layout_constraintTop_toBottomOf="@+id/forgotPassword">
 
         <com.pesanbotol.android.app.ui.components.PrimaryButton
-            android:elevation="1dp"
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="28dp"
             android:background="@drawable/background_button_auth"
+            android:elevation="1dp"
             android:gravity="center"
             android:text="@string/login"
             android:textColor="?attr/colorOnPrimary"
             android:textSize="14sp" />
-        <ProgressBar
-            android:visibility="gone"
-            android:id="@+id/progressBarOnBtn"
-            android:elevation="2dp"
-            android:layout_centerInParent="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-    </RelativeLayout>
 
+        <ProgressBar
+            android:id="@+id/progressBarOnBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:elevation="2dp"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/already_hav"
@@ -122,9 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:gravity="center"
-
         android:text="@string/don_t_have_an_account"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_btn" />

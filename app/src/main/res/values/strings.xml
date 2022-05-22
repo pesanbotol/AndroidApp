@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pesan Botol</string>
+    <string name="app_name" translatable="false">Pesan Botol</string>
     <!--  on boarding  -->
     <string name="title_menu_1">Bagikan Pengalaman</string>
     <string name="title_menu_2">Temukan Hidden Gems </string>
@@ -10,16 +10,17 @@
     <string name="Lewati">Lewati</string>
     <string name="Lanjut">Lanjut</string>
     <!--  Bottom Navigation Menu  -->
-    <string name="title_bottom_menu_1">Home</string>
-    <string name="title_bottom_menu_2">Aktivitas</string>
-    <string name="title_bottom_menu_3">Akun</string>
+    <string name="title_bottom_menu_1" >Home</string>
+    <string name="title_bottom_menu_2" >Aktivitas</string>
+    <string name="title_bottom_menu_3" >Akun</string>
     <!--  Auth  -->
-    <string name="imageauth">imageAuth</string>
-    <string name="i_agree_with_terms_and_privacy">Saya setuju dengan Terms dan Privacy</string>
-    <string name="email">Email</string>
-    <string name="name">Nama</string>
-    <string name="password">Password</string>
-    <string name="sign_up">Daftar</string>
+    <string name="imageauth" translatable="false">imageAuth</string>
+    <string name="i_agree_with_terms_and_privacy">Saya setuju dengan <font color='#01C6DB'>Terms</font> dan <font color='#01C6DB'>Privacy</font> </string>
+    <string name="email" translatable="false">Email</string>
+    <string name="name" translatable="false">Nama</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="passwordLength" translatable="false">Your Passwords must match and must be at least 6 characters in length</string>
+    <string name="sign_up" translatable="false">Daftar</string>
     <string name="already_have_account">Sudah punya akun?</string>
     <string name="log_in"> <u>Masuk</u></string>
     <string name="login">Masuk</string>
@@ -28,13 +29,16 @@
 
     <!--  Activity Page  -->
     <string name="tv_location">Lokasi saat ini</string>
-    <string name="user_current_location">Kudus, Central Java</string>
+    <string name="user_current_location" translatable="false">Kudus, Central Java</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="profile_user">Profile User</string>
-    <string name="your_latest_activity">Your Latest Activity</string>
-    <string name="dummy_name">Arby Azra</string>
-    <string name="dummy_location">Tegal, Central Java, Indonesia</string>
-    <string name="dummy_bio">Aku adalah anak gembala Selalu riang serta gembira</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="profile_user" translatable="false">Profile User</string>
+    <string name="your_latest_activity">Aktivitas Terakhir</string>
+    <string name="dummy_name" translatable="false">Arby Azra</string>
+    <string name="dummy_location" translatable="false">Tegal, Central Java, Indonesia</string>
+    <string name="dummy_bio" translatable="false">Aku adalah anak gembala Selalu riang serta gembira</string>
+    <string name="descriptionLogin">Selamat datang!\nSilahkan masuk atau mendaftar</string>
+    <string name="lupa_password">Lupa password?</string>
+    <string name="descSignup">Daftar untuk menikmati fitur-fitur menarik dan pamerkan pengalaman kamu ke orang lain</string>
 </resources>
