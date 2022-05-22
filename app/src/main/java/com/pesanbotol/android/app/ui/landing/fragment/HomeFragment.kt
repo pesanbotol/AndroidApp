@@ -27,11 +27,11 @@ import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.auth.model.User
-import com.pesanbotol.android.app.data.bottle.model.BottleItem
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.data.core.model.BottleCustomMarker
 import com.pesanbotol.android.app.databinding.FragmentHomeBinding
 import com.pesanbotol.android.app.ui.add_message.AddMessageActivity
+import com.pesanbotol.android.app.ui.detail_bubble.DetailBubbleMessageActivity
 import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.CustomMarkerRenderer
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -253,6 +253,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }
 
     override fun onClusterInfoWindowClick(cluster: Cluster<BottleCustomMarker>?) {
+        val intent = Intent(requireContext(), DetailBubbleMessageActivity::class.java)
+        startActivity(intent)
         CommonFunction.showSnackBar(
             binding!!.root,
             requireContext(),
@@ -261,6 +263,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }
 
     override fun onClusterItemClick(item: BottleCustomMarker?): Boolean {
+        val intent = Intent(requireContext(), DetailBubbleMessageActivity::class.java)
+        startActivity(intent)
+        CommonFunction.showSnackBar(
+            binding!!.root,
+            requireContext(),
+            "Todo",
+        )
         CommonFunction.showSnackBar(
             binding!!.root,
             requireContext(),

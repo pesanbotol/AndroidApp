@@ -15,4 +15,13 @@
         <item name="android:fontFamily">@font/poppins</item>
         <item name="fontFamily">@font/poppins</item>
     </style>
+
+    <style name="Theme.PesanBotol.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.PesanBotol.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PesanBotol.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
