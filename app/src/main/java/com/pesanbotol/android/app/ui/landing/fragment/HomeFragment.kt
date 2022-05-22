@@ -100,6 +100,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.uiSettings.isRotateGesturesEnabled = true
         CommonFunction.setMapStyle(mMap, requireContext())
+        setupCluster()
+        mMap.setOnMyLocationClickListener {
+            myLocation = it
+            val latLng = LatLng(it.latitude, it.longitude)
+//                mMap.addMarker(
+//                    MarkerOptions().position(latLng)
+//                )
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f))
+        }
+        getMyLocation()
+    }
+
+    private fun setupCluster() {
         mClusterManager = ClusterManager(requireActivity(), mMap)
         mClusterManager?.let {
             mMap.setOnCameraIdleListener(mClusterManager)
@@ -112,33 +125,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
             mClusterManager!!.setOnClusterItemInfoWindowClickListener(this)
 
         }
-        mMap.setOnCameraMoveListener {
-//            val bounds = mMap.projection.visibleRegion.latLngBounds
-//            println("Bounds Center : lat ${bounds.center.latitude}, lng ${bounds.center.longitude}")
-//            println("Bounds northeast :lat ${bounds.northeast.latitude}, lng ${bounds.northeast.longitude}")
-//            println("Bounds southwest :lat ${bounds.southwest.latitude}, lng ${bounds.southwest.longitude}")
-        }
-        mMap.setOnCameraMoveListener {
-//            if (mMap.cameraPosition.zoom > 8.0f) {
-//                mClusterManager?.markerCollection?.markers?.forEach {
-//                    it.showInfoWindow()
-//                }
-//            } else {
-//                mClusterManager?.markerCollection?.markers?.forEach {
-//                    it.hideInfoWindow()
-//                }
-//            }
-        }
-        mMap.setOnMyLocationClickListener {
-            myLocation = it
-            val latLng = LatLng(it.latitude, it.longitude)
-//                mMap.addMarker(
-//                    MarkerOptions().position(latLng)
-//                )
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f))
-            getBottleContents(latLng)
-        }
-        getMyLocation()
     }
 
     private val requestPermissionLauncher =
@@ -174,21 +160,15 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 
     private fun getBottleContents(latLng: LatLng) {
         binding?.loadingIndicator?.visibility = View.VISIBLE
-        mClusterManager?.clearItems()
+        mMap.clear()
         bottleViewModel.getBottle(latLng)
             .addOnSuccessListener {
+                setupCluster()
                 it?.data?.bottle?.forEach { data ->
                     val latLng = LatLng(
                         data?.geo?.get(0)!!,
-                        data.geo.get(1)!!
+                        data.geo[1]!!
                     )
-//                    val marker = mMap.addMarker(
-//
-//                        MarkerOptions()
-//                            .position(latLng)
-//                            .title(data.contentText)
-//                            .snippet(data.kind)
-//                    )
                     mClusterManager?.addItem(
                         BottleCustomMarker(
                             User(

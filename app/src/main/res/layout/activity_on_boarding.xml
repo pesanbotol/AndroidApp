@@ -97,7 +97,7 @@
         android:src="@drawable/ic_baseline_circle_24"
         app:altSrc="@drawable/ic_baseline_circle_16"
         tools:layout_editor_absoluteX="198dp"
-        tools:layout_editor_absoluteY="715dp" />
+        tools:layout_editor_absoluteY="615dp" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/indicator_menu_2"
@@ -106,7 +106,7 @@
         android:src="@drawable/ic_baseline_circle_24"
         app:altSrc="@drawable/ic_baseline_circle_16"
         tools:layout_editor_absoluteX="198dp"
-        tools:layout_editor_absoluteY="715dp" />
+        tools:layout_editor_absoluteY="615dp" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/indicator_menu_3"
@@ -115,12 +115,15 @@
         android:src="@drawable/ic_baseline_circle_24"
         app:altSrc="@drawable/ic_baseline_circle_16"
         tools:layout_editor_absoluteX="198dp"
-        tools:layout_editor_absoluteY="715dp" />
+        tools:layout_editor_absoluteY="615dp" />
 
     <Button
+        android:background="@drawable/bg_primary_button"
         android:id="@+id/button_lanjut"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="0"
-        android:text="@string/Lanjut" />
+        android:text="@string/Lanjut"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="667dp" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

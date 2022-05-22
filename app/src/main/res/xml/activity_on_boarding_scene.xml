@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/imageView" />
         <Constraint
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:layout_width="0dp"
             android:id="@+id/iv_menu_1"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,7 +43,7 @@
             android:id="@+id/tv_title_menu_1"
             app:layout_constraintStart_toStartOf="@+id/iv_menu_1"
             app:layout_constraintTop_toBottomOf="@+id/iv_menu_1"
-            android:layout_marginTop="32dp" />
+            android:layout_marginTop="50dp" />
         <Constraint
             android:layout_height="wrap_content"
             android:layout_width="0dp"
@@ -165,7 +165,7 @@
             app:layout_constraintEnd_toEndOf="@id/tv_title_menu_1"
             android:layout_marginTop="16dp" />
         <Constraint
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
             android:id="@+id/iv_menu_2"
@@ -250,7 +250,7 @@
             android:id="@+id/iv_menu_2"
             app:layout_constraintEnd_toStartOf="parent" />
         <Constraint
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:layout_width="0dp"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/iv_menu_3"
@@ -269,7 +269,7 @@
             android:id="@+id/tv_title_menu_3"
             app:layout_constraintEnd_toEndOf="@+id/iv_menu_3"
             app:layout_constraintTop_toBottomOf="@+id/iv_menu_3"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="50dp" />
         <Constraint
             android:layout_height="wrap_content"
             android:layout_width="0dp"
@@ -284,9 +284,10 @@
             android:layout_width="0dp"
             android:id="@+id/button_lanjut"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp" />
         <Constraint
             android:id="@+id/indicator_menu_3"
             android:layout_width="wrap_content"

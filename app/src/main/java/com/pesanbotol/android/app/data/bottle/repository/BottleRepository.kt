@@ -7,6 +7,7 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.pesanbotol.android.app.data.bottle.model.BottleContentResponse
@@ -37,66 +38,48 @@ class BottleRepository {
             }
     }
 
+    fun uploadImage(file: File, firebaseUser: FirebaseUser): Task<String?> {
+        val tsLong = System.currentTimeMillis() / 1000
+        val ts = tsLong.toString()
+        val filename = "${ts}.${file.extension}"
+        val storageRef = _storage.reference.child("userupload").child(firebaseUser.uid)
+            .child(filename)
+        val uploadTask = storageRef.putBytes(file.readBytes())
+        return uploadTask.addOnFailureListener {
+            println("addBottle uploadBottleImage Error uploading image $it")
+            throw it
+        }.addOnSuccessListener { it ->
+
+            println("addBottle uploadBottleImage Success uploading image ${it.storage.downloadUrl}")
+
+        }.continueWith { filename }
+    }
+
     fun addBottle(
-        firebaseUser: FirebaseUser,
         latLng: LatLng,
         content: String,
-        file: File?
-    ): Task<BottleCreatedResponse?> {
+        filename: String?
+    ): Task<Any?> {
         val bottleRequest = hashMapOf(
             "contentText" to content,
             "kind" to "text",
             "geo" to listOf(latLng.latitude, latLng.longitude)
         )
-        val tsLong = System.currentTimeMillis() / 1000
-        val ts = tsLong.toString()
-        lateinit var task: Task<BottleCreatedResponse?>
-        if (file == null) {
-            println("addBottle File Null")
-            task = _functions
-                .getHttpsCallable("bottle-callableBottle-createBottle")
-                .call(bottleRequest)
-                .continueWith {
-                    val gson = Gson()
-                    val result = gson.fromJson(
-                        gson.toJson(it.result?.data),
-                        BottleCreatedResponse::class.java
-                    )
-                    result
-                }.addOnFailureListener {
-                    println("addBottle Error Creating Bottle : $it")
-                    throw it
-                }
-        } else {
-            println("addBottle File Not Null")
-            val filename = "${ts}.${file.extension}"
-            val storageRef = _storage.reference.child("userupload").child(firebaseUser.uid)
-                .child(filename)
-            val uploadTask = storageRef.putBytes(file.readBytes())
-            uploadTask.addOnFailureListener {
-                println("addBottle Error uploading image $it")
-                throw it
-            }.addOnSuccessListener { it ->
 
-                bottleRequest["contentImagePath"] = filename
 
-                println("addBottle Success uploading image ${it.storage.downloadUrl}")
-                task = _functions
-                    .getHttpsCallable("bottle-callableBottle-createBottle")
-                    .call(bottleRequest)
-                    .continueWith {
-                        val gson = Gson()
-                        val result = gson.fromJson(
-                            gson.toJson(it.result?.data),
-                            BottleCreatedResponse::class.java
-                        )
-                        result
-                    }.addOnFailureListener {
-                        println("addBottle Error Creating Bottle : $it")
-                    }
-            }
+        if (filename != null) {
+            println("addBottle with Image : $filename")
+            bottleRequest["contentImagePath"] = filename
         }
-        return task
+        return _functions
+            .getHttpsCallable("bottle-callableBottle-createBottle")
+            .call(bottleRequest)
+            .continueWith {
+                it.result.data
+            }.addOnFailureListener {
+                println("addBottle Error Creating Bottle : $it")
+            }
 
     }
+
 }

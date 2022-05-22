@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
@@ -36,18 +37,24 @@ class CustomMarkerRenderer(
     private val mClusterIconGenerator = IconGenerator(activity.applicationContext)
     private var mImageView: ImageView? = null
     private var mClusterImageView: ImageView? = null
-    private var mDimension = 0
+    private var mDimension = 50
 
     init {
         val multiProfile: View =
                 activity.layoutInflater.inflate(R.layout.multi_profile, null)
         mClusterIconGenerator.setContentView(multiProfile)
+        mClusterIconGenerator.setBackground(
+            ContextCompat.getDrawable(
+                activity.applicationContext,
+                R.drawable.custom_info_bubble
+            )
+        )
         mClusterImageView = multiProfile.findViewById(R.id.image)
 
         mImageView = ImageView(activity.applicationContext)
         mDimension = 50
         mImageView?.layoutParams = ViewGroup.LayoutParams(mDimension, mDimension)
-        val padding = 2
+        val padding = 10
         mImageView?.setPadding(padding, padding, padding, padding)
         mIconGenerator.setContentView(mImageView)
     }
@@ -93,20 +100,36 @@ class CustomMarkerRenderer(
     }
 
     private fun getClusterIcon(cluster: Cluster<BottleCustomMarker>): BitmapDescriptor {
-        val profilePhotos: MutableList<Drawable> = ArrayList(min(1, cluster.size))
-        val width = mDimension
-        val height = mDimension
-        for (p in cluster.items) {
 
-            val drawable: Drawable = getNetworkImage(p) ?: getEmptyProfileDrawable()
-            drawable.setBounds(0, 0, width, height)
-            profilePhotos.add(drawable)
-        }
-        val multiDrawable = MultiDrawable(profilePhotos)
-        multiDrawable.setBounds(0, 0, width, height)
-        mClusterImageView!!.setImageDrawable(multiDrawable)
-        val icon = mClusterIconGenerator.makeIcon(cluster.size.toString())
-        return BitmapDescriptorFactory.fromBitmap(icon)
+        val customMarkerView: View? =
+                (activity.layoutInflater as LayoutInflater?)?.inflate(
+                    R.layout.multi_profile,
+                    null
+                )
+        val totalBottle = customMarkerView?.findViewById<TextView>(R.id.total_bottle)
+        totalBottle?.text = cluster.size.toString()
+        customMarkerView?.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        customMarkerView?.layout(
+            0,
+            0,
+            100,
+            100
+        )
+        customMarkerView?.buildDrawingCache()
+        val returnedBitmap = Bitmap.createBitmap(
+            100, 100,
+            Bitmap.Config.ARGB_8888
+        )
+        val scaledBitmap = Bitmap.createScaledBitmap(
+            returnedBitmap, 100, 100, false
+        )
+        val canvas = Canvas(scaledBitmap)
+        canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN)
+        val drawable = customMarkerView?.background
+        drawable?.draw(canvas)
+        customMarkerView?.draw(canvas)
+//        val icon = mClusterIconGenerator.makeIcon(cluster.size.toString())
+        return BitmapDescriptorFactory.fromBitmap(scaledBitmap)
     }
 
     private fun getEmptyProfileDrawable() = ContextCompat.getDrawable(
@@ -118,14 +141,18 @@ class CustomMarkerRenderer(
         if (p.bottleItem.contentImageUrl == null) {
             return null
         }
-        val connection: HttpURLConnection =
-                URL(p.bottleItem.contentImageUrl).openConnection() as HttpURLConnection
-        connection.setRequestProperty("User-agent", "Mozilla/4.0")
+        try {
+            val connection: HttpURLConnection =
+                    URL(p.bottleItem.contentImageUrl).openConnection() as HttpURLConnection
+            connection.setRequestProperty("User-agent", "Mozilla/4.0")
 
-        connection.connect()
-        val input: InputStream = connection.inputStream
+            connection.connect()
+            val input: InputStream = connection.inputStream
 
-        return Drawable.createFromStream(input, null)
+            return Drawable.createFromStream(input, null)
+        } catch (e: Exception) {
+            return null
+        }
     }
 
     override fun shouldRenderAsCluster(cluster: Cluster<BottleCustomMarker>): Boolean {
@@ -191,8 +218,6 @@ class CustomMarkerRenderer(
         customMarkerView.draw(canvas)
         return returnedBitmap
     }
-
-
 
 
 }

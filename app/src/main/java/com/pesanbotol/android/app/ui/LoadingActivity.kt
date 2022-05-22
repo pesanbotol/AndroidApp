@@ -18,33 +18,37 @@ class LoadingActivity : AppCompatActivity() {
         supportActionBar?.hide()
         if (authViewModel.isLoggedIn()) {
             println("Logged In")
-            val intent = Intent(this, LandingActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                    Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
+            navigateToLogin()
         } else {
             println("Not LoggedIn")
             authViewModel.getPassedOnboarding().observe(this) {
                 if (it == true) {
-                    val intent = Intent(this, LoginActivity::class.java)
-                    intent.flags =
-                            Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                                    Intent.FLAG_ACTIVITY_NEW_TASK
-
-                    startActivity(intent)
+                    navigateToLogin()
                 } else {
-                    val intent = Intent(this, OnBoardingActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                            Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
+                    navigateToOnboarding()
                 }
             }
 
         }
 
 
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+
+        startActivity(intent)
+    }
+
+    private fun navigateToOnboarding() {
+        val intent = Intent(this, OnBoardingActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 }

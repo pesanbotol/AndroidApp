@@ -7,7 +7,7 @@
     <string name="desc_menu_2">Explore places, activities and festivals by knowing the information available around you.</string>
     <string name="desc_menu_3">Make your profile better than others!. Visit and complete missions to earn unique badges!</string>
     <string name="Lewati">Next</string>
-    <string name="Lanjut">Explore !!</string>
+    <string name="Lanjut">Explore Now</string>
 
     <string name="descriptionLogin">Welcome!\nPlease login or register</string>
     <string name="lupa_password">Forget password?</string>
@@ -17,7 +17,7 @@
     <string name="signUp"><u>Sign Up</u></string>
 
     <string name="descSignup">Sign up to enjoy exciting features and show off your experience to others</string>
-    <string name="i_agree_with_terms_and_privacy">I agree with the<font color='#01C6DB'>Terms</font> and <font color='#01C6DB'>Privacy</font>Privacy</string>
+    <string name="i_agree_with_terms_and_privacy">I agree with the <font color='#1E91D0'>Terms and Privacy</font></string>
     <string name="already_have_account">Do you have account ?</string>
 
     <string name="title_bottom_menu_1" >Home</string>

@@ -12,6 +12,7 @@ class BottleViewModel(private val bottleRepository: BottleRepository) : ViewMode
 //    private val _bottleViewState : MutableLiveData<>
 
     fun getBottle(latLng: LatLng) = bottleRepository.getBottles(latLng)
-    fun addBottle(firebaseUser: FirebaseUser, latLng: LatLng, content: String, file: File?) =
-            bottleRepository.addBottle(firebaseUser, latLng, content, file)
+    fun uploadBottleFile(file: File,firebaseUser: FirebaseUser) = bottleRepository.uploadImage(file,firebaseUser)
+    fun addBottle(latLng: LatLng, content: String, filename: String?) =
+            bottleRepository.addBottle(latLng, content, filename)
 }

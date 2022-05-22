@@ -15,7 +15,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -26,11 +25,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
-import com.pesanbotol.android.app.data.bottle.model.BottleCreatedResponse
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.databinding.ActivityAddMessageBinding
 import com.pesanbotol.android.app.utility.*
@@ -250,7 +247,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
                 return
             }
             val defaultLocation = LatLng(-5.778581, 109.640097)
-            createBottle(defaultLocation)
+            processBottleCreation(defaultLocation)
 //            reduceFileImage(it).let { reduced ->
 //                createBottle(defaultLocation)
 //            }
@@ -267,42 +264,22 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
 //        }
     }
 
-    private fun createBottle(defaultLocation: LatLng) {
+    private fun processBottleCreation(defaultLocation: LatLng) {
         showLoading()
         try {
-            authViewModel.firebaseUser()?.let {
-                bottleViewModel.addBottle(
-                    it,
-                    if (myLocation != null) LatLng(
-                        myLocation!!.latitude,
-                        myLocation!!.longitude
-                    ) else defaultLocation,
-                    binding.etDescription.text.toString(),
-                    photo
-                )
-                    .addOnSuccessListener {
-                        hideLoading()
-                        CommonFunction.showSnackBar(
-                            binding.root,
-                            applicationContext,
-                            "Berhasil mengunggah!",
-                            //                    getString(R.string.file_failed_to_convert),
-                        )
-                        onBackPressed()
-                    }
-                    .addOnFailureListener { exc ->
-                        hideLoading()
-                        CommonFunction.showSnackBar(
-                            binding.root,
-                            applicationContext,
-                            "Gagal membuat status : $exc",
-                            //                    getString(R.string.file_failed_to_convert),
-                            true
-                        )
-
-                    }
+            if (photo != null) {
+                authViewModel.firebaseUser()?.let {
+                    bottleViewModel.uploadBottleFile(photo!!, it)
+                        .addOnSuccessListener { filename ->
+                            createBottle(defaultLocation, filename)
+                        }
+                }
+            } else {
+                createBottle(defaultLocation, null)
             }
+
         } catch (e: Exception) {
+            println("Gagal membuat status ${e.toString()}")
             hideLoading()
             CommonFunction.showSnackBar(
                 binding.root,
@@ -313,6 +290,51 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             )
         }
 
+    }
+
+    private fun createBottle(defaultLocation: LatLng, filename: String?) {
+        bottleViewModel.addBottle(
+            if (myLocation != null) LatLng(
+                myLocation!!.latitude,
+                myLocation!!.longitude
+            ) else defaultLocation,
+            binding.etDescription.text.toString(),
+            filename
+        )
+            .addOnCompleteListener {
+                hideLoading()
+
+
+                CommonFunction.showSnackBar(
+                    binding.root,
+                    applicationContext,
+                    "Berhasil mengunggah!",
+                    //                    getString(R.string.file_failed_to_convert),
+                )
+                onBackPressed()
+            }
+            .addOnFailureListener { exc ->
+                hideLoading()
+                CommonFunction.showSnackBar(
+                    binding.root,
+                    applicationContext,
+                    "Gagal membuat status : $exc",
+                    //                    getString(R.string.file_failed_to_convert),
+                    true
+                )
+
+            }
+    }
+
+    private fun uploadBottleFile() {
+        if (photo != null) {
+            authViewModel.firebaseUser()?.let {
+                bottleViewModel.uploadBottleFile(photo!!, it)
+                    .addOnSuccessListener {
+
+                    }
+            }
+        }
     }
 
 
