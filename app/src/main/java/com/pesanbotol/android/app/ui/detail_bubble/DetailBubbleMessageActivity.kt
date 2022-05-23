@@ -8,10 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pesanbotol.android.app.R
-import com.pesanbotol.android.app.data.dummy.Comment
-import com.pesanbotol.android.app.data.dummy.CommentUserAdapter
+import com.pesanbotol.android.app.data.dummy.model_dummy.Comment
+import com.pesanbotol.android.app.data.dummy.adapter.CommentUserAdapter
 import com.pesanbotol.android.app.databinding.ActivityDetailBubbleMessageBinding
-import com.pesanbotol.android.app.ui.comment_bottle.CommentBottleActivity
 
 class DetailBubbleMessageActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDetailBubbleMessageBinding
@@ -62,8 +61,6 @@ class DetailBubbleMessageActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when(view?.id){
             R.id.btn_add_comments -> {
-                val intent = Intent(this, CommentBottleActivity::class.java)
-                startActivity(intent)
             }
         }
     }
