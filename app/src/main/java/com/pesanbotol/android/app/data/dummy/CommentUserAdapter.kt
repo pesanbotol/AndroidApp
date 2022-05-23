@@ -1,15 +1,14 @@
-package com.pesanbotol.android.app.data.dummy.adapter
+package com.pesanbotol.android.app.data.dummy
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pesanbotol.android.app.R
-import com.pesanbotol.android.app.data.dummy.model_dummy.Comment
 import com.pesanbotol.android.app.databinding.ItemCommentsBinding
 
-class AllCommentUserAdapter(private val dataComment: ArrayList<Comment>) :
-    RecyclerView.Adapter<AllCommentUserAdapter.ListViewHolder>() {
+class CommentUserAdapter(private val dataComment: ArrayList<Comment>) :
+    RecyclerView.Adapter<CommentUserAdapter.ListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding =

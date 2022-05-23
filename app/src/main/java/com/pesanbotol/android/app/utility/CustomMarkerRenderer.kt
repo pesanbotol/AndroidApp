@@ -74,6 +74,7 @@ class CustomMarkerRenderer(
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(it))
         }
         marker.title = bottle.user.name
+        marker.hideInfoWindow()
 
     }
 

@@ -1,4 +1,4 @@
-package com.pesanbotol.android.app.data.dummy.model_dummy
+package com.pesanbotol.android.app.data.dummy
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

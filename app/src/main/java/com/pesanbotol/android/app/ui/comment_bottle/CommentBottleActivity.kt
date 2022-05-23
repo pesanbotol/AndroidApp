@@ -1,32 +1,26 @@
-package com.pesanbotol.android.app.ui.detail_bubble
+package com.pesanbotol.android.app.ui.comment_bottle
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.dummy.Comment
 import com.pesanbotol.android.app.data.dummy.CommentUserAdapter
-import com.pesanbotol.android.app.databinding.ActivityDetailBubbleMessageBinding
-import com.pesanbotol.android.app.ui.comment_bottle.CommentBottleActivity
+import com.pesanbotol.android.app.databinding.ActivityCommentBottleBinding
 
-class DetailBubbleMessageActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityDetailBubbleMessageBinding
+class CommentBottleActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCommentBottleBinding
 
-    private var dataUser = ArrayList<Comment>()
-
+    private var dataComment = ArrayList<Comment>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailBubbleMessageBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = ActivityCommentBottleBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_comment_bottle)
+        binding.rvAllComments.setHasFixedSize(true)
 
-        binding.rvComments.setHasFixedSize(true)
-        binding.btnAddComments.setOnClickListener(this)
-
-        dataUser.addAll(listComment)
+        dataComment.addAll(listComment)
         showRecycleView()
     }
 
@@ -51,20 +45,11 @@ class DetailBubbleMessageActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showRecycleView() {
         if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.rvComments.layoutManager = GridLayoutManager(this, 2)
+            binding.rvAllComments.layoutManager = GridLayoutManager(this, 2)
         } else {
-            binding.rvComments.layoutManager = LinearLayoutManager(this)
+            binding.rvAllComments.layoutManager = LinearLayoutManager(this)
         }
-        val listAdapter = CommentUserAdapter(dataUser)
-        binding.rvComments.adapter = listAdapter
-    }
-
-    override fun onClick(view: View?) {
-        when(view?.id){
-            R.id.btn_add_comments -> {
-                val intent = Intent(this, CommentBottleActivity::class.java)
-                startActivity(intent)
-            }
-        }
+        val listAdapter = CommentUserAdapter(dataComment)
+        binding.rvAllComments.adapter = listAdapter
     }
 }
