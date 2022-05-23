@@ -35,7 +35,6 @@
         <activity
             android:name=".ui.detail_bubble.DetailBubbleMessageActivity"
             android:exported="false"
-            android:label="@string/title_activity_detail_message"
             android:theme="@style/Theme.PesanBotol.NoActionBar" />
         <activity
             android:name=".ui.add_message.AddMessageActivity"

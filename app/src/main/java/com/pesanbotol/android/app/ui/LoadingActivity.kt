@@ -18,7 +18,7 @@ class LoadingActivity : AppCompatActivity() {
         supportActionBar?.hide()
         if (authViewModel.isLoggedIn()) {
             println("Logged In")
-            navigateToLogin()
+            navigateToLanding()
         } else {
             println("Not LoggedIn")
             authViewModel.getPassedOnboarding().observe(this) {
@@ -32,6 +32,15 @@ class LoadingActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun navigateToLanding() {
+        val intent = Intent(this, LandingActivity::class.java)
+        intent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 
     private fun navigateToLogin() {
