@@ -26,8 +26,8 @@ class DetailBubbleMessageActivity : AppCompatActivity(), View.OnClickListener {
         binding.rvComments.setHasFixedSize(true)
         binding.btnAddComments.setOnClickListener(this)
 
-        dataUser.addAll(listComment)
-        showRecycleView()
+//        dataUser.addAll(listComment)
+//        showRecycleView()
     }
 
     private val listComment: ArrayList<Comment>

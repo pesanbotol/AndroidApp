@@ -233,8 +233,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }
 
     override fun onClusterInfoWindowClick(cluster: Cluster<BottleCustomMarker>?) {
-        val intent = Intent(requireContext(), DetailBubbleMessageActivity::class.java)
-        startActivity(intent)
         CommonFunction.showSnackBar(
             binding!!.root,
             requireContext(),
@@ -245,11 +243,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     override fun onClusterItemClick(item: BottleCustomMarker?): Boolean {
         val intent = Intent(requireContext(), DetailBubbleMessageActivity::class.java)
         startActivity(intent)
-        CommonFunction.showSnackBar(
-            binding!!.root,
-            requireContext(),
-            "Todo",
-        )
         CommonFunction.showSnackBar(
             binding!!.root,
             requireContext(),

@@ -45,8 +45,9 @@
                     android:textColor="?attr/colorOnPrimary"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/iv_photo_profile"
-                    tools:layout_editor_absoluteX="12dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_photo_profile" />
 
                 <TextView
                     android:id="@+id/tv_user_location"
@@ -81,7 +82,7 @@
                     android:gravity="start"
                     android:paddingHorizontal="25dp"
                     android:paddingTop="20dp"
-                    android:text="Edit Profile"
+                    android:text="@string/edit_profile"
                     android:textColor="?attr/colorOnPrimary"
                     android:textSize="14sp"
                     android:textStyle="bold"

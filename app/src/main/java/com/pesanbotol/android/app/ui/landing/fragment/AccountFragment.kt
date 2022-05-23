@@ -10,10 +10,11 @@ import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
 import com.pesanbotol.android.app.databinding.FragmentAccountBinding
+import com.pesanbotol.android.app.ui.edit_profile.EditProfileActivity
 import com.pesanbotol.android.app.ui.login.LoginActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AccountFragment : Fragment() {
+class AccountFragment : Fragment(), View.OnClickListener {
     private val authViewModel by viewModel<AuthViewModel>()
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding
@@ -23,6 +24,8 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
+
+        binding?.tvEditProfile?.setOnClickListener(this)
 
         _binding?.let { view ->
             authViewModel.firebaseUser()?.let {
@@ -60,6 +63,11 @@ class AccountFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(view: View?) {
+        val intent = Intent(requireContext(), EditProfileActivity::class.java)
+        startActivity(intent)
     }
 
 }

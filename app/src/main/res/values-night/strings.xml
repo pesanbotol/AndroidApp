@@ -16,4 +16,5 @@
     <string name="lupa_password" translatable="false">Lupa password?</string>
     <string name="descSignup">Daftar untuk menikmati fitur-fitur menarik dan pamerkan pengalaman kamu ke orang lain</string>
     <string name="lihat_semua"><u> Lihat Semua </u></string>
+    <string name="edit_profile"><u> Edit Profile</u></string>
 </resources>

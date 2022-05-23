@@ -20,7 +20,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:background="@drawable/background_outline_latest_activity"
-
                 app:boxBackgroundMode="none"
                 app:hintEnabled="false">
 
@@ -120,8 +119,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:textColor="@color/white"
-            android:text="Buat Pesan" />
+            android:text="Buat Pesan"
+            android:textColor="@color/white" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

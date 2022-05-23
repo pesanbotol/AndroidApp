@@ -12,12 +12,12 @@ import com.pesanbotol.android.app.databinding.ActivityCommentBottleBinding
 
 class CommentBottleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCommentBottleBinding
-
     private var dataComment = ArrayList<Comment>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCommentBottleBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_comment_bottle)
+        setContentView(binding.root)
         binding.rvAllComments.setHasFixedSize(true)
 
         dataComment.addAll(listComment)
