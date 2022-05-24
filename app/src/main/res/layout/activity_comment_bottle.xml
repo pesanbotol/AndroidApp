@@ -10,10 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearLayout"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="448dp" />
+        android:layout_alignParentTop="true" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -21,30 +18,31 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/background_message"
         android:orientation="horizontal"
-        android:paddingHorizontal="8dp">
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp">
 
         <ImageView
             android:id="@+id/attach_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:elevation="2dp"
             android:enabled="false"
             android:src="@drawable/ic_outline_attach_file_24" />
 
         <EditText
             android:id="@+id/messageEditText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@null"
-            android:gravity="bottom"
-            android:hint="Say something..."
+            android:background="@drawable/background_message"
+            android:gravity="left|center_vertical"
+            android:hint="Aa"
             android:inputType="text"
-            android:minHeight="38dp"
-            android:padding="10dp"
-            android:textColor="?attr/colorOnPrimary" />
+            android:padding="8dp"
+            android:textColor="?attr/colorOnSecondary"
+            tools:ignore="RtlHardcoded" />
 
         <ImageView
             android:id="@+id/sendButton"
