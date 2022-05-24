@@ -52,6 +52,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     private var bounds: ArrayList<LatLng> = arrayListOf()
     private var boundsBuilder = LatLngBounds.Builder()
     private var mClusterManager: ClusterManager<BottleCustomMarker>? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val SDK_INT = Build.VERSION.SDK_INT
