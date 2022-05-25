@@ -12,38 +12,56 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_bar"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_margin="8dp"
-        app:queryHint="Search here.."
-        android:background="@drawable/background_search_bar" />
+        android:background="@drawable/background_search_bar"
+        android:padding="20dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="20dp">
 
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/text_inputLayout_search"-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="48dp"-->
-<!--        android:layout_margin="8dp"-->
-<!--        android:background="@drawable/background_search_bar"-->
-<!--        android:elevation="10dp"-->
-<!--        app:boxBackgroundMode="none"-->
-<!--        app:errorEnabled="false"-->
-<!--        app:endIconMode="clear_text"-->
-<!--        app:hintEnabled="false"-->
-<!--        app:startIconDrawable="@drawable/ic_baseline_search_24">-->
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="start|center"
+            android:paddingStart="8dp"
+            android:src="@drawable/ic_baseline_search_24" />
 
-<!--        <com.pesanbotol.android.app.ui.components.SearchTextField-->
-<!--            android:id="@+id/et_search"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:hint="Search Here"-->
-<!--            android:maxLines="1"-->
-<!--            android:padding="2dp"-->
-<!--            android:textFontWeight="1" />-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Search here" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/text_inputLayout_search"-->
+    <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="48dp"-->
+    <!--        android:layout_margin="8dp"-->
+    <!--        android:background="@drawable/background_search_bar"-->
+    <!--        android:elevation="10dp"-->
+    <!--        app:boxBackgroundMode="none"-->
+    <!--        app:errorEnabled="false"-->
+    <!--        app:endIconMode="clear_text"-->
+    <!--        app:hintEnabled="false"-->
+    <!--        app:startIconDrawable="@drawable/ic_baseline_search_24">-->
+
+    <!--        <com.pesanbotol.android.app.ui.components.SearchTextField-->
+    <!--            android:id="@+id/et_search"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:hint="Search Here"-->
+    <!--            android:maxLines="1"-->
+    <!--            android:padding="2dp"-->
+    <!--            android:textFontWeight="1" />-->
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <LinearLayout
         android:id="@+id/loading_indicator"

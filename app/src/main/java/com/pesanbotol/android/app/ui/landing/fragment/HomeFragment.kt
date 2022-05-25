@@ -32,6 +32,7 @@ import com.pesanbotol.android.app.data.core.model.BottleCustomMarker
 import com.pesanbotol.android.app.databinding.FragmentHomeBinding
 import com.pesanbotol.android.app.ui.add_message.AddMessageActivity
 import com.pesanbotol.android.app.ui.detail_bubble.DetailBubbleMessageActivity
+import com.pesanbotol.android.app.ui.search_bottle.SearchActivity
 import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.CustomMarkerRenderer
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -77,6 +78,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
             val intent = Intent(requireActivity(), AddMessageActivity::class.java)
             startActivity(intent)
         }
+        binding?.cardView?.setOnClickListener {
+            val intent = Intent(requireActivity(), SearchActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding?.root
     }
 

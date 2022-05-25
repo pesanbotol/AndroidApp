@@ -7,20 +7,52 @@
     android:padding="8dp"
     tools:context=".ui.search_bottle.SearchActivity">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_bar"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
         android:background="@drawable/background_search_bar"
+        android:elevation="10dp"
+        app:boxBackgroundMode="none"
+        app:endIconMode="clear_text"
+        app:errorEnabled="false"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="Search here.." />
+        app:startIconDrawable="@drawable/ic_baseline_search_24">
 
-    <ListView
+        <com.pesanbotol.android.app.ui.components.SearchTextField
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:focusable="true"
+            android:hint="Search Here"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:padding="2dp"
+            android:scrollHorizontally="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+        <ListView
+            android:id="@+id/list_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
