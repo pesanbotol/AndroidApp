@@ -33,6 +33,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PesanBotol">
         <activity
+            android:name=".ui.search_bottle.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.edit_profile.EditProfileActivity"
             android:exported="false" />
         <activity
