@@ -54,6 +54,8 @@ dependencies {
     def okhttp_log_ver = "4.9.0"
     def retrofit_ver = "2.9.0"
     def glide_ver = "4.13.1"
+    
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
     implementation 'androidx.room:room-paging:2.5.0-alpha01'

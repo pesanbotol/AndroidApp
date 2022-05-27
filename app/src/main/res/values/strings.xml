@@ -53,6 +53,10 @@
     <string name="lihat_semua" translatable="false"><u> Lihat Semua </u></string>
     <string name="edit_profile" translatable="false"> <u> Edit Profile</u></string>
 
+    <!--  String used for tabs layout follower following  -->
+    <string name="tab_followers" translatable="false">Followers</string>
+    <string name="tab_following" translatable="false">Following</string>
+
     <!--    dummy data  -->
     <string-array name="name">
         <item>Jake Wharton</item>

@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
 import com.pesanbotol.android.app.databinding.FragmentAccountBinding
 import com.pesanbotol.android.app.ui.edit_profile.EditProfileActivity
+import com.pesanbotol.android.app.ui.followers_following.FollowActivity
 import com.pesanbotol.android.app.ui.login.LoginActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,6 +28,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
 
         binding?.tvEditProfile?.setOnClickListener(this)
+        binding?.tvFollowers?.setOnClickListener(this)
 
         _binding?.let { view ->
             authViewModel.firebaseUser()?.let {
@@ -66,8 +69,17 @@ class AccountFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        val intent = Intent(requireContext(), EditProfileActivity::class.java)
-        startActivity(intent)
+        when (view?.id) {
+            R.id.tv_edit_profile -> {
+                val intent = Intent(requireContext(), EditProfileActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.tv_followers -> {
+                val intent = Intent(requireContext(), FollowActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
     }
 
 }
