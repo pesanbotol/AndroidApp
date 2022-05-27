@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/activity_on_boarding_scene"
+    tools:context=".ui.onboarding.OnBoardingActivity">
+
+    <ImageView
+        android:id="@+id/iv_menu_1"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/title_menu_1"
+        app:srcCompat="@drawable/exampleauth"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="58dp" />
+
+    <TextView
+        android:id="@+id/tv_title_menu_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/title_menu_1"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="424dp" />
+
+    <TextView
+        android:id="@+id/tv_desc_menu_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/desc_menu_1"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="464dp" />
+
+    <ImageView
+        android:id="@+id/iv_menu_2"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:contentDescription="@string/title_menu_2"
+        app:srcCompat="@drawable/hidden_gems"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="107dp" />
+
+    <TextView
+        android:id="@+id/tv_title_menu_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/title_menu_2"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_desc_menu_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/desc_menu_2"
+        tools:layout_editor_absoluteY="463dp" />
+
+    <ImageView
+        android:id="@+id/iv_menu_3"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:contentDescription="@string/title_menu_3"
+        app:srcCompat="@drawable/exampleauth" />
+
+    <TextView
+        android:id="@+id/tv_title_menu_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="24sp"
+        android:text="@string/title_menu_3"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_desc_menu_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/desc_menu_3"
+        tools:layout_editor_absoluteX="411dp"
+        tools:layout_editor_absoluteY="480dp" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/indicator_menu_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_circle_24"
+        app:altSrc="@drawable/ic_baseline_circle_16"
+        tools:layout_editor_absoluteX="198dp"
+        tools:layout_editor_absoluteY="615dp" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/indicator_menu_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_circle_24"
+        app:altSrc="@drawable/ic_baseline_circle_16"
+        tools:layout_editor_absoluteX="198dp"
+        tools:layout_editor_absoluteY="615dp" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/indicator_menu_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_circle_24"
+        app:altSrc="@drawable/ic_baseline_circle_16"
+        tools:layout_editor_absoluteX="198dp"
+        tools:layout_editor_absoluteY="615dp" />
+
+    <Button
+        android:background="@drawable/bg_primary_button"
+        android:id="@+id/button_lanjut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:text="@string/Lanjut"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="667dp" />
+</androidx.constraintlayout.motion.widget.MotionLayout>

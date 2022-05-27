@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_up" translatable="false">Sign Up</string>
+    <string name="imageauth" translatable="false">imageAuth</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="name" translatable="false">Name</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="already_have_account" translatable="false">Already have an account ?</string>
+    <string name="log_in" translatable="false"><u>Log In</u></string>
+    <string name="login" translatable="false">Login</string>
+    <string name="don_t_have_an_account" translatable="false">Don’t have an account ?</string>
+    <string name="signUp" translatable="false">Sign Up</string>
+    <string name="profile_user" translatable="false">Profile User</string>
+    <string name="your_latest_activity" translatable="false">Your Latest Activity</string>
+    <string name="descriptionLogin">Selamat datang!\nSilahkan masuk atau mendaftar</string>
+    <string name="lupa_password" translatable="false">Lupa password?</string>
+    <string name="descSignup">Daftar untuk menikmati fitur-fitur menarik dan pamerkan pengalaman kamu ke orang lain</string>
+    <string name="lihat_semua"><u> Lihat Semua </u></string>
+    <string name="edit_profile"><u> Edit Profile</u></string>
+</resources>

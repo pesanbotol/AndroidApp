@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "711492615059",
+    "firebase_url": "https://semiotic-joy-349807-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "semiotic-joy-349807",
+    "storage_bucket": "semiotic-joy-349807.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711492615059:android:7316cbb137faf554f90666",
+        "android_client_info": {
+          "package_name": "com.example.botolapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711492615059-t3pk7hp8e8e8og80cf2v00amrqsh553m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWr5s57gpgZELheoL-3fzv-mm_1Me6-e4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711492615059-t3pk7hp8e8e8og80cf2v00amrqsh553m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "711492615059-h193tnoe0b93q3qpo4dd2cgfiu9mrks1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.botolapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711492615059:android:bbe8a60275b6b29ef90666",
+        "android_client_info": {
+          "package_name": "com.pesanbotol.android.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711492615059-h2qf0vjgjff847iujgc3em7nnh9ufsn7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pesanbotol.android.app",
+            "certificate_hash": "3236f57da2c102ad1957860ead9318ecb3d9bcb8"
+          }
+        },
+        {
+          "client_id": "711492615059-t3pk7hp8e8e8og80cf2v00amrqsh553m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWr5s57gpgZELheoL-3fzv-mm_1Me6-e4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711492615059-t3pk7hp8e8e8og80cf2v00amrqsh553m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "711492615059-h193tnoe0b93q3qpo4dd2cgfiu9mrks1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.botolapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
