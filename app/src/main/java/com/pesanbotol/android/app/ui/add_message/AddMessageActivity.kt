@@ -33,16 +33,19 @@ import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.databinding.ActivityAddMessageBinding
-import com.pesanbotol.android.app.ml.Model
+import com.pesanbotol.android.app.ml.*
 import com.pesanbotol.android.app.utility.*
 import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUEST_CODE_PERMISSIONS
 import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUIRED_PERMISSIONS
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.ByteArrayOutputStream
 import java.io.File
+
 
 class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
     private lateinit var binding: ActivityAddMessageBinding
@@ -115,13 +118,15 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             val stream = ByteArrayOutputStream()
 
             image.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            stream.close()
             val byteArray: ByteArray = stream.toByteArray()
 
             val bitmap: Bitmap = BitmapFactory.decodeByteArray(
                 byteArray, 0,
                 byteArray.size
             )
-            val resized: Bitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
+            val resized: Bitmap = Bitmap.createScaledBitmap(bitmap, 448, 448, true)
             //  start tflite
             val model = Model.newInstance(this)
 
@@ -132,14 +137,25 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
 
             val tbuffer = TensorImage.fromBitmap(resized)
             val byteBuffer = tbuffer.buffer
-
+            Log.d("shapex", byteBuffer.toString())
+            Log.d("shape", inputFeature0.buffer.toString())
             inputFeature0.loadBuffer(byteBuffer)
 
             // Runs model inference and gets result.
             val outputs = model.process(inputFeature0)
-            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
-
-            binding.tvPredict.setText(outputFeature0.floatArray[10].toString())
+            val outputFeature0: TensorBuffer = outputs.outputFeature0AsTensorBuffer
+            val data1 = outputFeature0.intArray
+            val data2 = outputFeature0.floatArray
+            println("outputFeature0.floatArray[100].toString() ${outputFeature0.getDataType().toString()}")
+            println("outputFeature0.floatArray[100].toString() ${outputFeature0.toString()}")
+            println("outputFeature0.floatArray[100].toString() ${data1}")
+            data1.forEach {
+                println("data1 $it")
+            }
+            data2.forEach {
+                println("data2 $it")
+            }
+            binding.tvPredict.setText(outputFeature0.toString())
 
             // Releases model resources if no longer used.
             model.close()
