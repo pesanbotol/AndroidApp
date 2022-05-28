@@ -45,6 +45,7 @@ import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 
 
 class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
@@ -85,7 +86,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val mapManager =
-            supportFragmentManager.findFragmentById(R.id.map_add_story) as SupportMapFragment?
+                supportFragmentManager.findFragmentById(R.id.map_add_story) as SupportMapFragment?
         mapManager?.getMapAsync(this)
 
         if (!allPermissionsGranted()) {
@@ -112,53 +113,69 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             dialog.show()
         }
 //        val imageAsBytes: ByteArray? = binding.previewImage.drawable.state
-
+        val labels = application.assets.open("labels.txt").bufferedReader().use { it.readText() }
+            .split("\n")
         binding.btnPrediksi.setOnClickListener {
-            val image: Bitmap = binding.previewImage.drawable.toBitmap()
-            val stream = ByteArrayOutputStream()
+            photo?.let {
+                val image: Bitmap = BitmapFactory.decodeFile(it.path)
+                println("it.path ${it.path}")
+                val stream = ByteArrayOutputStream()
 
-            image.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-            stream.flush()
-            stream.close()
-            val byteArray: ByteArray = stream.toByteArray()
+                image.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                stream.flush()
+                stream.close()
+                val byteArray: ByteArray = stream.toByteArray()
 
-            val bitmap: Bitmap = BitmapFactory.decodeByteArray(
-                byteArray, 0,
-                byteArray.size
-            )
-            val resized: Bitmap = Bitmap.createScaledBitmap(bitmap, 448, 448, true)
-            //  start tflite
-            val model = Model.newInstance(this)
+                val bitmap: Bitmap = BitmapFactory.decodeByteArray(
+                    byteArray, 0,
+                    byteArray.size
+                )
+                val resized: Bitmap = Bitmap.createScaledBitmap(bitmap, 448, 448, true)
+                //  start tflite
+                val model = Model.newInstance(this)
 
-            // Creates inputs for reference.
-            val inputFeature0 =
-                TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+                // Creates inputs for reference.
+                val inputFeature0 =
+                        TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
 
+                val tbuffer = TensorImage.fromBitmap(resized)
+                val byteBuffer = tbuffer.buffer
+                Log.d("shapex", byteBuffer.toString())
+                Log.d("shape", inputFeature0.buffer.toString())
+                inputFeature0.loadBuffer(byteBuffer)
 
-            val tbuffer = TensorImage.fromBitmap(resized)
-            val byteBuffer = tbuffer.buffer
-            Log.d("shapex", byteBuffer.toString())
-            Log.d("shape", inputFeature0.buffer.toString())
-            inputFeature0.loadBuffer(byteBuffer)
+                // Runs model inference and gets result.
+                val outputs = model.process(inputFeature0)
+                val outputFeature0: TensorBuffer = outputs.outputFeature0AsTensorBuffer
+                val data1 = outputFeature0.intArray
+                val data2 = outputFeature0.floatArray
+                data1.forEach {
+                    println("data1 $it")
+                }
+                data2.forEach {
+                    println("data2 $it")
+                }
+//                    var max = getMax(outputFeature0.floatArray)
+                println(
+                    "outputFeature0.floatArray[100].toString() ${
+                        outputFeature0.getDataType().toString()
+                    }"
+                )
+                println("outputFeature0.floatArray[100].toString() ${outputFeature0.toString()}")
+                println("outputFeature0.floatArray[100].toString() ${data1}")
+                try {
 
-            // Runs model inference and gets result.
-            val outputs = model.process(inputFeature0)
-            val outputFeature0: TensorBuffer = outputs.outputFeature0AsTensorBuffer
-            val data1 = outputFeature0.intArray
-            val data2 = outputFeature0.floatArray
-            println("outputFeature0.floatArray[100].toString() ${outputFeature0.getDataType().toString()}")
-            println("outputFeature0.floatArray[100].toString() ${outputFeature0.toString()}")
-            println("outputFeature0.floatArray[100].toString() ${data1}")
-            data1.forEach {
-                println("data1 $it")
+                    println("outputFeature0.floatArray[100].toString() ${getMax(data1)}")
+
+                    binding.tvPredict.setText(labels[getMax(data1)])
+                } catch (e: Exception) {
+                    println("kopawokawkpoawpok error ya kasian $e")
+                }
+
+                // Releases model resources if no longer used.
+                model.close()
             }
-            data2.forEach {
-                println("data2 $it")
-            }
-            binding.tvPredict.setText(outputFeature0.toString())
 
-            // Releases model resources if no longer used.
-            model.close()
             //  end tflite
         }
 
@@ -166,11 +183,24 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
 
     }
 
+    fun getMax(arr: IntArray): Int {
+        var ind = 0;
+        var min = 0;
+
+        for (i in 0..arr.size) {
+            if (arr[i] > min) {
+                min = arr[i]
+                ind = i;
+            }
+        }
+        return ind
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.apply {
             binding.addMapFrame.background =
-                ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
+                    ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
             binding.addMapFrame.clipToOutline = true
             setAllGesturesEnabled(true)
             isScrollGesturesEnabledDuringRotateOrZoom = true
@@ -186,13 +216,13 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
     }
 
     private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                getMyLocation()
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    getMyLocation()
+                }
             }
-        }
 
     private fun getMyLocation() {
         mMap.isMyLocationEnabled = true
@@ -260,7 +290,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             )
             binding.previewImage.setImageBitmap(result)
             binding.previewImage.background =
-                ContextCompat.getDrawable(this, R.drawable.rounded_outline)
+                    ContextCompat.getDrawable(this, R.drawable.rounded_outline)
             binding.previewImage.clipToOutline = true
             binding.uploadImagePlaceholder.visibility = View.GONE
         }
@@ -274,7 +304,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             photo = uriToFile(selectedImg, this@AddMessageActivity)
             binding.previewImage.setImageURI(selectedImg)
             binding.previewImage.background =
-                ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
+                    ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
             binding.previewImage.clipToOutline = true
             binding.uploadImagePlaceholder.visibility = View.GONE
         }
