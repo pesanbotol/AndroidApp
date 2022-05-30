@@ -7,10 +7,10 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.location.Location
+import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,7 +19,6 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.graphics.drawable.toBitmap
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -38,10 +37,12 @@ import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUEST_CODE_
 import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUIRED_PERMISSIONS
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.tensorflow.lite.DataType
-import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
-import java.io.ByteArrayOutputStream
 import java.io.File
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import java.util.*
+
 
 class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
     private lateinit var binding: ActivityAddMessageBinding
@@ -50,6 +51,9 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
     private var myLocation: Location? = null
     private val bottleViewModel by viewModel<BottleViewModel>()
     private val authViewModel by viewModel<AuthViewModel>()
+    private var classifier: ImageClassifier? = null
+    private var textureView: AutoFitTextureView? = null
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onRequestPermissionsResult(
@@ -78,10 +82,10 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
         super.onCreate(savedInstanceState)
         binding = ActivityAddMessageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        classifier = ImageClassifier(application)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val mapManager =
-            supportFragmentManager.findFragmentById(R.id.map_add_story) as SupportMapFragment?
+                supportFragmentManager.findFragmentById(R.id.map_add_story) as SupportMapFragment?
         mapManager?.getMapAsync(this)
 
         if (!allPermissionsGranted()) {
@@ -108,40 +112,120 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             dialog.show()
         }
 //        val imageAsBytes: ByteArray? = binding.previewImage.drawable.state
-
+        val labels = application.assets.open("labels.txt").bufferedReader().use { it.readText() }
+            .split("\n")
         binding.btnPrediksi.setOnClickListener {
-            val image: Bitmap = binding.previewImage.drawable.toBitmap()
-            val stream = ByteArrayOutputStream()
+            photo?.let {
+                // Creates inputs for reference.
+                val inputFeature0 =
+                        TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+                val image: Bitmap = BitmapFactory.decodeFile(it.path)
+//                val dimension = Math.min(image.width, image.height)
+//                val imagex = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+//                val dimension = Math.min(image.width,image.height)
+//                val extract =ThumbnailUtils.extractThumbnail(image,dimension,dimension)
 
-            image.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-            val byteArray: ByteArray = stream.toByteArray()
+                println("it.path ${it.path}")
+//                val stream = ByteArrayOutputStream()
 
-            val bitmap: Bitmap = BitmapFactory.decodeByteArray(
-                byteArray, 0,
-                byteArray.size
-            )
-            val resized: Bitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
-            //  start tflite
-            val model = Model.newInstance(this)
+                val image2 = Bitmap.createScaledBitmap(image,224,224,true)
+//                stream.flush()
+//                stream.close()
+//                val byteArray: ByteArray = stream.toByteArray()
+                val bBuffer = ByteBuffer.allocateDirect(4 * 224 * 224 * 3)
+                bBuffer.order(ByteOrder.nativeOrder())
+//                val intValues = intArrayOf(224 * 224)
+                val intValues = IntArray(224 * 224)
+                println("getPixels ${image2.width} ${image2.height}")
+                image2.getPixels(intValues, 0, image2.width, 0, 0, image2.width, image2.height)
+                var pixel = 0
+                for (i in 0 until 224) {
+                    for (j in 0 until 224) {
+                        val values = intValues[pixel++] // RGB
+                        bBuffer.putFloat((values shr 16 and 0xFF) * (1f / 1))
+                        bBuffer.putFloat((values shr 8 and 0xFF) * (1f / 1))
+                        bBuffer.putFloat((values and 0xFF) * (1f / 1))
+                    }
+                }
+//                val bitmap: Bitmap = BitmapFactory.decodeByteArray(
+//                    byteArray, 0,
+//                    byteArray.size
+//                )
+//                val resized: Bitmap = Bitmap.createScaledBitmap(
+//                    bitmap,
+//                    224,
+//                    224,
+//                    false
+//                )
+                inputFeature0.loadBuffer(bBuffer)
+                //  start tflite
+//                classifyFrame(resized)
+                val model = Model.newInstance(this)
 
-            // Creates inputs for reference.
-            val inputFeature0 =
-                TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
 
+//                val tbuffer = TensorImage.fromBitmap(resized)
+//                val byteBuffer = tbuffer.buffer
+//                Log.d("shapex", byteBuffer.toString())
+//                Log.d("shape", inputFeature0.buffer.toString())
+//                inputFeature0.loadBuffer(byteBuffer)
 
-            val tbuffer = TensorImage.fromBitmap(resized)
-            val byteBuffer = tbuffer.buffer
+                // Runs model inference and gets result.
+                val outputs = model.process(inputFeature0)
+                val outputFeature0: TensorBuffer = outputs.outputFeature0AsTensorBuffer
+//                outputFeature0.
+                val confidences = outputFeature0.floatArray
+                // find the index of the class with the biggest confidence.
+                // find the index of the class with the biggest confidence.
+                var maxPos = 0
+                var maxConfidence = 0f
+                println("i in confidences.indices ${confidences.indices}")
+                println("Array ${Arrays.toString(confidences)}")
+                println("Array ${Arrays.toString(outputFeature0.intArray)}")
+                for (i in confidences.indices) {
+                    println("indices ${confidences[i]}")
+                    if (confidences[i] > maxConfidence) {
+                        maxConfidence = confidences[i]
+                        maxPos = i
+                    }
+                }
+                val classes = arrayOf("SFW", "NSFW")
+//                println("maxPos ${confidences.}")
+                println("maxPos ${maxPos}")
+                binding.tvPredict.setText("value : ${Arrays.toString(confidences)}, categorized as : ${classes[maxPos]}")
 
-            inputFeature0.loadBuffer(byteBuffer)
+                // Releases model resources if no longer used.
 
-            // Runs model inference and gets result.
-            val outputs = model.process(inputFeature0)
-            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+                // Releases model resources if no longer used.
+                model.close()
+//                val data1 = outputFeature0.intArray
+//                val data2 = outputFeature0.floatArray
+//                data1.forEach {
+//                    println("data1 $it")
+//                }
+//                data2.forEach {
+//                    println("data2 $it")
+//                }
+////                    var max = getMax(outputFeature0.floatArray)
+//                println(
+//                    "outputFeature0.floatArray[100].toString() ${
+//                        outputFeature0.getDataType().toString()
+//                    }"
+//                )
+//                println("outputFeature0.floatArray[100].toString() ${outputFeature0.toString()}")
+//                println("outputFeature0.floatArray[100].toString() ${data1}")
+//                try {
+//
+//                    println("outputFeature0.floatArray[100].toString() ${getMax(data1)}")
+//
+//                    binding.tvPredict.setText(labels[getMax(data1)])
+//                } catch (e: Exception) {
+//                    println("kopawokawkpoawpok error ya kasian $e")
+//                }
+//
+//                // Releases model resources if no longer used.
+//                model.close()
+            }
 
-            binding.tvPredict.setText(outputFeature0.floatArray[10].toString())
-
-            // Releases model resources if no longer used.
-            model.close()
             //  end tflite
         }
 
@@ -149,11 +233,47 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
 
     }
 
+    private fun classifyFrame(resizedBitmap: Bitmap) {
+        if (classifier == null || photo == null) {
+            Toast.makeText(
+                applicationContext,
+                "Uninitialized Classifier or invalid context.",
+                Toast.LENGTH_LONG
+            ).show()
+            return
+        }
+//        val bitmap: Bitmap? = binding.previewImage.drawable.toBitmap(). getBitmap(
+//            ImageClassifier.DIM_IMG_SIZE_X,
+//            ImageClassifier.DIM_IMG_SIZE_Y
+//        )
+        val textToShow: String = classifier!!.classifyFrame(resizedBitmap!!)
+        resizedBitmap.recycle()
+        Toast.makeText(
+            applicationContext,
+            textToShow,
+            Toast.LENGTH_LONG
+        ).show()
+        binding.tvPredict.text = textToShow
+    }
+
+    fun getMax(arr: IntArray): Int {
+        var ind = 0;
+        var min = 0;
+
+        for (i in 0..arr.size) {
+            if (arr[i] > min) {
+                min = arr[i]
+                ind = i;
+            }
+        }
+        return ind
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.apply {
             binding.addMapFrame.background =
-                ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
+                    ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
             binding.addMapFrame.clipToOutline = true
             setAllGesturesEnabled(true)
             isScrollGesturesEnabledDuringRotateOrZoom = true
@@ -169,13 +289,13 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
     }
 
     private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                getMyLocation()
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    getMyLocation()
+                }
             }
-        }
 
     private fun getMyLocation() {
         mMap.isMyLocationEnabled = true
@@ -243,7 +363,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             )
             binding.previewImage.setImageBitmap(result)
             binding.previewImage.background =
-                ContextCompat.getDrawable(this, R.drawable.rounded_outline)
+                    ContextCompat.getDrawable(this, R.drawable.rounded_outline)
             binding.previewImage.clipToOutline = true
             binding.uploadImagePlaceholder.visibility = View.GONE
         }
@@ -257,7 +377,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             photo = uriToFile(selectedImg, this@AddMessageActivity)
             binding.previewImage.setImageURI(selectedImg)
             binding.previewImage.background =
-                ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
+                    ContextCompat.getDrawable(this@AddMessageActivity, R.drawable.rounded_outline)
             binding.previewImage.clipToOutline = true
             binding.uploadImagePlaceholder.visibility = View.GONE
         }
