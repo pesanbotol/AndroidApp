@@ -20,7 +20,7 @@
     <string name="name" translatable="false">Nama</string>
     <string name="password" translatable="false">Password</string>
     <string name="passwordLength" translatable="false">Your Passwords must match and must be at least 6 characters in length</string>
-    <string name="sign_up" translatable="false">Daftar</string>
+    <string name="sign_up">Daftar</string>
     <string name="already_have_account">Sudah punya akun?</string>
     <string name="log_in"> <u>Masuk</u></string>
     <string name="login">Masuk</string>

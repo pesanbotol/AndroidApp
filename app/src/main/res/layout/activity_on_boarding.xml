@@ -69,7 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:contentDescription="@string/title_menu_3"
-        app:srcCompat="@drawable/exampleauth" />
+        app:srcCompat="@drawable/badge" />
 
     <TextView
         android:id="@+id/tv_title_menu_3"

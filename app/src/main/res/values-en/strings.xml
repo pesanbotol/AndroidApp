@@ -15,14 +15,16 @@
     <string name="login">Login</string>
     <string name="don_t_have_an_account">Don\'t have an Account ?</string>
     <string name="signUp"><u>Sign Up</u></string>
+    <!--  Text inside Button  -->
+    <string name="sign_up">Sign Up</string>
 
     <string name="descSignup">Sign up to enjoy exciting features and show off your experience to others</string>
     <string name="i_agree_with_terms_and_privacy">I agree with the <font color='#1E91D0'>Terms and Privacy</font></string>
     <string name="already_have_account">Do you have account ?</string>
 
-    <string name="title_bottom_menu_1" >Home</string>
-    <string name="title_bottom_menu_2" >Activity</string>
-    <string name="title_bottom_menu_3" >Account</string>
+    <string name="title_bottom_menu_1">Home</string>
+    <string name="title_bottom_menu_2">Activity</string>
+    <string name="title_bottom_menu_3">Account</string>
 
     <string name="tv_location">Current Location</string>
     <string name="your_latest_activity">Your Latest Activity</string>

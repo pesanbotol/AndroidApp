@@ -12,6 +12,7 @@ import android.view.View
 import androidx.annotation.Nullable
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import com.google.android.material.color.MaterialColors
 import com.pesanbotol.android.app.R
 
 
@@ -47,7 +48,14 @@ class PasswordTextField : AppCompatEditText, View.OnTouchListener {
                 ContextCompat.getDrawable(context, R.drawable.ic_baseline_clear_24) as Drawable
         background =
                 ContextCompat.getDrawable(context, R.drawable.bg_outlined_textfield) as Drawable
+        val textColors = MaterialColors.getColor(
+            this,
+            com.google.android.material.R.attr.colorOnSecondary
+        )
+        setTextColor(textColors)
+
         setOnTouchListener(this)
+
 
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

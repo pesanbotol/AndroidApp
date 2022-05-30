@@ -49,7 +49,7 @@
                 android:gravity="top"
                 android:lineSpacingExtra="3sp"
                 android:text="Informasi Akun"
-                android:textColor="?attr/colorPrimary"
+                android:textColor="?attr/colorSecondary"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:translationY="-1.5sp"
@@ -132,7 +132,7 @@
                 android:gravity="top"
                 android:lineSpacingExtra="3sp"
                 android:text="Akun Media Sosial"
-                android:textColor="?attr/colorPrimary"
+                android:textColor="?attr/colorSecondary"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:translationY="-1.5sp"
@@ -198,14 +198,13 @@
 
             <com.pesanbotol.android.app.ui.components.PrimaryButton
                 android:id="@+id/btn_save_profile"
+                android:backgroundTint="?attr/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:text="Simpan"
                 android:textColor="@color/white"
                 tools:layout_editor_absoluteX="8dp" />
-
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

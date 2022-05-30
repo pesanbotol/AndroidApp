@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:text="@string/lupa_password"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?attr/colorSecondary"
         android:textStyle="normal"
         app:layout_constraintTop_toBottomOf="@+id/password_text_input"
         tools:layout_editor_absoluteX="12dp" />
@@ -106,7 +106,7 @@
             android:elevation="1dp"
             android:gravity="center"
             android:text="@string/login"
-            android:textColor="?attr/colorOnPrimary"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <ProgressBar
@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/signUp"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?attr/colorSecondary"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColor="?attr/colorOnSecondary"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -69,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColor="?attr/colorOnSecondary"
             android:hint="@string/password"
             android:inputType="textPassword"
             app:passwordToggleEnabled="true" />
@@ -92,7 +94,7 @@
             android:elevation="1dp"
             android:gravity="center"
             android:text="@string/sign_up"
-            android:textColor="?attr/colorOnPrimary"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <ProgressBar
@@ -137,7 +139,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/log_in"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?attr/colorSecondary"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

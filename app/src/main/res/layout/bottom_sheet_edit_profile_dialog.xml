@@ -28,11 +28,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:text="Galeri"
-                android:textColor="@color/blue_1100" />
+                android:textColor="?attr/colorOnSecondary" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
