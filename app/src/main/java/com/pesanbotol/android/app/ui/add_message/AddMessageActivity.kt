@@ -33,7 +33,6 @@ import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.databinding.ActivityAddMessageBinding
-import com.pesanbotol.android.app.ml.Model
 import com.pesanbotol.android.app.utility.*
 import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUEST_CODE_PERMISSIONS
 import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUIRED_PERMISSIONS
