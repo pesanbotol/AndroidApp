@@ -14,16 +14,18 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pesanbotol.android.app.R
+import com.pesanbotol.android.app.data.profile.viewmodel.ProfileViewModel
 import com.pesanbotol.android.app.databinding.ActivityEditProfileBinding
-import com.pesanbotol.android.app.ui.landing.fragment.AccountFragment
 import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.uriToFile
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 
 class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private var _binding: ActivityEditProfileBinding? = null
     private val binding get() = _binding
 
+    private val profileViewModel by viewModel<ProfileViewModel>()
     private var photo: File? = null
 
     override fun onRequestPermissionsResult(
@@ -53,7 +55,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         _binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        if (actionBar != null){
+        if (actionBar != null) {
             actionBar?.setDisplayHomeAsUpEnabled(true)
             actionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24)
         }
@@ -66,6 +68,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             )
         }
         binding?.ivGallery?.setOnClickListener(this)
+        binding?.btnSaveProfile?.setOnClickListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -79,16 +82,51 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        val dialogBottom = BottomSheetDialog(this)
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_edit_profile_dialog, null)
-        val btnGallery = view.findViewById<CardView>(R.id.btn_gallery_edit_profile)
-        btnGallery.setOnClickListener {
-            dialogBottom.dismiss()
-            startGallery()
+        when (view?.id) {
+            R.id.iv_gallery -> {
+                val dialogBottom = BottomSheetDialog(this)
+                val view = layoutInflater.inflate(R.layout.bottom_sheet_edit_profile_dialog, null)
+                val btnGallery = view.findViewById<CardView>(R.id.btn_gallery_edit_profile)
+                btnGallery.setOnClickListener {
+                    dialogBottom.dismiss()
+                    startGallery()
+                }
+                dialogBottom.setCancelable(true)
+                dialogBottom.setContentView(view)
+                dialogBottom.show()
+            }
+            R.id.btn_save_profile -> {
+                updateProfile()
+            }
         }
-        dialogBottom.setCancelable(true)
-        dialogBottom.setContentView(view)
-        dialogBottom.show()
+
+    }
+
+    private fun updateProfile() {
+        val instagram = binding?.etInstagram?.text.toString().trim()
+        val facebook = binding?.etFacebook?.text.toString().trim()
+        val twitter = binding?.etTwitter?.text.toString().trim()
+        val displayName = binding?.etName?.text.toString().trim()
+        val description = binding?.etDescription?.text.toString().trim()
+
+        profileViewModel.getUpdateProfile(
+            instagram, facebook, twitter, displayName, description
+        ).addOnSuccessListener {
+            CommonFunction.showSnackBar(
+                binding?.root!!,
+                applicationContext,
+                "Berhasil mengunggah!",
+                //                    getString(R.string.file_failed_to_convert),
+            )
+        }.addOnFailureListener { exc ->
+            CommonFunction.showSnackBar(
+                binding!!.root,
+                applicationContext,
+                "Gagal membuat update : $exc",
+                //                    getString(R.string.file_failed_to_convert),
+                true
+            )
+        }
     }
 
     private fun startGallery() {
