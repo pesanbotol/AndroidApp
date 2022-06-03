@@ -1,19 +1,15 @@
 package com.pesanbotol.android.app.ui.landing.fragment
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
+import com.pesanbotol.android.app.data.profile.viewmodel.ProfileViewModel
 import com.pesanbotol.android.app.databinding.FragmentAccountBinding
 import com.pesanbotol.android.app.ui.edit_profile.EditProfileActivity
 import com.pesanbotol.android.app.ui.login.LoginActivity
@@ -21,6 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AccountFragment : Fragment(), View.OnClickListener {
     private val authViewModel by viewModel<AuthViewModel>()
+    private val profileViewModel by viewModel<ProfileViewModel>()
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding
 
@@ -39,6 +36,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
             }
 
         }
+
         _binding?.btnLogout?.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Keluar")
@@ -61,6 +59,9 @@ class AccountFragment : Fragment(), View.OnClickListener {
                 startActivity(intent)
             }
         }
+
+        callProfileViewModel()
+
         return binding?.root
 
     }
@@ -69,6 +70,17 @@ class AccountFragment : Fragment(), View.OnClickListener {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun callProfileViewModel() {
+        profileViewModel.getMyProfile()
+            .addOnSuccessListener {
+                binding?.apply {
+                    tvEditProfile.text = it?.data?.username.toString()
+                    tvUserBio.text = it?.data?.description
+                }
+            }
+    }
+
 
     override fun onClick(view: View?) {
         val intent = Intent(requireContext(), EditProfileActivity::class.java)
