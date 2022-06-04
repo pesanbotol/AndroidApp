@@ -14,8 +14,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pesanbotol.android.app.R
+import com.pesanbotol.android.app.data.bottle.model.ProfileUpdate
 import com.pesanbotol.android.app.data.profile.viewmodel.ProfileViewModel
 import com.pesanbotol.android.app.databinding.ActivityEditProfileBinding
+import com.pesanbotol.android.app.ui.landing.fragment.AccountFragment
 import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.uriToFile
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -59,7 +61,14 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             actionBar?.setDisplayHomeAsUpEnabled(true)
             actionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24)
         }
-
+        val data = intent.getParcelableExtra<ProfileUpdate>(AccountFragment.MY_PROFILE)
+        data?.let {
+            binding?.etInstagram?.setText(it.meta?.socials?.instagram ?: "")
+            binding?.etFacebook?.setText(it.meta?.socials?.facebook ?: "")
+            binding?.etTwitter?.setText(it.meta?.socials?.twitter ?: "")
+            binding?.etName?.setText( it.displayName ?: "")
+            binding?.etDescription?.setText( it.description ?: "")
+        }
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
                 this,
@@ -79,6 +88,16 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showLoading() {
+        binding?.progressBar?.visibility = View.VISIBLE
+        binding?.btnSaveProfile?.isEnabled = false
+    }
+
+    private fun hideLoading() {
+        binding?.progressBar?.visibility = View.GONE
+        binding?.btnSaveProfile?.isEnabled = true
     }
 
     override fun onClick(view: View?) {
@@ -108,7 +127,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         val twitter = binding?.etTwitter?.text.toString().trim()
         val displayName = binding?.etName?.text.toString().trim()
         val description = binding?.etDescription?.text.toString().trim()
-
+        showLoading()
         profileViewModel.getUpdateProfile(
             instagram, facebook, twitter, displayName, description
         ).addOnSuccessListener {
@@ -118,7 +137,9 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                 "Berhasil mengubah!",
                 //                    getString(R.string.file_failed_to_convert),
             )
+            hideLoading()
         }.addOnFailureListener { exc ->
+            hideLoading()
             CommonFunction.showSnackBar(
                 binding!!.root,
                 applicationContext,
@@ -145,7 +166,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             photo = uriToFile(selectedImg, this@EditProfileActivity)
             binding?.profilePic?.setImageURI(selectedImg)
             binding?.profilePic?.background =
-                ContextCompat.getDrawable(this@EditProfileActivity, R.drawable.rounded_outline)
+                    ContextCompat.getDrawable(this@EditProfileActivity, R.drawable.rounded_outline)
         }
     }
 }

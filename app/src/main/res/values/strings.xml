@@ -36,8 +36,8 @@
     <string name="profile_user" translatable="false">Profile User</string>
     <string name="your_latest_activity">Aktivitas Terakhir</string>
     <string name="dummy_name" translatable="false">Arby Azra</string>
-    <string name="dummy_location" translatable="false">Tegal, Central Java, Indonesia</string>
-    <string name="dummy_bio" translatable="false">Aku adalah anak gembala Selalu riang serta gembira</string>
+    <string name="dummy_location" translatable="false">Unknown Location</string>
+    <string name="dummy_bio" translatable="false">Your bio is empty</string>
     <string name="descriptionLogin">Selamat datang!\nSilahkan masuk atau mendaftar</string>
     <string name="lupa_password">Lupa password?</string>
     <string name="descSignup">Daftar untuk menikmati fitur-fitur menarik dan pamerkan pengalaman kamu ke orang lain</string>
