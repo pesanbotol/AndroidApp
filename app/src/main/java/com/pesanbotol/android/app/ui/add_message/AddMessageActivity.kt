@@ -44,7 +44,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
     private var myLocation: Location? = null
     private val bottleViewModel by viewModel<BottleViewModel>()
     private val authViewModel by viewModel<AuthViewModel>()
-    private var classifier: ImageClassifier? = null
+//    private var classifier: ImageClassifier? = null
     private var textureView: AutoFitTextureView? = null
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -75,7 +75,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
         super.onCreate(savedInstanceState)
         binding = ActivityAddMessageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        classifier = ImageClassifier(application)
+//        classifier = ImageClassifier(application)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val mapManager =
                 supportFragmentManager.findFragmentById(R.id.map_add_story) as SupportMapFragment?

@@ -51,9 +51,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-functions-ktx:20.1.0'
     implementation 'com.google.firebase:firebase-storage-ktx'
 
-    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
-    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0'
-    implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
+//    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
+//    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0'
+//    implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
 
     def nav_version_ktx = "2.5.0-beta01"
     def coroutines_ver = "1.6.0"
