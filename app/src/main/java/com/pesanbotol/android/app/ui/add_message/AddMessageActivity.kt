@@ -4,10 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.location.Location
-import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -36,12 +34,7 @@ import com.pesanbotol.android.app.utility.*
 import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUEST_CODE_PERMISSIONS
 import com.pesanbotol.android.app.utility.CommonFunction.Companion.REQUIRED_PERMISSIONS
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.tensorflow.lite.DataType
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.util.*
 
 
 class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener {
@@ -118,28 +111,28 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
 
     }
 
-    private fun classifyFrame(resizedBitmap: Bitmap) {
-        if (classifier == null || photo == null) {
-            Toast.makeText(
-                applicationContext,
-                "Uninitialized Classifier or invalid context.",
-                Toast.LENGTH_LONG
-            ).show()
-            return
-        }
+//    private fun classifyFrame(resizedBitmap: Bitmap) {
+//        if (classifier == null || photo == null) {
+//            Toast.makeText(
+//                applicationContext,
+//                "Uninitialized Classifier or invalid context.",
+//                Toast.LENGTH_LONG
+//            ).show()
+//            return
+//        }
 //        val bitmap: Bitmap? = binding.previewImage.drawable.toBitmap(). getBitmap(
 //            ImageClassifier.DIM_IMG_SIZE_X,
 //            ImageClassifier.DIM_IMG_SIZE_Y
 //        )
-        val textToShow: String = classifier!!.classifyFrame(resizedBitmap!!)
-        resizedBitmap.recycle()
-        Toast.makeText(
-            applicationContext,
-            textToShow,
-            Toast.LENGTH_LONG
-        ).show()
-        binding.tvPredict.text = textToShow
-    }
+//        val textToShow: String = classifier!!.classifyFrame(resizedBitmap!!)
+//        resizedBitmap.recycle()
+//        Toast.makeText(
+//            applicationContext,
+//            textToShow,
+//            Toast.LENGTH_LONG
+//        ).show()
+//        binding.tvPredict.text = textToShow
+//    }
 
     fun getMax(arr: IntArray): Int {
         var ind = 0;
@@ -347,21 +340,14 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
         )
             .addOnCompleteListener {
                 hideLoading()
-
-
                 CommonFunction.showSnackBar(
                     binding.root,
                     applicationContext,
                     "Berhasil mengunggah!",
                     //                    getString(R.string.file_failed_to_convert),
                 )
-                bottleViewModel.getBottle(
-                    if (myLocation != null) LatLng(
-                        myLocation!!.latitude,
-                        myLocation!!.longitude
-                    ) else defaultLocation
-                )
-                onBackPressed()
+                setResult(RESULT_OK)
+                finish()
             }
             .addOnFailureListener { exc ->
                 hideLoading()
@@ -376,16 +362,16 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             }
     }
 
-    private fun uploadBottleFile() {
-        if (photo != null) {
-            authViewModel.firebaseUser()?.let {
-                bottleViewModel.uploadBottleFile(photo!!, it)
-                    .addOnSuccessListener {
-
-                    }
-            }
-        }
-    }
+//    private fun uploadBottleFile() {
+//        if (photo != null) {
+//            authViewModel.firebaseUser()?.let {
+//                bottleViewModel.uploadBottleFile(photo!!, it)
+//                    .addOnSuccessListener {
+//
+//                    }
+//            }
+//        }
+//    }
 
 
 }

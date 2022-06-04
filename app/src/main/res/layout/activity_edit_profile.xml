@@ -7,202 +7,215 @@
     android:padding="20dp"
     tools:context=".ui.edit_profile.EditProfileActivity">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/image_logo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profilePic"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/image_logo"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profilePic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:src="@drawable/photo_profile_dummy" />
+
+                    <ImageView
+                        android:id="@+id/iv_gallery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:background="@drawable/background_change_image_profile"
+                        android:src="@drawable/ic_outline_photo_camera_24" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/informasi_a"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:src="@drawable/photo_profile_dummy" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="top"
+                    android:lineSpacingExtra="3sp"
+                    android:text="Informasi Akun"
+                    android:textColor="?attr/colorSecondary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:translationY="-1.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/image_logo" />
 
-                <ImageView
-                    android:id="@+id/iv_gallery"
+                <TextView
+                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:background="@drawable/background_change_image_profile"
-                    android:src="@drawable/ic_outline_photo_camera_24" />
-            </FrameLayout>
+                    android:text="Name"
+                    app:layout_constraintStart_toStartOf="@+id/informasi_a"
+                    app:layout_constraintTop_toBottomOf="@+id/informasi_a" />
 
-            <TextView
-                android:id="@+id/informasi_a"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="top"
-                android:lineSpacingExtra="3sp"
-                android:text="Informasi Akun"
-                android:textColor="?attr/colorSecondary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:translationY="-1.5sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_logo" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                app:layout_constraintStart_toStartOf="@+id/informasi_a"
-                app:layout_constraintTop_toBottomOf="@+id/informasi_a" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dwi Candra" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_name"
+                <TextView
+                    android:id="@+id/tv_bio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Bio"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout3"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Dwi Candra" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:hintEnabled="false">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|start"
+                        android:hint="Aku adalah anak gembala Selalu riang sertagembira"
+                        android:maxLines="10"
+                        android:minLines="6" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_marginTop="10dp"
-                android:id="@+id/tv_bio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bio"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout3"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_description"
+                <TextView
+                    android:id="@+id/informasiMediaSosial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top|start"
-                    android:hint="Aku adalah anak gembala Selalu riang sertagembira"
-                    android:maxLines="10"
-                    android:minLines="6" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="12dp"
+                    android:gravity="top"
+                    android:lineSpacingExtra="3sp"
+                    android:text="Akun Media Sosial"
+                    android:textColor="?attr/colorSecondary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:translationY="-1.5sp"
+                    tools:layout_editor_absoluteX="8dp" />
 
-            <TextView
-                android:id="@+id/informasiMediaSosial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="top"
-                android:lineSpacingExtra="3sp"
-                android:text="Akun Media Sosial"
-                android:textColor="?attr/colorSecondary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:translationY="-1.5sp"
-                tools:layout_editor_absoluteX="8dp" />
-
-            <TextView
-                android:id="@+id/tv_facebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Facebook" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout4"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_facebook"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_facebook"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Facebook" />
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/tv_socmed_instagram"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Instagram" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout6"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_Instagram"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout4"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_facebook"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Facebook" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/tv_socmed_instagram"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Instagram" />
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/tv_socmed_twitter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Twitter" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout5"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_twitter"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout6"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="Twitter" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content">
 
-            <RelativeLayout
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_Instagram"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Instagram" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/tv_socmed_twitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Twitter" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout5"
+                    android:layout_marginBottom="100dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_twitter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="Twitter" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.pesanbotol.android.app.ui.components.PrimaryButton
+                android:id="@+id/btn_save_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_margin="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:text="Simpan"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="8dp" />
 
-                <com.pesanbotol.android.app.ui.components.PrimaryButton
-                    android:id="@+id/btn_save_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:text="Simpan"
-                    android:textColor="@color/white"
-                    tools:layout_editor_absoluteX="8dp" />
-
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:elevation="2dp"
-                     />
-            </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:elevation="2dp" />
+        </RelativeLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

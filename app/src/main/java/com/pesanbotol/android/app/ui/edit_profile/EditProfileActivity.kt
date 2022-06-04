@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
@@ -66,8 +67,8 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             binding?.etInstagram?.setText(it.meta?.socials?.instagram ?: "")
             binding?.etFacebook?.setText(it.meta?.socials?.facebook ?: "")
             binding?.etTwitter?.setText(it.meta?.socials?.twitter ?: "")
-            binding?.etName?.setText( it.displayName ?: "")
-            binding?.etDescription?.setText( it.description ?: "")
+            binding?.etName?.setText(it.displayName ?: "")
+            binding?.etDescription?.setText(it.description ?: "")
         }
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -128,16 +129,18 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         val displayName = binding?.etName?.text.toString().trim()
         val description = binding?.etDescription?.text.toString().trim()
         showLoading()
-        profileViewModel.getUpdateProfile(
+        profileViewModel.updateProfile(
             instagram, facebook, twitter, displayName, description
         ).addOnSuccessListener {
+            hideLoading()
             CommonFunction.showSnackBar(
                 binding?.root!!,
                 applicationContext,
                 "Berhasil mengubah!",
                 //                    getString(R.string.file_failed_to_convert),
             )
-            hideLoading()
+            setResult(RESULT_OK)
+            finish()
         }.addOnFailureListener { exc ->
             hideLoading()
             CommonFunction.showSnackBar(
@@ -168,5 +171,9 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             binding?.profilePic?.background =
                     ContextCompat.getDrawable(this@EditProfileActivity, R.drawable.rounded_outline)
         }
+    }
+
+    companion object {
+        val PROFILE_UPDATED_RESULT = "profile-updated"
     }
 }

@@ -25,8 +25,11 @@ class LandingActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_dashboard)
 
         val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.homeFragment, R.id.aktivitasFragment, R.id.accountFragment
+//            setOf(
+//                R.id.homeFragment, R.id.aktivitasFragment, R.id.accountFragment
+//            )
+                    setOf(
+                R.id.homeFragment, R.id.accountFragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

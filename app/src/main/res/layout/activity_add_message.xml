@@ -50,7 +50,6 @@
                     android:clipToOutline="true"
                     android:contentDescription="View Images"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/monyet"
                     android:transitionName="profile" />
 
 
@@ -78,22 +77,22 @@
 
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/btn_prediksi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Prediksi" />
+<!--            <Button-->
+<!--                android:id="@+id/btn_prediksi"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:text="Prediksi" />-->
 
-            <TextView
-                android:id="@+id/tv_predict"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:paddingBottom="10dp"
-                android:text="Prediksi"
-                android:textSize="16sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_predict"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:paddingBottom="10dp"-->
+<!--                android:text="Prediksi"-->
+<!--                android:textSize="16sp" />-->
 
             <TextView
                 android:id="@+id/tv_location"

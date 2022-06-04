@@ -28,7 +28,7 @@ class ProfileRepository {
             }
     }
 
-    fun getUpdateProfile(
+    fun updateProfile(
         instagram: String?,
         facebook: String?,
         twitter: String?,

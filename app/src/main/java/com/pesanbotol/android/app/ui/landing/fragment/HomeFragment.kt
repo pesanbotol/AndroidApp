@@ -1,8 +1,11 @@
 package com.pesanbotol.android.app.ui.landing.fragment
 
 import android.Manifest.permission
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -11,11 +14,15 @@ import android.os.StrictMode.ThreadPolicy
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,20 +31,27 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.auth.model.User
+import com.pesanbotol.android.app.data.bottle.model.BottleItem
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.data.core.model.BottleCustomMarker
 import com.pesanbotol.android.app.databinding.FragmentHomeBinding
 import com.pesanbotol.android.app.ui.add_message.AddMessageActivity
 import com.pesanbotol.android.app.ui.detail_bubble.DetailBubbleMessageActivity
+import com.pesanbotol.android.app.ui.edit_profile.EditProfileActivity
+import com.pesanbotol.android.app.ui.landing.`interface`.SamePlaceItemClickListener
+import com.pesanbotol.android.app.ui.landing.adapters.SamePlaceListAdapter
 import com.pesanbotol.android.app.ui.search_bottle.SearchActivity
 import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.CustomMarkerRenderer
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment(), OnMapReadyCallback,
@@ -78,7 +92,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         mapFragment.getMapAsync(this)
         binding?.fabAddMessage?.setOnClickListener {
             val intent = Intent(requireActivity(), AddMessageActivity::class.java)
-            startActivity(intent)
+            resultAddBottleIntent.launch(intent)
         }
         binding?.cardView?.setOnClickListener {
             val intent = Intent(requireActivity(), SearchActivity::class.java)
@@ -225,10 +239,22 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                 }.apply {
                     hideLoading()
                     mClusterManager?.cluster()
-                    val bounds: LatLngBounds = boundsBuilder.build()
-                    mMap.setOnMapLoadedCallback {
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
+                    myLocation?.let { loc ->
+                        mMap.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                LatLng(
+                                    loc.latitude,
+                                    loc.longitude
+                                ), 13.0f
+                            )
+                        )
                     }
+
+                    //Uncomment this block if we want to bounds all bottles in map when loading is over
+//                    val bounds: LatLngBounds = boundsBuilder.build()
+//                    mMap.setOnMapLoadedCallback {
+//                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
+//                    }
                 }
             }
             .addOnFailureListener {
@@ -261,25 +287,63 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }
 
     override fun onClusterClick(cluster: Cluster<BottleCustomMarker>?): Boolean {
-        val firstName: String = cluster!!.items.iterator().next()?.user?.name ?: ""
-        Toast.makeText(
-            activity?.applicationContext,
-            cluster.size.toString() + " (including " + firstName + ")",
-            Toast.LENGTH_SHORT
-        ).show()
+        val isAllClusterInSamePlace =
+                cluster?.items?.reduceOrNull { acc, bottleCustomMarker -> if (acc?.position?.latitude == bottleCustomMarker?.position?.latitude && acc?.position?.longitude == bottleCustomMarker?.position?.longitude) acc else null }
+        if (isAllClusterInSamePlace != null) {
+            val dialog = BottomSheetDialog(requireContext())
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_same_place_dialog, null)
+            val rv = view.findViewById<RecyclerView>(R.id.recycler_view)
+            val bottlesSize = view.findViewById<TextView>(R.id.show_n_bottles)
+            val bottlesLocation = view.findViewById<TextView>(R.id.location)
+            val data = cluster.items.map { bottleCustomMarker -> bottleCustomMarker.bottleItem }
+            bottlesSize.text = "Menampilkan ${data.size} Pesan"
+            isAllClusterInSamePlace.position.let {
+                val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                val addresses: List<Address> =
+                        geocoder.getFromLocation(it.latitude, it.longitude, 1)
+//                    val address: String = addresses[0].getAddressLine(0)
+                val city: String = addresses[0].locality ?: ""
+                val state: String = addresses[0].adminArea ?: ""
+//                    val zip: String = addresses[0].postalCode
+                val country: String = addresses[0].countryName ?: ""
+                val location = "$city, $state - $country"
+                bottlesLocation.text = location
+            }
+            rv.adapter = SamePlaceListAdapter(ArrayList(data), object : SamePlaceItemClickListener {
+                override fun onClick(bottleItem: BottleItem) {
+                    val intent = Intent(requireContext(), DetailBubbleMessageActivity::class.java)
+                    intent.putExtra("bubble", bottleItem)
+                    startActivity(intent)
+                }
 
-        val builder = LatLngBounds.builder()
-        for (item in cluster.items) {
-            builder.include(item.position)
-        }
-        val bounds = builder.build()
-        try {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+            })
+            rv.layoutManager = LinearLayoutManager(requireContext())
+            dialog.setContentView(view)
+            dialog.show()
+            return true
+        } else {
+            cluster?.let {
+                Toast.makeText(
+                    activity?.applicationContext,
+                    "Ada " + cluster.size.toString() + " pesan di sini",
+                    Toast.LENGTH_SHORT
+                ).show()
 
-        return true
+                val builder = LatLngBounds.builder()
+                for (item in it.items) {
+                    builder.include(item.position)
+                }
+                val bounds = builder.build()
+                try {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+
+            return true
+        }
     }
 
     override fun onClusterInfoWindowClick(cluster: Cluster<BottleCustomMarker>?) {
@@ -315,6 +379,17 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         )
         return true
     }
+
+    private val resultAddBottleIntent =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    myLocation?.let { loc ->
+                        getBottleContents(LatLng(loc.latitude, loc.longitude))
+                    }
+
+
+                }
+            }
 
     override fun onClusterItemInfoWindowClick(item: BottleCustomMarker?) {
         CommonFunction.showSnackBar(

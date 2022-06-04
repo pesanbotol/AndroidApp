@@ -33,11 +33,11 @@ class DetailBubbleMessageActivity : AppCompatActivity()
                     val geocoder = Geocoder(this, Locale.getDefault())
                     val addresses: List<Address> =
                             geocoder.getFromLocation(geo[0]!!, geo[1]!!, 1)
-                    val address: String = addresses[0].getAddressLine(0)
-                    val city: String = addresses[0].locality
-                    val state: String = addresses[0].adminArea
-                    val zip: String = addresses[0].postalCode
-                    val country: String = addresses[0].countryName
+//                    val address: String = addresses[0].getAddressLine(0)
+                    val city: String = addresses[0].locality ?: ""
+                    val state: String = addresses[0].adminArea ?: ""
+//                    val zip: String = addresses[0].postalCode
+                    val country: String = addresses[0].countryName ?: ""
                     binding.tvCity.text = "$city, $state - $country"
                 }
             }

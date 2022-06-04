@@ -4,10 +4,10 @@
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_house_colors"
         android:title="@string/title_bottom_menu_1" />
-    <item
-        android:id="@+id/aktivitasFragment"
-        android:icon="@drawable/ic_aktivitas_colors"
-        android:title="@string/title_bottom_menu_2" />
+<!--    <item-->
+<!--        android:id="@+id/aktivitasFragment"-->
+<!--        android:icon="@drawable/ic_aktivitas_colors"-->
+<!--        android:title="@string/title_bottom_menu_2" />-->
     <item
         android:id="@+id/accountFragment"
         android:icon="@drawable/ic_profile_colors"
