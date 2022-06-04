@@ -115,14 +115,14 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             CommonFunction.showSnackBar(
                 binding?.root!!,
                 applicationContext,
-                "Berhasil mengunggah!",
+                "Berhasil mengubah!",
                 //                    getString(R.string.file_failed_to_convert),
             )
         }.addOnFailureListener { exc ->
             CommonFunction.showSnackBar(
                 binding!!.root,
                 applicationContext,
-                "Gagal membuat update : $exc",
+                "Gagal mengubah : $exc",
                 //                    getString(R.string.file_failed_to_convert),
                 true
             )

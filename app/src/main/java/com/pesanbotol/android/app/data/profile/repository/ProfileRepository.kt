@@ -14,7 +14,7 @@ class ProfileRepository {
         twitter: String?,
         displayName: String?,
         description: String?
-    ): Task<String?> {
+    ): Task<Boolean?> {
         val data = hashMapOf(
             "instagram" to instagram,
             "facebook" to facebook,
@@ -23,11 +23,10 @@ class ProfileRepository {
             "description" to description,
         )
         return _functions
-            .getHttpsCallable("authTrigger-myProfile")
+            .getHttpsCallable("authTrigger-updateProfile")
             .call(data)
             .continueWith { task ->
-                val result = task.result?.data as Map<String, Any>
-                result["operationResult"] as String
+                true
             }.addOnFailureListener {
                 println("addBottle Error Creating Bottle : $it")
             }
