@@ -43,6 +43,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var myLocation: Location? = null
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -191,12 +192,16 @@ class AccountFragment : Fragment(), View.OnClickListener {
 
 
     private fun hideLoading() {
-        binding?.progressBar?.visibility = View.GONE
+//        binding?.progressBar?.visibility = View.GONE
+        binding?.shimmerLayout?.stopShimmerAnimation()
+        binding?.shimmerLayout?.visibility = View.GONE
         binding?.profileLayout?.visibility = View.VISIBLE
     }
 
     private fun showLoading() {
-        binding?.progressBar?.visibility = View.VISIBLE
+//        binding?.progressBar?.visibility = View.VISIBLE
+        binding?.shimmerLayout?.startShimmerAnimation()
+        binding?.shimmerLayout?.visibility = View.VISIBLE
         binding?.profileLayout?.visibility = View.GONE
     }
 
@@ -215,7 +220,6 @@ class AccountFragment : Fragment(), View.OnClickListener {
             ) {
                 if (it.resultCode == Activity.RESULT_OK) {
                     profileViewModel.getMyProfile()
-
                 }
             }
 
