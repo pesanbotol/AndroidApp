@@ -78,17 +78,8 @@ class AccountFragment : Fragment(), View.OnClickListener {
                     showLoading()
                 }
                 is StateHandler.Error -> {
-                    hideLoading()
-                    binding?.apply {
-                        tvUserName.text =
-                                profile?.data?.displayName ?: profile?.data?.username?.toString()
-                                        ?: "-"
-                        tvUserBio.text = profile?.data?.description ?: "Your bio is empty"
-                        binding?.tvSocmedFbId?.text = profile?.data?.meta?.socials?.facebook ?: "-"
-                        binding?.tvSocmedIgId?.text = profile?.data?.meta?.socials?.instagram ?: "-"
-                        binding?.tvSocmedTwitterId?.text =
-                                profile?.data?.meta?.socials?.twitter ?: "-"
-                    }
+                    hideLoading("Failed : ${it.message}")
+
                     CommonFunction.showSnackBar(
                         requireView(),
                         requireContext(),
@@ -202,15 +193,22 @@ class AccountFragment : Fragment(), View.OnClickListener {
     }
 
 
-    private fun hideLoading() {
+    private fun hideLoading(error: String? = null) {
 //        binding?.progressBar?.visibility = View.GONE
         binding?.shimmerLayout?.stopShimmerAnimation()
         binding?.shimmerLayout?.visibility = View.GONE
-        binding?.profileLayout?.visibility = View.VISIBLE
+        if (error != null) {
+            binding?.errorState?.visibility = View.VISIBLE
+            binding?.errorText?.text = error
+        } else {
+            binding?.errorState?.visibility = View.GONE
+            binding?.profileLayout?.visibility = View.VISIBLE
+        }
     }
 
     private fun showLoading() {
 //        binding?.progressBar?.visibility = View.VISIBLE
+        binding?.errorState?.visibility = View.GONE
         binding?.shimmerLayout?.startShimmerAnimation()
         binding?.shimmerLayout?.visibility = View.VISIBLE
         binding?.profileLayout?.visibility = View.GONE

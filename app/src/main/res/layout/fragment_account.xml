@@ -5,7 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.landing.fragment.AccountFragment">
-
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/error_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/error_404"
+                android:layout_width="wrap_content"
+                android:layout_height="180dp"/>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:id="@+id/error_text"
+                android:text="Ups, an error occured"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"

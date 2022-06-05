@@ -17,7 +17,7 @@
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_account_header"
+                android:background="@color/grey_1CC"
                 android:paddingBottom="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +143,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/background_change_image_profile" />
+                    android:src="@drawable/background_circle_shimmer" />
 
                 <TextView
                     android:id="@+id/tv_socmed_fb_id"
@@ -169,7 +169,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/icon_ig" />
+                    android:src="@drawable/background_circle_shimmer" />
 
                 <TextView
                     android:id="@+id/tv_socmed_ig_id"
@@ -194,7 +194,9 @@
                     android:layout_width="33dp"
                     android:layout_height="35dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/background_change_image_profile" />
+                    android:backgroundTint="@color/grey_1CC"
+                    android:tint="@color/grey_37F"
+                    android:src="@drawable/background_circle_shimmer" />
 
                 <TextView
                     android:id="@+id/tv_socmed_twitter_id"
@@ -216,7 +218,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/pink"
+            android:backgroundTint="@color/grey_1CC"
             android:textColor="@color/white" />
 
     </RelativeLayout>
