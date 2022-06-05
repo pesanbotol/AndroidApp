@@ -147,12 +147,12 @@ class CustomMarkerRenderer(
     )!!
 
     private fun getNetworkImage(p: BottleCustomMarker): Drawable? {
-        if (p.bottleItem.contentImageUrl == null) {
+        if (p.bottleItem.contentImage?.mediaThumbnailUrl == null) {
             return null
         }
         try {
             val connection: HttpURLConnection =
-                    URL(p.bottleItem.contentImageUrl).openConnection() as HttpURLConnection
+                    URL(p.bottleItem.contentImage.mediaThumbnailUrl).openConnection() as HttpURLConnection
             connection.setRequestProperty("User-agent", "Mozilla/4.0")
 
             connection.connect()

@@ -53,14 +53,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
 
         _binding?.let { view ->
             authViewModel.firebaseUser()?.let {
-                Glide.with(view.root).load(it.photoUrl).apply(
-                    RequestOptions().error(
-                        ContextCompat.getDrawable(
-                            requireContext(),
-                            R.drawable.empty_profile,
-                        ),
-                    )
-                ).into(view.ivPhotoProfile)
+
 
             }
 
@@ -85,6 +78,16 @@ class AccountFragment : Fragment(), View.OnClickListener {
                 }
                 is StateHandler.Error -> {
                     hideLoading()
+                    binding?.apply {
+                        tvUserName.text =
+                                profile?.data?.displayName ?: profile?.data?.username?.toString()
+                                        ?: "-"
+                        tvUserBio.text = profile?.data?.description ?: "Your bio is empty"
+                        binding?.tvSocmedFbId?.text = profile?.data?.meta?.socials?.facebook ?: "-"
+                        binding?.tvSocmedIgId?.text = profile?.data?.meta?.socials?.instagram ?: "-"
+                        binding?.tvSocmedTwitterId?.text =
+                                profile?.data?.meta?.socials?.twitter ?: "-"
+                    }
                     CommonFunction.showSnackBar(
                         requireView(),
                         requireContext(),
@@ -97,6 +100,14 @@ class AccountFragment : Fragment(), View.OnClickListener {
                     val profile = it.data
                     profileResponse = profile
                     binding?.apply {
+                        Glide.with(root).load(profile?.data?.avatar?.mediaThumbnailUrl).apply(
+                            RequestOptions().error(
+                                ContextCompat.getDrawable(
+                                    requireContext(),
+                                    R.drawable.empty_profile,
+                                ),
+                            )
+                        ).into(ivPhotoProfile)
                         tvUserName.text =
                                 profile?.data?.displayName ?: profile?.data?.username?.toString()
                                         ?: "-"

@@ -18,7 +18,7 @@ class SamePlaceListAdapter(
     class SamePlaceViewHolder(private val v: ItemSamePlaceBinding) :
         RecyclerView.ViewHolder(v.root) {
         fun binding(item: BottleItem) {
-            Glide.with(v.root).load(item.contentImageUrl).into(v.imageDialogProfile)
+            Glide.with(v.root).load(item.contentImage?.mediaThumbnailUrl).into(v.imageDialogProfile)
             v.titleUsername.text = item.user?.username ?: "-"
             v.snippetDesc.text = item.contentText
             val time = (item.createdAt ?: System.currentTimeMillis()).toLong() * 1000

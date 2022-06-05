@@ -25,7 +25,7 @@ class DetailBubbleMessageActivity : AppCompatActivity()
         setContentView(binding.root)
         var bubble = intent.getParcelableExtra<BottleItem>("bubble")
         bubble?.let {
-            Glide.with(this).load(it.contentImageUrl).into(binding.imageView2)
+            Glide.with(this).load(it.contentImage?.mediaThumbnailUrl).into(binding.imageView2)
             binding.tvName.text = it.user?.username ?: "unknown"
             binding.tvDescription.text = it.contentText
             if (it.geo?.get(0) != null && it.geo[1] != null) {

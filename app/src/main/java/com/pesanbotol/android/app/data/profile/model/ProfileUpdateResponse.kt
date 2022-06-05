@@ -36,7 +36,10 @@ data class ProfileUpdate(
     val username: Long? = null,
 
     @field:SerializedName("displayName")
-    val displayName: String? = null
+    val displayName: String? = null,
+
+    @field:SerializedName("avatar")
+    val avatar: Avatar? = null
 ) : Parcelable
 
 @Parcelize
@@ -47,7 +50,14 @@ data class Meta(
 
     @field:SerializedName("socials")
     val socials: Socials? = null
-): Parcelable
+) : Parcelable
+
+@Parcelize
+data class Avatar(
+    val kind: String? = null,
+    val mediaThumbnailUrl: String? = null,
+    val mediaUrl: String? = null
+) : Parcelable
 
 @Parcelize
 data class Socials(
