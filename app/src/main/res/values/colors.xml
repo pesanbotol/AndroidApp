@@ -33,5 +33,8 @@
     <!--colors default -->
     <color name="white">#FFFFFFFF</color>
 
+    <!--colors shimmer effect -->
+    <color name="shimmer_color">#dddddd</color>
+
 
 </resources>
