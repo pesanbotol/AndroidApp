@@ -26,8 +26,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.storage.StorageException
 import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.auth.viewmodel.AuthViewModel
+import com.pesanbotol.android.app.data.bottle.repository.UploadedFile
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.databinding.ActivityAddMessageBinding
 import com.pesanbotol.android.app.utility.*
@@ -239,7 +241,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             val result = getRotateImage(
                 photo!!.absolutePath,
                 BitmapFactory.decodeFile(photo!!.path),
-                )
+            )
             binding.previewImage.setImageBitmap(result)
             binding.previewImage.background =
                     ContextCompat.getDrawable(this, R.drawable.rounded_outline)
@@ -293,7 +295,6 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
                 println("Size before compress ${(getFolderSize(it) / 1000.0) / 1024.0}")
                 val compressed = reduceFileImage(it)
                 println("Size after compress ${(getFolderSize(compressed) / 1000.0) / 1024.0}")
-//                return
                 processBottleCreation(compressed)
             } catch (e: Exception) {
                 CommonFunction.showSnackBar(
@@ -344,7 +345,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
 
     }
 
-    private fun createBottle(filename: String?) {
+    private fun createBottle(uploadedFile: UploadedFile?) {
         val defaultLocation = LatLng(-5.778581, 109.640097)
         bottleViewModel.addBottle(
             if (myLocation != null) LatLng(
@@ -352,10 +353,9 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
                 myLocation!!.longitude
             ) else defaultLocation,
             binding.etDescription.text.toString(),
-            filename
+            uploadedFile?.filename
         )
-            .addOnCompleteListener {
-                hideLoading()
+            .addOnSuccessListener {
                 CommonFunction.showSnackBar(
                     binding.root,
                     applicationContext,
@@ -365,8 +365,18 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
                 setResult(RESULT_OK)
                 finish()
             }
+            .addOnCompleteListener {
+                hideLoading()
+            }
             .addOnFailureListener { exc ->
                 hideLoading()
+                try {
+                    uploadedFile?.url?.let { bottleViewModel.deleteImage(it) }
+                } catch (e: StorageException) {
+                    println("Error deleting image ${e.toString()}")
+                } catch (e: Exception) {
+
+                }
                 CommonFunction.showSnackBar(
                     binding.root,
                     applicationContext,

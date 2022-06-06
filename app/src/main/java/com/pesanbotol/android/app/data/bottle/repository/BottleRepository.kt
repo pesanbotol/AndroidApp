@@ -7,12 +7,18 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.pesanbotol.android.app.data.bottle.model.BottleContentResponse
 import com.pesanbotol.android.app.data.bottle.model.BottleCreatedResponse
 import java.io.File
+
+data class UploadedFile(
+    val filename: String,
+    val url: StorageReference
+)
 
 class BottleRepository {
     private var _functions: FirebaseFunctions = Firebase.functions
@@ -38,7 +44,7 @@ class BottleRepository {
             }
     }
 
-    fun uploadImage(file: File, firebaseUser: FirebaseUser): Task<String?> {
+    fun uploadImage(file: File, firebaseUser: FirebaseUser): Task<UploadedFile?> {
         val tsLong = System.currentTimeMillis() / 1000
         val ts = tsLong.toString()
         val filename = "${ts}.${file.extension}"
@@ -50,9 +56,26 @@ class BottleRepository {
             throw it
         }.addOnSuccessListener { it ->
 
-            println("addBottle uploadBottleImage Success uploading image ${it.storage.downloadUrl}")
+            println("addBottle uploadBottleImage Success uploading image ${it.storage}")
 
-        }.continueWith { filename }
+        }.continueWith {
+            UploadedFile(filename, it.result.storage)
+        }
+    }
+
+    @Throws(StorageException::class)
+    fun deleteImage(storageRef: StorageReference): Task<Boolean?> {
+        val uploadTask = storageRef.delete()
+        return uploadTask.addOnFailureListener {
+            println("addBottle uploadBottleImage Error delete image $it")
+        }.addOnSuccessListener {
+
+            println("addBottle uploadBottleImage delete image ${storageRef.path}")
+
+        }.continueWith {
+            true
+        }
+
     }
 
     fun addBottle(
