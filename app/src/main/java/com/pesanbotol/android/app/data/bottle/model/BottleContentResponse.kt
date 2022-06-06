@@ -39,7 +39,9 @@ data class RegisteredAt(
 data class User(
     val registeredAt: RegisteredAt? = null,
     val description: String? = null,
-    val username: String? = null
+    val username: String? = null,
+    val avatar: Avatar? = null,
+    val displayName: String? = null,
 ) : Parcelable
 
 

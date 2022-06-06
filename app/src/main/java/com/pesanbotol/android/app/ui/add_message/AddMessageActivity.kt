@@ -44,7 +44,8 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
     private var myLocation: Location? = null
     private val bottleViewModel by viewModel<BottleViewModel>()
     private val authViewModel by viewModel<AuthViewModel>()
-//    private var classifier: ImageClassifier? = null
+
+    //    private var classifier: ImageClassifier? = null
     private var textureView: AutoFitTextureView? = null
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -235,10 +236,10 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             photo = File(currentPhotoPath)
 
 //            val result = BitmapFactory.decodeFile(myFile.path)
-            val result = rotateBitmap(
+            val result = getRotateImage(
+                photo!!.absolutePath,
                 BitmapFactory.decodeFile(photo!!.path),
-                true
-            )
+                )
             binding.previewImage.setImageBitmap(result)
             binding.previewImage.background =
                     ContextCompat.getDrawable(this, R.drawable.rounded_outline)
@@ -289,8 +290,11 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
                     return
                 }
 
-
-                processBottleCreation(reduceFileImage(it))
+                println("Size before compress ${(getFolderSize(it) / 1000.0) / 1024.0}")
+                val compressed = reduceFileImage(it)
+                println("Size after compress ${(getFolderSize(compressed) / 1000.0) / 1024.0}")
+                return
+                processBottleCreation(compressed)
             } catch (e: Exception) {
                 CommonFunction.showSnackBar(
                     binding.root,
@@ -302,6 +306,18 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
             }
 
         }
+    }
+
+    fun getFolderSize(file: File): Long {
+        var size: Long = 0
+        if (file.isDirectory) {
+            for (child in file.listFiles()) {
+                size += getFolderSize(child)
+            }
+        } else {
+            size = file.length()
+        }
+        return size
     }
 
     private fun processBottleCreation(photo: File) {

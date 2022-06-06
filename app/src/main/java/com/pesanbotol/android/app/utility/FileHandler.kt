@@ -8,10 +8,13 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
+import androidx.exifinterface.media.ExifInterface
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
 import com.pesanbotol.android.app.R
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 val timeStamp: String = SimpleDateFormat(
     "dd_MM_yyyy_HH_mm_ss",
@@ -95,4 +98,28 @@ fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {
             true
         )
     }
+}
+
+@Throws(IOException::class)
+fun getRotateImage(photoPath: String, bitmap: Bitmap?): Bitmap? {
+    val ei = ExifInterface(photoPath)
+    val orientation: Int = ei.getAttributeInt(
+        ExifInterface.TAG_ORIENTATION,
+        ExifInterface.ORIENTATION_UNDEFINED
+    )
+    var rotatedBitmap: Bitmap? = null
+    rotatedBitmap = when (orientation) {
+        ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(
+            bitmap!!, 90
+        )
+        ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(
+            bitmap!!, 180
+        )
+        ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(
+            bitmap!!, 270
+        )
+        ExifInterface.ORIENTATION_NORMAL -> bitmap
+        else -> bitmap
+    }
+    return rotatedBitmap
 }

@@ -24,13 +24,16 @@ import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.google.maps.android.ui.IconGenerator
 import com.pesanbotol.android.app.R
+import com.pesanbotol.android.app.data.bottle.model.ContentImage
 import com.pesanbotol.android.app.data.core.model.BottleCustomMarker
+import kotlinx.coroutines.*
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.CoroutineContext
 
 
 class CustomMarkerRenderer(
@@ -150,18 +153,19 @@ class CustomMarkerRenderer(
         if (p.bottleItem.contentImage?.mediaThumbnailUrl == null) {
             return null
         }
-        try {
-            val connection: HttpURLConnection =
-                    URL(p.bottleItem.contentImage.mediaThumbnailUrl).openConnection() as HttpURLConnection
-            connection.setRequestProperty("User-agent", "Mozilla/4.0")
+        return downloadImage(p.bottleItem.contentImage)
 
-            connection.connect()
-            val input: InputStream = connection.inputStream
+    }
 
-            return Drawable.createFromStream(input, null)
-        } catch (e: Exception) {
-            return null
-        }
+    private fun downloadImage(contentImage: ContentImage): Drawable? {
+        val connection: HttpURLConnection =
+                URL(contentImage.mediaThumbnailUrl).openConnection() as HttpURLConnection
+        connection.setRequestProperty("User-agent", "Mozilla/4.0")
+
+        connection.connect()
+        val input: InputStream = connection.inputStream
+
+        return Drawable.createFromStream(input, null)
     }
 
     override fun shouldRenderAsCluster(cluster: Cluster<BottleCustomMarker>): Boolean {
@@ -184,7 +188,7 @@ class CustomMarkerRenderer(
                 customMarkerView.findViewById<View>(R.id.snippet_desc) as TextView
         val markerTimeView =
                 customMarkerView.findViewById<View>(R.id.tv_time_upload) as TextView
-        markerUsernameView.text = bottle.user.name
+        markerUsernameView.text = bottle.bottleItem.user?.displayName
         markerDescView.text = bottle.snippet ?: ""
         val time = (bottle.bottleItem.createdAt ?: System.currentTimeMillis()).toLong() * 1000
         val niceDateStr: String = DateUtils.getRelativeTimeSpanString(
