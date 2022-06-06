@@ -293,7 +293,7 @@ class AddMessageActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClick
                 println("Size before compress ${(getFolderSize(it) / 1000.0) / 1024.0}")
                 val compressed = reduceFileImage(it)
                 println("Size after compress ${(getFolderSize(compressed) / 1000.0) / 1024.0}")
-                return
+//                return
                 processBottleCreation(compressed)
             } catch (e: Exception) {
                 CommonFunction.showSnackBar(
