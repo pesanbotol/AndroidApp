@@ -158,12 +158,16 @@ class CustomMarkerRenderer(
     }
 
     private fun downloadImage(contentImage: ContentImage): Drawable? {
-        val connection: HttpURLConnection =
-                URL(contentImage.mediaThumbnailUrl).openConnection() as HttpURLConnection
-        connection.setRequestProperty("User-agent", "Mozilla/4.0")
+        val input: InputStream = try {
+            val connection: HttpURLConnection =
+                    URL(contentImage.mediaThumbnailUrl).openConnection() as HttpURLConnection
+            connection.setRequestProperty("User-agent", "Mozilla/4.0")
 
-        connection.connect()
-        val input: InputStream = connection.inputStream
+            connection.connect()
+            connection.inputStream
+        } catch (e: Exception) {
+            return null
+        }
 
         return Drawable.createFromStream(input, null)
     }
