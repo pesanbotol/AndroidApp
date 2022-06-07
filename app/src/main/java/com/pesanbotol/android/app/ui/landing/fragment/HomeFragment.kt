@@ -364,16 +364,16 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                 intent.putExtra("bubble", item.bottleItem)
 //                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()).toBundle())
                 startActivity(intent)
-                activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.no_animation)
+                activity?.overridePendingTransition(R.anim.slide_up, R.anim.no_animation)
             }
         }
 
 
-        CommonFunction.showSnackBar(
-            binding!!.root,
-            requireContext(),
-            "Todo",
-        )
+//        CommonFunction.showSnackBar(
+//            binding!!.root,
+//            requireContext(),
+//            "Todo",
+//        )
         return true
     }
 
@@ -389,11 +389,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         }
 
     override fun onClusterItemInfoWindowClick(item: BottleCustomMarker?) {
-        CommonFunction.showSnackBar(
-            binding!!.root,
-            requireContext(),
-            "Todo",
-        )
+//        CommonFunction.showSnackBar(
+//            binding!!.root,
+//            requireContext(),
+//            "Todo",
+//        )
     }
 
 

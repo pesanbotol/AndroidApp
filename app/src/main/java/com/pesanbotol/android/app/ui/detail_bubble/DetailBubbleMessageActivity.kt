@@ -59,7 +59,7 @@ class DetailBubbleMessageActivity : AppCompatActivity()
         } else {
             super.onBackPressed()
 //            finish()
-            overridePendingTransition(R.anim.no_animation, R.anim.slide_out_right)
+            overridePendingTransition(R.anim.no_animation, R.anim.slide_down)
         }
 //        super.onBackPressed()
 //        finish()
