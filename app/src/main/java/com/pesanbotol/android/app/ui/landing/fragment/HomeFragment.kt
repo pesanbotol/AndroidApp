@@ -17,8 +17,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,16 +40,13 @@ import com.pesanbotol.android.app.data.core.model.BottleCustomMarker
 import com.pesanbotol.android.app.databinding.FragmentHomeBinding
 import com.pesanbotol.android.app.ui.add_message.AddMessageActivity
 import com.pesanbotol.android.app.ui.detail_bubble.DetailBubbleMessageActivity
-import com.pesanbotol.android.app.ui.edit_profile.EditProfileActivity
 import com.pesanbotol.android.app.ui.landing.`interface`.SamePlaceItemClickListener
 import com.pesanbotol.android.app.ui.landing.adapters.SamePlaceListAdapter
 import com.pesanbotol.android.app.ui.search_bottle.SearchActivity
 import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.CustomMarkerRenderer
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment(), OnMapReadyCallback,
@@ -163,13 +158,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }
 
     private val requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    getMyLocation()
-                }
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                getMyLocation()
             }
+        }
 
     private fun getMyLocation(isMyLocationButton: Boolean = false) {
         if (ContextCompat.checkSelfPermission(
@@ -288,7 +283,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 
     override fun onClusterClick(cluster: Cluster<BottleCustomMarker>?): Boolean {
         val isAllClusterInSamePlace =
-                cluster?.items?.reduceOrNull { acc, bottleCustomMarker -> if (acc?.position?.latitude == bottleCustomMarker?.position?.latitude && acc?.position?.longitude == bottleCustomMarker?.position?.longitude) acc else null }
+            cluster?.items?.reduceOrNull { acc, bottleCustomMarker -> if (acc?.position?.latitude == bottleCustomMarker?.position?.latitude && acc?.position?.longitude == bottleCustomMarker?.position?.longitude) acc else null }
         if (isAllClusterInSamePlace != null) {
             val dialog = BottomSheetDialog(requireContext())
             val view = layoutInflater.inflate(R.layout.bottom_sheet_same_place_dialog, null)
@@ -300,7 +295,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
             isAllClusterInSamePlace.position.let {
                 val geocoder = Geocoder(requireContext(), Locale.getDefault())
                 val addresses: List<Address> =
-                        geocoder.getFromLocation(it.latitude, it.longitude, 1)
+                    geocoder.getFromLocation(it.latitude, it.longitude, 1)
 //                    val address: String = addresses[0].getAddressLine(0)
                 val city: String = addresses[0].locality ?: ""
                 val state: String = addresses[0].adminArea ?: ""
@@ -367,7 +362,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
             } else {
                 val intent = Intent(requireContext(), DetailBubbleMessageActivity::class.java)
                 intent.putExtra("bubble", item.bottleItem)
+//                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()).toBundle())
                 startActivity(intent)
+                activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.no_animation)
             }
         }
 
@@ -381,15 +378,15 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }
 
     private val resultAddBottleIntent =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode == Activity.RESULT_OK) {
-                    myLocation?.let { loc ->
-                        getBottleContents(LatLng(loc.latitude, loc.longitude))
-                    }
-
-
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                myLocation?.let { loc ->
+                    getBottleContents(LatLng(loc.latitude, loc.longitude))
                 }
+
+
             }
+        }
 
     override fun onClusterItemInfoWindowClick(item: BottleCustomMarker?) {
         CommonFunction.showSnackBar(

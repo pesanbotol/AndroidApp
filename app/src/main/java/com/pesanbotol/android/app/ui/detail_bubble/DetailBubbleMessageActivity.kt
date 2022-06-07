@@ -18,6 +18,7 @@ class DetailBubbleMessageActivity : AppCompatActivity()
     private lateinit var binding: ActivityDetailBubbleMessageBinding
 
     private var dataUser = ArrayList<Comment>()
+    private var onBackPressAlternative: (() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,7 @@ class DetailBubbleMessageActivity : AppCompatActivity()
                 it.geo.let { geo ->
                     val geocoder = Geocoder(this, Locale.getDefault())
                     val addresses: List<Address> =
-                            geocoder.getFromLocation(geo[0]!!, geo[1]!!, 1)
+                        geocoder.getFromLocation(geo[0]!!, geo[1]!!, 1)
 //                    val address: String = addresses[0].getAddressLine(0)
                     val city: String = addresses[0].locality ?: ""
                     val state: String = addresses[0].adminArea ?: ""
@@ -50,6 +51,19 @@ class DetailBubbleMessageActivity : AppCompatActivity()
 
 //        dataUser.addAll(listComment)
 //        showRecycleView()
+    }
+
+    override fun onBackPressed() {
+        if (onBackPressAlternative != null) {
+            onBackPressAlternative!!()
+        } else {
+            super.onBackPressed()
+//            finish()
+            overridePendingTransition(R.anim.no_animation, R.anim.slide_out_right)
+        }
+//        super.onBackPressed()
+//        finish()
+//        overridePendingTransition(R.anim.no_animation, R.anim.slide_out_right)
     }
 
     private val listComment: ArrayList<Comment>
