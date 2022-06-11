@@ -14,36 +14,36 @@ data class SearchMissionResponse(
 	@field:SerializedName("hits")
 	val hits: List<MissionItems?>? = null,
 
-	@field:SerializedName("search_cutoff")
-	val searchCutoff: Boolean? = null,
+//	@field:SerializedName("search_cutoff")
+//	val searchCutoff: Boolean? = null,
 
 	@field:SerializedName("found")
 	val found: Int? = null,
 
-	@field:SerializedName("out_of")
-	val outOf: Int? = null,
-
-	@field:SerializedName("request_params")
-	val requestParams: RequestParams? = null,
-
-	@field:SerializedName("page")
-	val page: Int? = null,
-
-	@field:SerializedName("facet_counts")
-	val facetCounts: List<Any?>? = null,
-
-	@field:SerializedName("search_time_ms")
-	val searchTimeMs: Int? = null
+//	@field:SerializedName("out_of")
+//	val outOf: Int? = null,
+//
+//	@field:SerializedName("request_params")
+//	val requestParams: RequestParams? = null,
+//
+//	@field:SerializedName("page")
+//	val page: Int? = null,
+//
+//	@field:SerializedName("facet_counts")
+//	val facetCounts: List<Any?>? = null,
+//
+//	@field:SerializedName("search_time_ms")
+//	val searchTimeMs: Int? = null
 )
 
 
 data class MissionItems(
 
-	@field:SerializedName("text_match")
-	val textMatch: Int? = null,
-
-	@field:SerializedName("highlights")
-	val highlights: List<Any?>? = null,
+//	@field:SerializedName("text_match")
+//	val textMatch: Int? = null,
+//
+//	@field:SerializedName("highlights")
+//	val highlights: List<Any?>? = null,
 
 	@field:SerializedName("document")
 	val document: MissionsDocument? = null

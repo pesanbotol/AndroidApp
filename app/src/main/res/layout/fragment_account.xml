@@ -262,15 +262,7 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.pesanbotol.android.app.ui.components.PrimaryButton
-                android:id="@+id/btn_logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="20dp"
-                android:backgroundTint="@color/pink"
-                android:text="Logout"
-                android:textColor="@color/white" />
+
 
         </RelativeLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -289,5 +281,14 @@
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
-
+    <com.pesanbotol.android.app.ui.components.PrimaryButton
+        android:id="@+id/btn_logout"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/pink"
+        android:text="Logout"
+        android:textColor="@color/white" />
 </FrameLayout>

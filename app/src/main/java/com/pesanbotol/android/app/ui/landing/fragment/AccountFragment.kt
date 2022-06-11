@@ -81,7 +81,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
                     hideLoading("Failed : ${it.message}")
 
                     CommonFunction.showSnackBar(
-                        requireView(),
+                        _binding!!.root,
                         requireContext(),
                         "Gagal : ${it.message}",
                         true

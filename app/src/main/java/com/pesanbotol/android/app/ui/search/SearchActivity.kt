@@ -34,6 +34,7 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
         supportActionBar?.hide()
 
         searchAnything()
+        _binding?.listItem?.layoutManager = LinearLayoutManager(this)
         searchViewModel.postSearchState.observe(this) {
             when (it) {
                 is StateHandler.Loading -> {
@@ -44,7 +45,6 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
                     _binding?.let { view ->
                         println("RESULT ${it.data?.users?.hits?.size}")
                         it.data?.users?.hits?.let { items ->
-                            view.listItem.layoutManager = LinearLayoutManager(this)
                             view.listItem.adapter = UserListAdapter(ArrayList(items), this)
 
                         }
@@ -79,7 +79,7 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
                         // result search in view model here
                         // searchCourseViewModel.searchCourseByKeyword(v.text.trim().toString())
                         try {
-                            searchViewModel.search("")
+                            searchViewModel.search(textView?.text.toString())
                             Toast.makeText(
                                 this@SearchActivity,
                                 "Search ADA $textView ",
