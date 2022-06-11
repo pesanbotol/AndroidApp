@@ -37,7 +37,7 @@ class UserListAdapter(
 //                    )
 //                )
 //                .into(v2.imageDialogProfile)
-            v2.titleUsername.text = user?.document?.displayName ?: "-"
+            v2.titleUsername.text = user?.document?.displayName ?: user?.document?.username ?: "-"
             v2.snippetDesc.text = user?.document?.description ?: ""
             v2.tvTimeUpload.text = ""
             v2.root.setOnClickListener {

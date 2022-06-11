@@ -30,6 +30,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.pesanbotol.android.app.R
@@ -39,6 +40,10 @@ import com.pesanbotol.android.app.data.bottle.model.MissionsItem
 import com.pesanbotol.android.app.data.bottle.viewmodel.BottleViewModel
 import com.pesanbotol.android.app.data.core.model.BottleCustomMarker
 import com.pesanbotol.android.app.data.core.model.TypeCustomMarker
+import com.pesanbotol.android.app.data.search.model.BottleDocument
+import com.pesanbotol.android.app.data.search.model.BottleItems
+import com.pesanbotol.android.app.data.search.model.MissionItems
+import com.pesanbotol.android.app.data.search.model.MissionsDocument
 import com.pesanbotol.android.app.databinding.FragmentHomeBinding
 import com.pesanbotol.android.app.ui.add_message.AddMessageActivity
 import com.pesanbotol.android.app.ui.detail_bubble.DetailBubbleMessageActivity
@@ -46,6 +51,9 @@ import com.pesanbotol.android.app.ui.landing.`interface`.MissionItemClickListene
 import com.pesanbotol.android.app.ui.landing.`interface`.SamePlaceItemClickListener
 import com.pesanbotol.android.app.ui.landing.adapters.BottleCustomAdapter
 import com.pesanbotol.android.app.ui.search.LandingSearchActivity
+import com.pesanbotol.android.app.ui.search.fragments.BottleSearchFragment
+import com.pesanbotol.android.app.ui.search.fragments.MissionSearchFragment
+import com.pesanbotol.android.app.ui.search.fragments.UserSearchFragment
 import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.CustomMarkerRenderer
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -94,11 +102,66 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         }
         binding?.cardView?.setOnClickListener {
             val intent = Intent(requireActivity(), LandingSearchActivity::class.java)
-            startActivity(intent)
+            getResult.launch(intent)
         }
 
         return binding?.root
     }
+
+    private val getResult =
+            registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    it.data?.extras?.let { bundle ->
+                        println("should perform navigation")
+                        bundle.getParcelable<BottleDocument>(BottleSearchFragment.BOTTLE_ITEM)
+                            ?.let { item ->
+                                println("should perform navigation from clicked bottle message")
+                                println("should show data ${Gson().toJson(item)}")
+                                item.geo?.let { latlng ->
+                                    println(
+                                        "latlng value ${latlng[0]!!} ${latlng[1]!!}"
+                                    )
+                                    mMap.animateCamera(
+                                        CameraUpdateFactory.newLatLngZoom(
+                                            LatLng(
+                                                latlng[0]!!,
+                                                latlng[1]!!
+                                            ), 13f
+                                        )
+                                    )
+//                                    mMap.moveCamera(
+//                                        CameraUpdateFactory.newLatLngZoom(
+//                                            LatLng(
+//                                                latlng[0]!!,
+//                                                latlng[1]!!
+//                                            ), 10.0f
+//                                        )
+//                                    )
+                                }
+                            }
+                        bundle.getParcelable<MissionsDocument>(MissionSearchFragment.MISSION_ITEM)
+                            ?.let { item ->
+                                println("should perform navigation from clicked mission")
+                                println("should show data ${Gson().toJson(item)}")
+                                item?.center?.let { latlng ->
+                                    println(
+                                        "latlng value ${latlng[0]!!} ${latlng[1]!!}"
+                                    )
+                                    mMap.animateCamera(
+                                        CameraUpdateFactory.newLatLngZoom(
+                                            LatLng(
+                                                latlng[0]!!,
+                                                latlng[1]!!
+                                            ), 13f
+                                        )
+                                    )
+                                }
+                            }
+                    }
+                }
+            }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -358,11 +421,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                                     true
                                 )
                             } else {
-                                CommonFunction.showSnackBar(
-                                    dialog.window!!.decorView,
-                                    view.context,
-                                    "Misi telah selesai",
-                                )
+                                submitMission(dialog, view)
                             }
 
                         }
@@ -510,11 +569,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                                             true
                                         )
                                     } else {
-                                        CommonFunction.showSnackBar(
-                                            dialog.window!!.decorView,
-                                            view.context,
-                                            "Misi telah selesai",
-                                        )
+                                        submitMission(dialog, view)
+
                                     }
 
                                 }
@@ -551,6 +607,37 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 //            "Todo",
 //        )
         return true
+    }
+
+    private fun submitMission(
+        dialog: BottomSheetDialog,
+        view: View
+    ) {
+        dialog.dismiss()
+        binding?.overlayIndicator?.visibility = View.VISIBLE
+        myLocation?.let { loc ->
+            bottleViewModel.submitMission(
+                LatLng(
+                    loc.latitude,
+                    loc.longitude
+                )
+            )
+                .addOnSuccessListener {
+                    binding?.overlayIndicator?.visibility = View.GONE
+                    CommonFunction.showSnackBar(
+                        dialog.window!!.decorView,
+                        view.context,
+                        "Misi telah selesai",
+                    )
+                }.addOnFailureListener {
+                    binding?.overlayIndicator?.visibility = View.GONE
+                    CommonFunction.showSnackBar(
+                        dialog.window!!.decorView,
+                        view.context,
+                        "Gagal : ${it.message}",
+                    )
+                }
+        }
     }
 
     private val resultAddBottleIntent =

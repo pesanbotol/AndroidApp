@@ -50,4 +50,10 @@ class ProfileViewModel(private val profileRepository: ProfileRepository) : ViewM
         displayName,
         description
     )
+
+    fun getProfileById(
+        id: String
+    ) = profileRepository.getProfileById(
+        id
+    )
 }

@@ -13,6 +13,7 @@ import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.pesanbotol.android.app.data.bottle.model.BottleContentResponse
 import com.pesanbotol.android.app.data.bottle.model.BottleCreatedResponse
+import com.pesanbotol.android.app.data.bottle.model.SubmittedMissionResponse
 import java.io.File
 
 data class UploadedFile(
@@ -41,6 +42,23 @@ class BottleRepository {
                 result
             }.addOnSuccessListener {
                 println("Success getting bottles")
+            }
+    }
+
+    fun submitMission(latLng: LatLng): Task<Boolean?> {
+
+        val position = hashMapOf(
+            "geo" to listOf(latLng.latitude.toString(), latLng.longitude.toString())
+        )
+        return _functions
+            .getHttpsCallable("mission-callableMission-submitMission")
+            .call(position)
+            .continueWith {
+                true
+            }.addOnSuccessListener {
+                println("Success submitting mission")
+            }.addOnFailureListener {
+                println("Failed submitting mission : ${it.message}")
             }
     }
 
@@ -88,8 +106,6 @@ class BottleRepository {
             "kind" to "text",
             "geo" to listOf(latLng.latitude, latLng.longitude)
         )
-
-
         if (filename != null) {
             println("addBottle with Image : $filename")
             bottleRequest["contentImagePath"] = filename

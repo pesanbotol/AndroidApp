@@ -49,7 +49,11 @@ data class Meta(
     val aggregator: Aggregator? = null,
 
     @field:SerializedName("socials")
-    val socials: Socials? = null
+    val socials: Socials? = null,
+    @field:SerializedName("badges")
+    val badges: List<String?>? = null,
+    @field:SerializedName("missions")
+    val missions: List<MissionsItem?>? = null
 ) : Parcelable
 
 @Parcelize
@@ -89,3 +93,5 @@ data class Aggregator(
     @field:SerializedName("commentCount")
     val commentCount: Int? = null
 ) : Parcelable
+
+

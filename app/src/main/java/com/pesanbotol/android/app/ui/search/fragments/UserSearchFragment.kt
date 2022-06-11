@@ -1,5 +1,6 @@
 package com.pesanbotol.android.app.ui.search.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.pesanbotol.android.app.data.search.model.SearchUsersResponse
 import com.pesanbotol.android.app.data.search.model.UserItems
 import com.pesanbotol.android.app.databinding.FragmentMissionSearchBinding
 import com.pesanbotol.android.app.databinding.FragmentUserSearchBinding
+import com.pesanbotol.android.app.ui.detail_users.DetailUsersActivity
 import com.pesanbotol.android.app.ui.search.adapters.MissionListAdapter
 import com.pesanbotol.android.app.ui.search.adapters.UserListAdapter
 import com.pesanbotol.android.app.ui.search.interfaces.UserItemClickListener
@@ -37,5 +39,10 @@ class UserSearchFragment : Fragment(), UserItemClickListener {
     }
 
     override fun onClick(user: UserItems) {
+        user.document?.id?.let {
+            val intent = Intent(requireActivity(), DetailUsersActivity::class.java)
+            intent.putExtra(DetailUsersActivity.UID_DATA, it)
+            startActivity(intent)
+        }
     }
 }

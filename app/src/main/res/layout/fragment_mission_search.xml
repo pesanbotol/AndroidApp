@@ -6,6 +6,7 @@
     tools:context=".ui.search.fragments.MissionSearchFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+
         android:id="@+id/rv_mission"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

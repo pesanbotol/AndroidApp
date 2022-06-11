@@ -35,10 +35,12 @@ class LandingSearchActivity : AppCompatActivity() {
         searchViewModel.postSearchState.observe(this) { state ->
             when (state) {
                 is StateHandler.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
+                    binding.shimmerLayout.visibility = View.VISIBLE
+                    binding.shimmerLayout.startShimmerAnimation()
                 }
                 is StateHandler.Success -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.shimmerLayout.stopShimmerAnimation()
+                    binding.shimmerLayout.visibility = View.GONE
                     state.data?.let {
                         val sectionsPagerAdapter = SectionPagerAdapter(this, it)
                         val viewPager: ViewPager2 = binding.viewPager2
@@ -50,6 +52,8 @@ class LandingSearchActivity : AppCompatActivity() {
                     }
                 }
                 is StateHandler.Error -> {
+                    binding.shimmerLayout.stopShimmerAnimation()
+                    binding.shimmerLayout.visibility = View.GONE
                     Log.e(
                         LandingSearchActivity::class.simpleName,
                         state.message ?: "Unknown error occured"

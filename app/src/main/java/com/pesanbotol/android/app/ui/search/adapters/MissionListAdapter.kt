@@ -31,7 +31,7 @@ class MissionListAdapter(
             clickListener: MissionItemClickListener
         ) {
             v2.imageDialogProfile.visibility = View.GONE
-            v2.titleUsername.text = mission?.document?.description ?: "-"
+            v2.snippetDesc.text = "Tugas ${mission?.document?.description ?: "-"}"
 //            val time = (mission?.document?.createdAt ?: System.currentTimeMillis()).toLong() * 1000
 //            val niceDateStr: String = DateUtils.getRelativeTimeSpanString(
 //                time,
@@ -48,8 +48,8 @@ class MissionListAdapter(
                     val state: String = addresses[0].adminArea ?: ""
 //                    val zip: String = addresses[0].postalCode
                     val country: String = addresses[0].countryName ?: ""
-                    val location = "$address, $city, $state"
-                    v2.snippetDesc.text = location
+                    val location = "$city, $state - $country"
+                    v2.titleUsername.text = location
                 }
             }
             v2.tvTimeUpload.text = ""

@@ -9,6 +9,26 @@ import com.pesanbotol.android.app.data.bottle.model.ProfileUpdateResponse
 
 class ProfileRepository {
     private var _functions: FirebaseFunctions = Firebase.functions
+    fun getProfileById(id: String): Task<ProfileUpdateResponse?> {
+        val query = hashMapOf(
+            "uid" to id
+        )
+        return _functions
+            .getHttpsCallable("authTrigger-profileByUid")
+            .call(query)
+            .continueWith { task ->
+                val gson = Gson()
+                val result = gson.fromJson(
+                    gson.toJson(task.result?.data),
+                    ProfileUpdateResponse::class.java
+                )
+                result
+            }.addOnSuccessListener {
+                println("Success getting $id profile")
+            }.addOnFailureListener { ex ->
+                println("Failure getting $id profile $ex")
+            }
+    }
 
     fun getMyProfile(): Task<ProfileUpdateResponse?> {
         return _functions

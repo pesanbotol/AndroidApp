@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -29,10 +30,12 @@ import com.pesanbotol.android.app.data.profile.viewmodel.ProfileViewModel
 import com.pesanbotol.android.app.databinding.FragmentAccountBinding
 import com.pesanbotol.android.app.ui.edit_profile.EditProfileActivity
 import com.pesanbotol.android.app.ui.login.LoginActivity
+import com.pesanbotol.android.app.ui.search.adapters.BadgeListAdapter
 import com.pesanbotol.android.app.utility.CommonFunction
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AccountFragment : Fragment(), View.OnClickListener {
     private val authViewModel by viewModel<AuthViewModel>()
@@ -104,10 +107,17 @@ class AccountFragment : Fragment(), View.OnClickListener {
                                 profile?.data?.displayName ?: profile?.data?.username?.toString()
                                         ?: "-"
                         tvUserBio.text = profile?.data?.description ?: "Your bio is empty"
+                        binding?.tvFollowings?.text =
+                                "${profile?.data?.meta?.aggregator?.postCount ?: 0} Pesan Dibuat"
                         binding?.tvSocmedFbId?.text = profile?.data?.meta?.socials?.facebook ?: "-"
                         binding?.tvSocmedIgId?.text = profile?.data?.meta?.socials?.instagram ?: "-"
                         binding?.tvSocmedTwitterId?.text =
                                 profile?.data?.meta?.socials?.twitter ?: "-"
+                        binding?.rvBadges?.layoutManager = LinearLayoutManager(requireContext())
+                        profile?.data?.meta?.badges?.let { badges ->
+                            binding?.rvBadges?.adapter = BadgeListAdapter(ArrayList(badges))
+                        }
+
                     }
                 }
                 else -> {}

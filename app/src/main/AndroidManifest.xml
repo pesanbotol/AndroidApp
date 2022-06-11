@@ -37,9 +37,6 @@
             android:name=".ui.search.LandingSearchActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.search.SearchActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.edit_profile.EditProfileActivity"
             android:exported="false" />
         <activity
@@ -48,6 +45,9 @@
             android:theme="@style/Theme.PesanBotol.NoActionBar" />
         <activity
             android:name=".ui.add_message.AddMessageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.detail_users.DetailUsersActivity"
             android:exported="false" />
         <activity
             android:name=".ui.LoadingActivity"
