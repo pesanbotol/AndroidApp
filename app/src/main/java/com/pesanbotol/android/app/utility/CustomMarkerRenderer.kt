@@ -26,6 +26,7 @@ import com.google.maps.android.ui.IconGenerator
 import com.pesanbotol.android.app.R
 import com.pesanbotol.android.app.data.bottle.model.ContentImage
 import com.pesanbotol.android.app.data.core.model.BottleCustomMarker
+import com.pesanbotol.android.app.data.core.model.TypeCustomMarker
 import kotlinx.coroutines.*
 import java.io.InputStream
 import java.net.HttpURLConnection
@@ -73,7 +74,7 @@ class CustomMarkerRenderer(
     ) {
         markerOptions
             .icon(getItemIcon(bottle))
-            .title(bottle.user.name)
+            .title(bottle.title)
 
     }
 
@@ -81,16 +82,12 @@ class CustomMarkerRenderer(
         getMarkerBitmapFromView(bottle)?.let {
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(it))
         }
-        marker.title = bottle.user.name
+        marker.title = bottle.title
         marker.hideInfoWindow()
 
     }
 
     private fun getItemIcon(bottle: BottleCustomMarker): BitmapDescriptor? {
-        mImageView?.let {
-            Glide.with(activity.applicationContext).load(bottle.user.photoUrl).into(it)
-        }
-        val icon = mIconGenerator.makeIcon()
         val bitmap = getMarkerBitmapFromView(bottle)!!.let {
             BitmapDescriptorFactory.fromBitmap(it)
         }
@@ -150,7 +147,10 @@ class CustomMarkerRenderer(
     )!!
 
     private fun getNetworkImage(p: BottleCustomMarker): Drawable? {
-        if (p.bottleItem.contentImage?.mediaThumbnailUrl == null) {
+        if (p.type != TypeCustomMarker.bottle) {
+            return null
+        }
+        if (p.bottleItem?.contentImage?.mediaThumbnailUrl == null) {
             return null
         }
         return downloadImage(p.bottleItem.contentImage)
@@ -192,9 +192,10 @@ class CustomMarkerRenderer(
                 customMarkerView.findViewById<View>(R.id.snippet_desc) as TextView
         val markerTimeView =
                 customMarkerView.findViewById<View>(R.id.tv_time_upload) as TextView
-        markerUsernameView.text = bottle.bottleItem.user?.displayName
-        markerDescView.text = bottle.snippet ?: ""
-        val time = (bottle.bottleItem.createdAt ?: System.currentTimeMillis()).toLong() * 1000
+        markerUsernameView.text = bottle.title
+        markerDescView.text = bottle.snippet
+        val time = (bottle.bottleItem?.createdAt ?: bottle.missionItem?.createdAt
+        ?: System.currentTimeMillis()).toLong() * 1000
         val niceDateStr: String = DateUtils.getRelativeTimeSpanString(
             time,
             System.currentTimeMillis(),

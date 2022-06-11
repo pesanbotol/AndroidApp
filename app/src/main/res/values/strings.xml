@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name" translatable="false">Pesan Botol</string>
+    <string name="app_name" translatable="false">Trace</string>
     <!--  on boarding  -->
     <string name="title_menu_1">Bagikan Pengalaman</string>
     <string name="title_menu_2">Temukan Hidden Gems </string>
     <string name="title_menu_3">Kumpulkan Badge</string>
     <string name="desc_menu_1">Menyelami indahnya destinasi sembari membagikan pengalaman anda dan buat orang tahu tentang perjalanan anda!</string>
     <string name="desc_menu_2">Jelajahi tempat, kegiatan, dan festival dengan mengetahui informasi yang tersedia di sekitar anda. </string>
-    <string name="desc_menu_3">Jadikan profil kamu lebih baik dari yang lain!.  Kunjungi dan selesaikan misi untuk mendapatkan badge-badge unik!</string>
+    <string name="desc_menu_3">Jadikan profil kamu lebih baik dari yang lainKunjungi dan selesaikan misi untuk mendapatkan badge-badge unik!</string>
     <string name="Lewati">Lewati</string>
     <string name="Lanjut">Lanjut</string>
     <!--  Bottom Navigation Menu  -->

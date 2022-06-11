@@ -12,7 +12,8 @@ data class BottleContentResponse(
 data class Data(
 //	val trend: List<Any?>? = null,
 //	val bottleRecommended: List<Any?>? = null,
-    val bottle: List<BottleItem?>? = null
+    val bottle: List<BottleItem?>? = null,
+    val missions: List<MissionsItem?>? = null
 ) : Parcelable
 
 @Parcelize
@@ -27,6 +28,20 @@ data class BottleItem(
     val contentImagePath: String? = null,
     val user: User? = null
 ) : Parcelable
+
+
+
+
+@Parcelize
+data class MissionsItem(
+    val reward: String? = null,
+    val createdAt: Int? = null,
+    val enable: Boolean? = null,
+    val kind: String? = null,
+    val center: List<Double?>? = null,
+    val description: String? = null
+) : Parcelable
+
 
 
 @Parcelize

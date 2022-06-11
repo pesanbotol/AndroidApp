@@ -48,7 +48,9 @@ class ProfileRepository {
             .continueWith { task ->
                 true
             }.addOnFailureListener {
-                println("addBottle Error Creating Bottle : $it")
+                println("Failed to update profile : $it")
+            }.addOnSuccessListener {
+                println("Success to update profile : $it")
             }
     }
 

@@ -1,29 +1,29 @@
 package com.pesanbotol.android.app.utility
 
-import android.app.Application
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Typeface
-import android.os.Environment
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
-import android.util.Log
+import android.util.DisplayMetrics
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.MapStyleOptions
 import com.pesanbotol.android.app.R
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
+
 
 class Utils {
     companion object {
         fun getColoredSpanned(text: String, color: String): String? {
             return "<font color=$color>$text</font>"
+        }
+        fun convertDpToPixel(dp: Float, context: Context): Float {
+            return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+        }
+
+        fun convertPixelsToDp(px: Float, context: Context): Float {
+            return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
         }
 
         fun setTextColor(

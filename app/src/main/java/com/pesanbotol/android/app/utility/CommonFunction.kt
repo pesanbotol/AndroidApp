@@ -11,6 +11,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.snackbar.Snackbar
 import com.pesanbotol.android.app.R
+import com.pesanbotol.android.app.utility.Utils.Companion.convertDpToPixel
 
 class CommonFunction {
     companion object {
@@ -29,7 +30,7 @@ class CommonFunction {
             message: String,
             error: Boolean? = null
         ) {
-            Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+            val s = Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(
                     ContextCompat.getColor(
                         context,
@@ -42,7 +43,9 @@ class CommonFunction {
                         if (error == true) R.color.pink else R.color.blue_1100
                     )
                 )
-                .show()
+            val sView = s.view
+            sView.translationY = -(convertDpToPixel(50.0f, context))
+            s.show()
         }
 
 
