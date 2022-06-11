@@ -31,6 +31,7 @@ class LandingSearchActivity : AppCompatActivity() {
         binding = ActivityLandingSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+        searchViewModel.search("")
         searchAnything()
         searchViewModel.postSearchState.observe(this) { state ->
             when (state) {
