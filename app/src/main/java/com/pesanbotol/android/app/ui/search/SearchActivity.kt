@@ -10,17 +10,25 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pesanbotol.android.app.data.core.StateHandler
+import com.pesanbotol.android.app.data.search.model.BottleItems
+import com.pesanbotol.android.app.data.search.model.MissionItems
 import com.pesanbotol.android.app.data.search.model.UserItems
 import com.pesanbotol.android.app.data.search.viewmodel.SearchViewModel
 import com.pesanbotol.android.app.databinding.ActivitySearchBinding
+import com.pesanbotol.android.app.ui.search.adapters.BottleListAdapter
+import com.pesanbotol.android.app.ui.search.adapters.MissionListAdapter
 import com.pesanbotol.android.app.ui.search.adapters.UserListAdapter
+import com.pesanbotol.android.app.ui.search.interfaces.BottleItemClickListener
+import com.pesanbotol.android.app.ui.search.interfaces.MissionItemClickListener
 import com.pesanbotol.android.app.ui.search.interfaces.UserItemClickListener
 import com.pesanbotol.android.app.utility.CommonFunction
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchActivity : AppCompatActivity(), UserItemClickListener {
+class SearchActivity : AppCompatActivity(), UserItemClickListener, BottleItemClickListener,
+    MissionItemClickListener {
     private var _binding: ActivitySearchBinding? = null
     private val binding get() = _binding
 
@@ -34,7 +42,9 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
         supportActionBar?.hide()
 
         searchAnything()
-        _binding?.listItem?.layoutManager = LinearLayoutManager(this)
+        _binding?.rvUsers?.layoutManager = LinearLayoutManager(this)
+        _binding?.rvMission?.layoutManager = LinearLayoutManager(this)
+        _binding?.rvBottles?.layoutManager = LinearLayoutManager(this)
         searchViewModel.postSearchState.observe(this) {
             when (it) {
                 is StateHandler.Loading -> {
@@ -45,7 +55,15 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
                     _binding?.let { view ->
                         println("RESULT ${it.data?.users?.hits?.size}")
                         it.data?.users?.hits?.let { items ->
-                            view.listItem.adapter = UserListAdapter(ArrayList(items), this)
+                            view.rvUsers.adapter = UserListAdapter(ArrayList(items), this)
+
+                        }
+                        it.data?.bottles?.hits?.let { items ->
+                            view.rvBottles.adapter = BottleListAdapter(ArrayList(items), this)
+
+                        }
+                        it.data?.mission?.hits?.let { items ->
+                            view.rvMission.adapter = MissionListAdapter(ArrayList(items), this)
 
                         }
 
@@ -62,12 +80,14 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
                         true
                     )
                 }
+                else -> {}
             }
         }
     }
 
     private fun searchAnything() {
         binding?.textInputLayout?.apply {
+            editText?.doOnTextChanged { text, start, before, count -> }
             editText?.setOnEditorActionListener(object : TextView.OnEditorActionListener {
                 override fun onEditorAction(
                     textView: TextView?,
@@ -104,5 +124,11 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
 
     override fun onClick(user: UserItems) {
 
+    }
+
+    override fun onClick(item: BottleItems) {
+    }
+
+    override fun onClick(item: MissionItems) {
     }
 }

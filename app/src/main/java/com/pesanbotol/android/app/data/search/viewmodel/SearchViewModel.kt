@@ -26,10 +26,13 @@ class SearchViewModel(private val searchRepository: SearchRepository) : ViewMode
                     searchResult.users = it
                     _postSearchState.postValue(StateHandler.Success(SearchResult(users = it)))
                 }
-//                val missionResult = searchMissions(q).result
                 searchBottles(q).addOnSuccessListener {
                     searchResult.bottles = it
                     _postSearchState.postValue(StateHandler.Success(SearchResult(bottles = it)))
+                }
+                searchMissions(q).addOnSuccessListener {
+                    searchResult.mission = it
+                    _postSearchState.postValue(StateHandler.Success(SearchResult(mission = it)))
                 }
 
             } catch (e: Exception) {

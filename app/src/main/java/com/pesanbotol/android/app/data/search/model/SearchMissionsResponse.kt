@@ -27,7 +27,8 @@ data class SearchMissionResponse(
 //	val requestParams: RequestParams? = null,
 //
 //	@field:SerializedName("page")
-//	val page: Int? = null,
+//	val page: Int
+//	? = null,
 //
 //	@field:SerializedName("facet_counts")
 //	val facetCounts: List<Any?>? = null,

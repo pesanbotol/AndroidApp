@@ -13,7 +13,7 @@ import com.pesanbotol.android.app.data.search.model.SearchUsersResponse
 
 //import com.pesanbotol.android.app.data.search.model.SearchUsersResponse
 
-enum class SearchKind { bottles, users, mission }
+enum class SearchKind { bottles, users, missions }
 class SearchRepository {
     private var _functions: FirebaseFunctions = Firebase.functions
 
@@ -86,7 +86,7 @@ class SearchRepository {
             "page" to 1,
             "perPage" to 250,
             "q" to q,
-            "searchKind" to SearchKind.mission.name,
+            "searchKind" to SearchKind.missions.name,
         )
         return _functions
             .getHttpsCallable("searchTrigger-searchQuery")

@@ -2,6 +2,7 @@ package com.pesanbotol.android.app.ui.search.adapters
 
 import android.app.Application
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -25,16 +26,17 @@ class UserListAdapter(
             user: UserItems?,
             clickListener: UserItemClickListener
         ) {
-            Glide.with(v2!!.root).load(user?.document?.displayName)
-                .apply(
-                    RequestOptions().error(
-                        ContextCompat.getDrawable(
-                            v2.root.context,
-                            R.drawable.empty_profile,
-                        ),
-                    )
-                )
-                .into(v2.imageDialogProfile)
+            v2.imageDialogProfile.visibility = View.GONE
+//            Glide.with(v2!!.root).load(user?.document?.displayName)
+//                .apply(
+//                    RequestOptions().error(
+//                        ContextCompat.getDrawable(
+//                            v2.root.context,
+//                            R.drawable.empty_profile,
+//                        ),
+//                    )
+//                )
+//                .into(v2.imageDialogProfile)
             v2.titleUsername.text = user?.document?.displayName ?: "-"
             v2.snippetDesc.text = user?.document?.description ?: ""
             v2.tvTimeUpload.text = ""
