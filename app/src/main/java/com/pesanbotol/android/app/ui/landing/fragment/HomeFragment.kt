@@ -45,7 +45,7 @@ import com.pesanbotol.android.app.ui.detail_bubble.DetailBubbleMessageActivity
 import com.pesanbotol.android.app.ui.landing.`interface`.MissionItemClickListener
 import com.pesanbotol.android.app.ui.landing.`interface`.SamePlaceItemClickListener
 import com.pesanbotol.android.app.ui.landing.adapters.BottleCustomAdapter
-import com.pesanbotol.android.app.ui.search.SearchActivity
+import com.pesanbotol.android.app.ui.search.LandingSearchActivity
 import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.CustomMarkerRenderer
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -93,7 +93,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
             resultAddBottleIntent.launch(intent)
         }
         binding?.cardView?.setOnClickListener {
-            val intent = Intent(requireActivity(), SearchActivity::class.java)
+            val intent = Intent(requireActivity(), LandingSearchActivity::class.java)
             startActivity(intent)
         }
 
@@ -285,12 +285,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
 
         }.apply {
 
-
-            //Uncomment this block if we want to bounds all bottles in map when loading is over
-            //                    val bounds: LatLngBounds = boundsBuilder.build()
-            //                    mMap.setOnMapLoadedCallback {
-            //                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
-            //                    }
         }
     }
 

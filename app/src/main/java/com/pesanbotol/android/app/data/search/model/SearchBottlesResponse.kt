@@ -1,9 +1,10 @@
 package com.pesanbotol.android.app.data.search.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-
+@Parcelize
 data class BottleItems(
 
 //    @field:SerializedName("text_match")
@@ -14,8 +15,9 @@ data class BottleItems(
 
     @field:SerializedName("document")
     val document: BottleDocument? = null
-)
+) : Parcelable
 
+@Parcelize
 data class BottleDocument(
 
     @field:SerializedName("contentImage.mediaThumbnailUrl")
@@ -50,7 +52,7 @@ data class BottleDocument(
 
     @field:SerializedName("_contentImagePath")
     val contentImagePath: String? = null
-)
+) : Parcelable
 
 data class RequestParams(
 
@@ -64,6 +66,7 @@ data class RequestParams(
     val collectionName: String? = null
 )
 
+@Parcelize
 data class SearchBottlesResponse(
 
     @field:SerializedName("hits")
@@ -89,4 +92,4 @@ data class SearchBottlesResponse(
 //
 //    @field:SerializedName("search_time_ms")
 //    val searchTimeMs: Int? = null
-)
+) : Parcelable

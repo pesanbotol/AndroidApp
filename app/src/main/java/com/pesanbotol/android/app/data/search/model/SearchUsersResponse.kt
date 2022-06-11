@@ -1,6 +1,8 @@
 package com.pesanbotol.android.app.data.search.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 //
 //data class SearchUsersResponse(
@@ -9,6 +11,7 @@ import com.google.gson.annotations.SerializedName
 //    val result: Result? = null
 //)
 
+@Parcelize
 data class SearchUsersResponse(
 
     @field:SerializedName("hits")
@@ -34,9 +37,10 @@ data class SearchUsersResponse(
 //
 //    @field:SerializedName("search_time_ms")
 //    val searchTimeMs: Int? = null
-)
+) : Parcelable
 
 
+@Parcelize
 data class UserItems(
 
 //    @field:SerializedName("text_match")
@@ -47,8 +51,9 @@ data class UserItems(
 
     @field:SerializedName("document")
     val document: UsersDocument? = null
-)
+) : Parcelable
 
+@Parcelize
 data class UsersDocument(
 
     @field:SerializedName("displayName")
@@ -62,4 +67,4 @@ data class UsersDocument(
 
     @field:SerializedName("username")
     val username: String? = null
-)
+) : Parcelable

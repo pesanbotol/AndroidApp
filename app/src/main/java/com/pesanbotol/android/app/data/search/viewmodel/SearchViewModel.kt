@@ -22,17 +22,17 @@ class SearchViewModel(private val searchRepository: SearchRepository) : ViewMode
                 val searchResult = SearchResult(
 
                 )
-                searchUsers(q).addOnSuccessListener {
-                    searchResult.users = it
-                    _postSearchState.postValue(StateHandler.Success(SearchResult(users = it)))
-                }
                 searchBottles(q).addOnSuccessListener {
                     searchResult.bottles = it
-                    _postSearchState.postValue(StateHandler.Success(SearchResult(bottles = it)))
+                    _postSearchState.postValue(StateHandler.Success(searchResult))
                 }
                 searchMissions(q).addOnSuccessListener {
                     searchResult.mission = it
-                    _postSearchState.postValue(StateHandler.Success(SearchResult(mission = it)))
+                    _postSearchState.postValue(StateHandler.Success(searchResult))
+                }
+                searchUsers(q).addOnSuccessListener {
+                    searchResult.users = it
+                    _postSearchState.postValue(StateHandler.Success(searchResult))
                 }
 
             } catch (e: Exception) {
