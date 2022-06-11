@@ -17,4 +17,7 @@
     <string name="descSignup">Daftar untuk menikmati fitur-fitur menarik dan pamerkan pengalaman kamu ke orang lain</string>
     <string name="lihat_semua"><u> Lihat Semua </u></string>
     <string name="edit_profile"><u> Edit Profile</u></string>
+    <string name="tab_text_bottle">Bottle</string>
+    <string name="tab_text_mission">Missions</string>
+    <string name="tab_text_user">User</string>
 </resources>

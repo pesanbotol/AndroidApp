@@ -52,6 +52,9 @@
     <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
     <string name="lihat_semua" translatable="false"><u> Lihat Semua </u></string>
     <string name="edit_profile" translatable="false"> <u> Edit Profile</u></string>
+    <string name="tab_text_bottle">Bottle</string>
+    <string name="tab_text_mission">Missions</string>
+    <string name="tab_text_user">User</string>
 
     <!--    dummy data  -->
     <string-array name="name">
