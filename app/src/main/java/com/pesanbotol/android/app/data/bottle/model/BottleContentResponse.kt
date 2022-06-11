@@ -1,7 +1,9 @@
 package com.pesanbotol.android.app.data.bottle.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
+
+//import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class BottleContentResponse(

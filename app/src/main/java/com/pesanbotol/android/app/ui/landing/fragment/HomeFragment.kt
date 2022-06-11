@@ -44,9 +44,8 @@ import com.pesanbotol.android.app.ui.add_message.AddMessageActivity
 import com.pesanbotol.android.app.ui.detail_bubble.DetailBubbleMessageActivity
 import com.pesanbotol.android.app.ui.landing.`interface`.MissionItemClickListener
 import com.pesanbotol.android.app.ui.landing.`interface`.SamePlaceItemClickListener
-import com.pesanbotol.android.app.ui.landing.adapters.MissionListAdapter
-import com.pesanbotol.android.app.ui.landing.adapters.SamePlaceListAdapter
-import com.pesanbotol.android.app.ui.search_bottle.SearchActivity
+import com.pesanbotol.android.app.ui.landing.adapters.BottleCustomAdapter
+import com.pesanbotol.android.app.ui.search.SearchActivity
 import com.pesanbotol.android.app.utility.CommonFunction
 import com.pesanbotol.android.app.utility.CustomMarkerRenderer
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -310,106 +309,120 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
     }
 
     override fun onClusterClick(cluster: Cluster<BottleCustomMarker>?): Boolean {
+        println("onClusterClick ${cluster?.items?.joinToString(";") { "${it.position.latitude} ${it.position.longitude}" }}")
         val isAllClusterInSamePlace =
                 cluster?.items?.reduceOrNull { acc, bottleCustomMarker -> if (acc?.position?.latitude == bottleCustomMarker?.position?.latitude && acc?.position?.longitude == bottleCustomMarker?.position?.longitude) acc else null }
         if (isAllClusterInSamePlace != null) {
-            if (isAllClusterInSamePlace.type == TypeCustomMarker.mission) {
-                val dialog = BottomSheetDialog(requireContext())
-                val view = layoutInflater.inflate(R.layout.bottom_sheet_same_place_dialog, null)
-                val rv = view.findViewById<RecyclerView>(R.id.recycler_view)
-                val bottlesSize = view.findViewById<TextView>(R.id.show_n_bottles)
-                val bottlesLocation = view.findViewById<TextView>(R.id.location)
-                val data =
-                        cluster.items.map { bottleCustomMarker -> bottleCustomMarker.missionItem }
-                bottlesSize.text =
-                        "Menampilkan misi ${isAllClusterInSamePlace.missionItem?.description}"
-                isAllClusterInSamePlace?.missionItem?.center.let {
-                    val geocoder = Geocoder(requireContext(), Locale.getDefault())
-                    val addresses: List<Address> =
-                            geocoder.getFromLocation(it!![0]!!, it[1]!!, 1)
-//                    val address: String = addresses[0].getAddressLine(0)
-                    val city: String = addresses[0].locality ?: ""
-                    val state: String = addresses[0].adminArea ?: ""
-//                    val zip: String = addresses[0].postalCode
-                    val country: String = addresses[0].countryName ?: ""
-                    val location = "$city, $state - $country"
-                    bottlesLocation.text = location
-                }
-                dialog.setContentView(view)
-                rv.layoutManager = LinearLayoutManager(requireContext())
-
-                dialog.show()
-                rv.adapter = MissionListAdapter(
-                    ArrayList(data),
-                    object : MissionItemClickListener {
-                        override fun onClick(missionsItem: MissionsItem) {
-                            val distance = FloatArray(1)
-                            myLocation?.let {
-                                Location.distanceBetween(
-
-                                    it.latitude,
-                                    it.longitude,
-                                    missionsItem.center!![0]!!,
-                                    missionsItem.center[1]!!,
-                                    distance
-                                )
-                                if (distance[0] > 10) {
-                                    CommonFunction.showSnackBar(
-                                        dialog.window!!.decorView,
-                                        view.context,
-                                        "Kamu diluar radius 10 meter dari lokasi",
-                                        true
-                                    )
-                                } else {
-                                    CommonFunction.showSnackBar(
-                                        dialog.window!!.decorView,
-                                        view.context,
-                                        "Misi telah selesai",
-                                    )
-                                }
-
-                            }
-                        }
-
-                    })
-                return true
-            }
+            println("isAllClusterInSamePlace != null")
+//            if (isAllClusterInSamePlace.type == TypeCustomMarker.mission) {
+            println("isAllClusterInSamePlace != null")
             val dialog = BottomSheetDialog(requireContext())
             val view = layoutInflater.inflate(R.layout.bottom_sheet_same_place_dialog, null)
             val rv = view.findViewById<RecyclerView>(R.id.recycler_view)
             val bottlesSize = view.findViewById<TextView>(R.id.show_n_bottles)
             val bottlesLocation = view.findViewById<TextView>(R.id.location)
-            val data = cluster.items.map { bottleCustomMarker -> bottleCustomMarker.bottleItem }
-            bottlesSize.text = "Menampilkan ${data.size} Pesan"
-            isAllClusterInSamePlace.position.let {
+            val data =
+                    cluster.items.map { bottleCustomMarker -> bottleCustomMarker }
+            bottlesSize.text =
+                    "Menampilkan ${data.size} item"
+            (isAllClusterInSamePlace?.missionItem?.center
+                ?: isAllClusterInSamePlace.bottleItem?.geo).let {
                 val geocoder = Geocoder(requireContext(), Locale.getDefault())
                 val addresses: List<Address> =
-                        geocoder.getFromLocation(it.latitude, it.longitude, 1)
+                        geocoder.getFromLocation(it!![0]!!, it[1]!!, 1)
 //                    val address: String = addresses[0].getAddressLine(0)
-                if (addresses.isNotEmpty()) {
-//                    val address: String = addresses[0].getAddressLine(0)
-                    val city: String = addresses[0].locality ?: ""
-                    val state: String = addresses[0].adminArea ?: ""
+                val city: String = addresses[0].locality ?: ""
+                val state: String = addresses[0].adminArea ?: ""
 //                    val zip: String = addresses[0].postalCode
-                    val country: String = addresses[0].countryName ?: ""
-                    val location = "$city, $state - $country"
-                    bottlesLocation.text = location
-                } else {
-                    bottlesLocation.text = ""
-                }
+                val country: String = addresses[0].countryName ?: ""
+                val location = "$city, $state - $country"
+                bottlesLocation.text = location
             }
-            rv.adapter = SamePlaceListAdapter(ArrayList(data), object : SamePlaceItemClickListener {
-                override fun onClick(bottleItem: BottleItem) {
-                    val intent = Intent(requireContext(), DetailBubbleMessageActivity::class.java)
-                    intent.putExtra("bubble", bottleItem)
-                    startActivity(intent)
-                }
-
-            })
-            rv.layoutManager = LinearLayoutManager(requireContext())
             dialog.setContentView(view)
+            rv.layoutManager = LinearLayoutManager(requireContext())
+
             dialog.show()
+            rv.adapter = BottleCustomAdapter(
+                ArrayList(data),
+                object : MissionItemClickListener {
+                    override fun onClick(missionsItem: MissionsItem) {
+                        val distance = FloatArray(1)
+                        myLocation?.let {
+                            Location.distanceBetween(
+
+                                it.latitude,
+                                it.longitude,
+                                missionsItem.center!![0]!!,
+                                missionsItem.center[1]!!,
+                                distance
+                            )
+                            if (distance[0] > 10) {
+                                CommonFunction.showSnackBar(
+                                    dialog.window!!.decorView,
+                                    view.context,
+                                    "Kamu diluar radius 10 meter dari lokasi",
+                                    true
+                                )
+                            } else {
+                                CommonFunction.showSnackBar(
+                                    dialog.window!!.decorView,
+                                    view.context,
+                                    "Misi telah selesai",
+                                )
+                            }
+
+                        }
+                    }
+
+                },
+                object : SamePlaceItemClickListener {
+                    override fun onClick(bottleItem: BottleItem) {
+                        val intent =
+                                Intent(requireContext(), DetailBubbleMessageActivity::class.java)
+                        intent.putExtra("bubble", bottleItem)
+                        startActivity(intent)
+                    }
+
+                }
+            )
             return true
+//            }
+//            val dialog = BottomSheetDialog(requireContext())
+//            val view = layoutInflater.inflate(R.layout.bottom_sheet_same_place_dialog, null)
+//            val rv = view.findViewById<RecyclerView>(R.id.recycler_view)
+//            val bottlesSize = view.findViewById<TextView>(R.id.show_n_bottles)
+//            val bottlesLocation = view.findViewById<TextView>(R.id.location)
+//            val data = cluster.items.map { bottleCustomMarker -> bottleCustomMarker.bottleItem }
+//            bottlesSize.text = "Menampilkan ${data.size} Pesan"
+//            isAllClusterInSamePlace.position.let {
+//                val geocoder = Geocoder(requireContext(), Locale.getDefault())
+//                val addresses: List<Address> =
+//                        geocoder.getFromLocation(it.latitude, it.longitude, 1)
+////                    val address: String = addresses[0].getAddressLine(0)
+//                if (addresses.isNotEmpty()) {
+////                    val address: String = addresses[0].getAddressLine(0)
+//                    val city: String = addresses[0].locality ?: ""
+//                    val state: String = addresses[0].adminArea ?: ""
+////                    val zip: String = addresses[0].postalCode
+//                    val country: String = addresses[0].countryName ?: ""
+//                    val location = "$city, $state - $country"
+//                    bottlesLocation.text = location
+//                } else {
+//                    bottlesLocation.text = ""
+//                }
+//            }
+//            rv.adapter = SamePlaceListAdapter(ArrayList(data), object : SamePlaceItemClickListener {
+//                override fun onClick(bottleItem: BottleItem) {
+//                    val intent = Intent(requireContext(), DetailBubbleMessageActivity::class.java)
+//                    intent.putExtra("bubble", bottleItem)
+//                    startActivity(intent)
+//                }
+//
+//            })
+//            rv.layoutManager = LinearLayoutManager(requireContext())
+//            dialog.setContentView(view)
+//            dialog.show()
+//            return true
         } else {
             cluster?.let {
                 Toast.makeText(
@@ -461,27 +474,28 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                     val rv = view.findViewById<RecyclerView>(R.id.recycler_view)
                     val bottlesSize = view.findViewById<TextView>(R.id.show_n_bottles)
                     val bottlesLocation = view.findViewById<TextView>(R.id.location)
-                    val data =
-                            arrayListOf(item.missionItem)
-                    bottlesSize.text = "Menampilkan misi ${item.missionItem?.description}"
-                    item?.missionItem?.center.let {
+//                    val data =
+//                            cluster.items.map { bottleCustomMarker -> bottleCustomMarker }
+                    bottlesSize.text =
+                            "Menampilkan misi ${item.missionItem?.description}"
+                    item.missionItem?.center.let {
                         val geocoder = Geocoder(requireContext(), Locale.getDefault())
                         val addresses: List<Address> =
                                 geocoder.getFromLocation(it!![0]!!, it[1]!!, 1)
-                        if (addresses.isNotEmpty()) {
 //                    val address: String = addresses[0].getAddressLine(0)
-                            val city: String = addresses[0].locality ?: ""
-                            val state: String = addresses[0].adminArea ?: ""
+                        val city: String = addresses[0].locality ?: ""
+                        val state: String = addresses[0].adminArea ?: ""
 //                    val zip: String = addresses[0].postalCode
-                            val country: String = addresses[0].countryName ?: ""
-                            val location = "$city, $state - $country"
-                            bottlesLocation.text = location
-                        } else {
-                            bottlesLocation.text = "unknown"
-                        }
+                        val country: String = addresses[0].countryName ?: ""
+                        val location = "$city, $state - $country"
+                        bottlesLocation.text = location
                     }
-                    rv.adapter = MissionListAdapter(
-                        ArrayList(data),
+                    dialog.setContentView(view)
+                    rv.layoutManager = LinearLayoutManager(requireContext())
+
+                    dialog.show()
+                    rv.adapter = BottleCustomAdapter(
+                        arrayListOf(item),
                         object : MissionItemClickListener {
                             override fun onClick(missionsItem: MissionsItem) {
                                 val distance = FloatArray(1)
@@ -512,10 +526,20 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                                 }
                             }
 
-                        })
-                    rv.layoutManager = LinearLayoutManager(requireContext())
-                    dialog.setContentView(view)
-                    dialog.show()
+                        },
+                        object : SamePlaceItemClickListener {
+                            override fun onClick(bottleItem: BottleItem) {
+                                val intent =
+                                        Intent(
+                                            requireContext(),
+                                            DetailBubbleMessageActivity::class.java
+                                        )
+                                intent.putExtra("bubble", bottleItem)
+                                startActivity(intent)
+                            }
+
+                        }
+                    )
                     return true
                 }
                 val intent = Intent(requireContext(), DetailBubbleMessageActivity::class.java)

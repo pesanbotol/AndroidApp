@@ -34,7 +34,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.PesanBotol">
         <activity
-            android:name=".ui.search_bottle.SearchActivity"
+            android:name=".ui.search.SearchActivity"
             android:exported="false" />
         <activity
             android:name=".ui.edit_profile.EditProfileActivity"
