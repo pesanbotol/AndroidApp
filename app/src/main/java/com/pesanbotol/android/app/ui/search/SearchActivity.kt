@@ -37,10 +37,13 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
         searchViewModel.postSearchState.observe(this) {
             when (it) {
                 is StateHandler.Loading -> {
-                    _binding?.progressBar?.visibility = View.VISIBLE
+//                    _binding?.progressBar?.visibility = View.VISIBLE
+                    _binding?.shimmerLayout?.visibility = View.VISIBLE
                 }
                 is StateHandler.Success -> {
-                    _binding?.progressBar?.visibility = View.GONE
+//                    _binding?.progressBar?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+
                     _binding?.let { view ->
                         println("RESULT ${it.data?.users?.hits?.size}")
                         it.data?.users?.hits?.let { items ->
@@ -52,7 +55,8 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
                     }
                 }
                 is StateHandler.Error -> {
-                    _binding?.progressBar?.visibility = View.GONE
+//                    _binding?.progressBar?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
 
                     Log.e(SearchActivity::class.simpleName, it.message ?: "Unknown error occured")
                     CommonFunction.showSnackBar(
@@ -62,8 +66,20 @@ class SearchActivity : AppCompatActivity(), UserItemClickListener {
                         true
                     )
                 }
+                else -> {}
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        _binding?.shimmerLayout?.startShimmerAnimation()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        _binding?.shimmerLayout?.stopShimmerAnimation()
+
     }
 
     private fun searchAnything() {
