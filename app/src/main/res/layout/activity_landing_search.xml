@@ -54,6 +54,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,6 +64,7 @@
             </LinearLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
+
 
         <LinearLayout
             android:id="@+id/data_layout"
@@ -79,13 +81,20 @@
                 app:tabSelectedTextColor="@color/black"
                 app:tabTextColor="@color/grey_1CC" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:paddingTop="10dp"
-                android:id="@+id/viewPager2"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/srl"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+                android:layout_height="match_parent">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>
+
 
     </LinearLayout>
 

@@ -299,8 +299,20 @@
 
             </RelativeLayout>
         </ScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <com.pesanbotol.android.app.ui.components.PrimaryButton
+        android:id="@+id/btn_logout"
+        android:elevation="99dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/pink"
+        android:text="Logout"
+        android:textColor="@color/white" />
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerLayout"
         android:layout_width="wrap_content"
@@ -316,15 +328,4 @@
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <com.pesanbotol.android.app.ui.components.PrimaryButton
-        android:id="@+id/btn_logout"
-        android:elevation="99dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/pink"
-        android:text="Logout"
-        android:textColor="@color/white" />
 </FrameLayout>
