@@ -62,7 +62,7 @@ data class MissionsDocument(
 	val createdAt: Int? = null,
 
 	@field:SerializedName("geofence")
-	val geofence: List<Double?>? = null,
+	val geofence: List<List<Double?>?>? = null,
 
 	@field:SerializedName("enable")
 	val enable: Boolean? = null,

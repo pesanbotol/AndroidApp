@@ -19,9 +19,7 @@ class SearchViewModel(private val searchRepository: SearchRepository) : ViewMode
         viewModelScope.launch {
             _postSearchState.postValue(StateHandler.Loading())
             try {
-                val searchResult = SearchResult(
-
-                )
+                val searchResult = SearchResult()
                 searchBottles(q).addOnSuccessListener {
                     searchResult.bottles = it
                     _postSearchState.postValue(StateHandler.Success(searchResult))
@@ -45,9 +43,9 @@ class SearchViewModel(private val searchRepository: SearchRepository) : ViewMode
     private fun searchBottles(q: String) =
             searchRepository.searchBottles(q)
 
-    fun searchUsers(q: String) =
+    private fun searchUsers(q: String) =
             searchRepository.searchUsers(q)
 
-    suspend fun searchMissions(q: String, searchKind: String? = "missions") =
+    private fun searchMissions(q: String, searchKind: String? = "missions") =
             searchRepository.searchMissions(q)
 }

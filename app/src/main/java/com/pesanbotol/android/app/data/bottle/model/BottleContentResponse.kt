@@ -36,6 +36,7 @@ data class BottleItem(
 
 @Parcelize
 data class MissionsItem(
+    val missionId: String? = null,
     val reward: String? = null,
     val createdAt: Int? = null,
     val enable: Boolean? = null,

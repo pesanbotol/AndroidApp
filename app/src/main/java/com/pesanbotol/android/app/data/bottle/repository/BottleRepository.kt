@@ -1,5 +1,6 @@
 package com.pesanbotol.android.app.data.bottle.repository
 
+import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
@@ -45,20 +46,22 @@ class BottleRepository {
             }
     }
 
-    fun submitMission(latLng: LatLng): Task<Boolean?> {
+    fun submitMission(latLng: LatLng, missionId: String): Task<Boolean?> {
 
         val position = hashMapOf(
+            "missionId" to missionId,
             "geo" to listOf(latLng.latitude.toString(), latLng.longitude.toString())
         )
         return _functions
             .getHttpsCallable("mission-callableMission-submitMission")
             .call(position)
             .continueWith {
+                Log.d("submitMission", Gson().toJson(it.result.data))
                 true
             }.addOnSuccessListener {
                 println("Success submitting mission")
             }.addOnFailureListener {
-                println("Failed submitting mission : ${it.message}")
+                println("Failed submitting mission $missionId : ${it.message}")
             }
     }
 

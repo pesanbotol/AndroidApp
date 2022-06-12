@@ -24,7 +24,7 @@ class BottleSearchFragment : Fragment(), BottleItemClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBottleSearchBinding.inflate(inflater, container, false)
         _binding?.rvBottles?.layoutManager = LinearLayoutManager(requireContext())
@@ -34,6 +34,10 @@ class BottleSearchFragment : Fragment(), BottleItemClickListener {
         }
 
         return _binding!!.root
+    }
+
+    fun setData(data: SearchBottlesResponse) {
+        _binding?.rvBottles?.adapter = BottleListAdapter(ArrayList(data.hits!!), this)
     }
 
     companion object {

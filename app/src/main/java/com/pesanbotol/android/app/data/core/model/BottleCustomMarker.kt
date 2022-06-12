@@ -21,7 +21,7 @@ class BottleCustomMarker(
     override fun getTitle(): String {
         return when (type) {
             TypeCustomMarker.bottle -> bottleItem?.user?.displayName ?: ""
-            else -> if (missionItem?.description != null) "Misi : ${missionItem.description}" else ""
+            else -> if (missionItem?.description != null) "${missionItem.description}" else ""
         }
     }
 

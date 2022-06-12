@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pesanbotol.android.app.data.search.model.MissionItems
+import com.pesanbotol.android.app.data.search.model.SearchBottlesResponse
 import com.pesanbotol.android.app.data.search.model.SearchMissionResponse
 import com.pesanbotol.android.app.databinding.FragmentMissionSearchBinding
 import com.pesanbotol.android.app.ui.landing.LandingActivity
+import com.pesanbotol.android.app.ui.search.adapters.BottleListAdapter
 import com.pesanbotol.android.app.ui.search.adapters.MissionListAdapter
 import com.pesanbotol.android.app.ui.search.interfaces.MissionItemClickListener
 
@@ -21,7 +23,6 @@ class MissionSearchFragment : Fragment(), MissionItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentMissionSearchBinding.inflate(inflater, container, false)
         _binding?.rvMission?.layoutManager = LinearLayoutManager(requireContext())
         val arg = arguments
@@ -29,6 +30,10 @@ class MissionSearchFragment : Fragment(), MissionItemClickListener {
             _binding?.rvMission?.adapter = MissionListAdapter(ArrayList(it.hits!!), this)
         }
         return _binding!!.root
+    }
+
+    fun setData(data: SearchMissionResponse) {
+        _binding?.rvMission?.adapter = MissionListAdapter(ArrayList(data.hits!!), this)
     }
 
     companion object {

@@ -23,8 +23,7 @@ class UserSearchFragment : Fragment(), UserItemClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         _binding = FragmentUserSearchBinding.inflate(inflater, container, false)
         _binding?.rvUsers?.layoutManager = LinearLayoutManager(requireContext())
         val arg = arguments
@@ -32,6 +31,10 @@ class UserSearchFragment : Fragment(), UserItemClickListener {
             _binding?.rvUsers?.adapter = UserListAdapter(ArrayList(it.hits!!), this)
         }
         return _binding!!.root
+    }
+
+    fun setData(data: SearchUsersResponse) {
+        _binding?.rvUsers?.adapter = UserListAdapter(ArrayList(data.hits!!), this)
     }
 
     companion object {

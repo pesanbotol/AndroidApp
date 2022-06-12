@@ -7,6 +7,7 @@
     tools:context=".ui.detail_users.DetailUsersActivity">
 
     <RelativeLayout
+        android:layout_margin="30dp"
         android:id="@+id/error_state"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

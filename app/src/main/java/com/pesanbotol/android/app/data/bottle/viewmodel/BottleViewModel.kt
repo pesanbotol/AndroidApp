@@ -22,8 +22,8 @@ class BottleViewModel(private val bottleRepository: BottleRepository) : ViewMode
     fun uploadBottleFile(file: File, firebaseUser: FirebaseUser) =
             bottleRepository.uploadImage(file, firebaseUser)
 
-    fun submitMission(latLng: LatLng) =
-            bottleRepository.submitMission(latLng)
+    fun submitMission(latLng: LatLng,missionId:String) =
+            bottleRepository.submitMission(latLng,missionId)
 
     fun addBottle(latLng: LatLng, content: String, filename: String?) =
             bottleRepository.addBottle(latLng, content, filename)

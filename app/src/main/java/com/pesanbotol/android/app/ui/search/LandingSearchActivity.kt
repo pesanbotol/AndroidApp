@@ -33,6 +33,13 @@ class LandingSearchActivity : AppCompatActivity() {
         supportActionBar?.hide()
         searchViewModel.search("")
         searchAnything()
+        val sectionsPagerAdapter = SectionPagerAdapter(this)
+        val viewPager: ViewPager2 = binding.viewPager2
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs: TabLayout = binding.tabsLayout
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
         searchViewModel.postSearchState.observe(this) { state ->
             when (state) {
                 is StateHandler.Loading -> {
@@ -43,13 +50,16 @@ class LandingSearchActivity : AppCompatActivity() {
                     binding.shimmerLayout.stopShimmerAnimation()
                     binding.shimmerLayout.visibility = View.GONE
                     state.data?.let {
-                        val sectionsPagerAdapter = SectionPagerAdapter(this, it)
-                        val viewPager: ViewPager2 = binding.viewPager2
-                        viewPager.adapter = sectionsPagerAdapter
-                        val tabs: TabLayout = binding.tabsLayout
-                        TabLayoutMediator(tabs, viewPager) { tab, position ->
-                            tab.text = resources.getString(TAB_TITLES[position])
-                        }.attach()
+                        it.bottles?.let {
+                            sectionsPagerAdapter.setBottlesData(it)
+                            viewPager.adapter
+                        }
+                        it.mission?.let {
+                            sectionsPagerAdapter.setMissionsData(it)
+                        }
+                        it.users?.let {
+                            sectionsPagerAdapter.setUsersData(it)
+                        }
                     }
                 }
                 is StateHandler.Error -> {
@@ -71,6 +81,11 @@ class LandingSearchActivity : AppCompatActivity() {
         }
 
 
+
+
+
+
+
     }
 
     private fun searchAnything() {
@@ -84,19 +99,12 @@ class LandingSearchActivity : AppCompatActivity() {
                 ): Boolean {
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                         hideSoftKeyboard(textView)
-                        // result search in view model here
-                        // searchCourseViewModel.searchCourseByKeyword(v.text.trim().toString())
                         try {
                             searchViewModel.search(textView?.text.toString())
-                            Toast.makeText(
-                                this@LandingSearchActivity,
-                                "Search ADA $textView ",
-                                Toast.LENGTH_LONG
-                            ).show()
                         } catch (ex: Exception) {
                             Toast.makeText(
                                 this@LandingSearchActivity,
-                                "Search $ex",
+                                "Failed : $ex",
                                 Toast.LENGTH_LONG
                             )
                                 .show()

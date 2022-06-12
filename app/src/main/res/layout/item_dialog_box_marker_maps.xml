@@ -27,12 +27,13 @@
         <TextView
             android:gravity="start"
             android:id="@+id/title_username"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:ellipsize="end"
-            android:text="Arby Azra"
-            android:singleLine="true"
+            android:text="Arby Azrawdaowdpakadpokadw"
+            android:maxEms="15"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -42,11 +43,13 @@
             android:layout_gravity="start"
             android:id="@+id/snippet_desc"
             android:text="Halo guys"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:maxEms="15"
             android:paddingBottom="10dp"
             android:singleLine="true"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>

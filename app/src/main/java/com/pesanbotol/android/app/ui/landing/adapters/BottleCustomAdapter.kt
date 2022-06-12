@@ -49,7 +49,7 @@ class BottleCustomAdapter(
 
                 }
             } else {
-                v?.titleUsername?.text = if (item.description != null) "Misi : ${item.description}" else ""
+                v?.titleUsername?.text = if (item.description != null) "${item.description}" else ""
                 v?.snippetDesc?.text =
                         if (item.reward != null) "Tugas : Kunjungi tempat ini, untuk mendapatkan badge ${item.reward}" else ""
                 v?.markAsDone?.setOnClickListener {
