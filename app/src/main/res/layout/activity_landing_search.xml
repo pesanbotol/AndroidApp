@@ -19,7 +19,7 @@
             android:layout_height="48dp"
             android:layout_margin="12dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/background_search_bar"
+            android:background="@drawable/background_search_bar_2"
             android:elevation="10dp"
             app:boxBackgroundMode="none"
             app:endIconMode="clear_text"
@@ -42,29 +42,9 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:padding="2dp"
-                android:scrollHorizontally="true" />
+                android:scrollHorizontally="true"
+                android:textColor="?attr/colorOnSecondary" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmerLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <include layout="@layout/item_search_placeholder" />
-            </LinearLayout>
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
 
         <LinearLayout
             android:id="@+id/data_layout"
@@ -77,9 +57,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                app:tabIndicatorColor="@android:color/black"
-                app:tabSelectedTextColor="@color/black"
-                app:tabTextColor="@color/grey_1CC" />
+                app:tabIndicatorColor="?attr/colorOnSecondary"
+                app:tabSelectedTextColor="?attr/colorOnSecondary"
+                app:tabTextColor="?attr/colorOnSecondary" />
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/srl"
@@ -95,6 +75,24 @@
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/item_search_placeholder" />
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </LinearLayout>
 

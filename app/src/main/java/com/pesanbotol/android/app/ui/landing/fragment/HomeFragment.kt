@@ -134,7 +134,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
                             ?.let { item ->
                                 println("should perform navigation from clicked mission")
                                 println("should show data ${Gson().toJson(item)}")
-                                item?.center?.let { latlng ->
+                                item.center?.let { latlng ->
                                     println(
                                         "latlng value ${latlng[0]!!} ${latlng[1]!!}"
                                     )
@@ -289,7 +289,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback,
         it?.data?.missions?.forEach { data ->
             val latLng = LatLng(
                 data?.center?.get(0)!!,
-                data?.center?.get(1)!!
+                data.center.get(1)!!
             )
             mClusterManager?.addItem(
                 BottleCustomMarker(

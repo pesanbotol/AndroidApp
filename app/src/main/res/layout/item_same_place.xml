@@ -49,8 +49,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:gravity="start"
-                            android:text="Arby Azra"
-                            android:textColor="@color/black"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -77,8 +76,7 @@
                         android:gravity="start"
                         android:paddingBottom="10dp"
                         android:maxLines="3"
-                        android:text="Halo guys"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/colorOnSecondary"
                         android:textSize="14sp" />
                 </LinearLayout>
 

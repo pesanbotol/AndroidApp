@@ -26,6 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LandingSearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLandingSearchBinding
     private val searchViewModel by viewModel<SearchViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLandingSearchBinding.inflate(layoutInflater)
@@ -40,6 +41,7 @@ class LandingSearchActivity : AppCompatActivity() {
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
+
         binding.srl.setOnRefreshListener {
             binding.srl.isRefreshing = false
             searchViewModel.search(binding.etSearch.text.toString())

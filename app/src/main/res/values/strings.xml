@@ -55,6 +55,7 @@
     <string name="tab_text_bottle">Pesan</string>
     <string name="tab_text_mission">Misi</string>
     <string name="tab_text_user">Pengguna</string>
+    <string name="tandai_selesai">Tandai Selesai</string>
 
     <!--    dummy data  -->
     <string-array name="name">
